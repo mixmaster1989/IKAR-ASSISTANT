@@ -1,0 +1,29 @@
+# Минимальные зависимости для серверного запуска IKAR (без локального ML/Computer Vision)
+# CPU-дружественные, компактные, без PyTorch и тяжёлых CV/Audio библиотек
+
+fastapi>=0.110,<1.0
+uvicorn[standard]>=0.20.0
+python-multipart
+aiofiles
+pydantic>=2.4,<3
+python-dotenv
+aiohttp
+requests
+aiosqlite
+tiktoken
+cryptography>=3.4.8
+starlette
+typing-extensions
+
+# Парсинг и извлечение контента
+beautifulsoup4>=4.12.0
+lxml>=4.9.0
+trafilatura>=2.0.0,<3
+newspaper3k>=0.2.8
+readability-lxml>=0.8.1
+justext>=3.0.0
+nltk>=3.8.0
+
+# При необходимости работы с HF API (без локального инференса)
+huggingface_hub>=0.23.0
+

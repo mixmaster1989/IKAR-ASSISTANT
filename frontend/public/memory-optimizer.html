@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Оптимизатор Памяти - Chatumba</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .memory-optimizer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .status-card {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        
+        .status-running {
+            background-color: #28a745;
+        }
+        
+        .status-stopped {
+            background-color: #dc3545;
+        }
+        
+        .status-night {
+            background-color: #6f42c1;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .stat-item {
+            background: white;
+            padding: 15px;
+            border-radius: 6px;
+            border: 1px solid #e9ecef;
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #495057;
+        }
+        
+        .stat-label {
+            font-size: 12px;
+            color: #6c757d;
+            margin-top: 5px;
+        }
+        
+        .control-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.2s;
+        }
+        
+        .btn-primary {
+            background-color: #007bff;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+        
+        .btn-danger {
+            background-color: #dc3545;
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background-color: #c82333;
+        }
+        
+        .btn-warning {
+            background-color: #ffc107;
+            color: #212529;
+        }
+        
+        .btn-warning:hover {
+            background-color: #e0a800;
+        }
+        
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #545b62;
+        }
+        
+        .config-form {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #dee2e6;
+            margin-top: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+            color: #495057;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: #80bdff;
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+        }
+        
+        .alert {
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid transparent;
+            border-radius: 4px;
+        }
+        
+        .alert-success {
+            color: #155724;
+            background-color: #d4edda;
+            border-color: #c3e6cb;
+        }
+        
+        .alert-danger {
+            color: #721c24;
+            background-color: #f8d7da;
+            border-color: #f5c6cb;
+        }
+        
+        .alert-info {
+            color: #0c5460;
+            background-color: #d1ecf1;
+            border-color: #bee5eb;
+        }
+        
+        .logs-container {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .log-entry {
+            font-family: monospace;
+            font-size: 12px;
+            margin-bottom: 5px;
+            padding: 5px;
+            border-radius: 3px;
+        }
+        
+        .log-info {
+            background-color: #e7f3ff;
+            border-left: 3px solid #007bff;
+        }
+        
+        .log-error {
+            background-color: #ffe6e6;
+            border-left: 3px solid #dc3545;
+        }
+        
+        .log-success {
+            background-color: #e6ffe6;
+            border-left: 3px solid #28a745;
+        }
+    </style>
+</head>
+<body>
+    <div class="memory-optimizer-container">
+        <h1>🧠 Оптимизатор Памяти</h1>
+        
+        <!-- Статус -->
+        <div class="status-card">
+            <h3>Статус Системы</h3>
+            <div id="status-display">
+                <p><span class="status-indicator status-stopped"></span>Загрузка...</p>
+            </div>
+            
+            <div class="stats-grid" id="stats-grid">
+                <!-- Статистика будет загружена динамически -->
+            </div>
+            
+            <div class="control-buttons">
+                <button class="btn btn-primary" onclick="startOptimizer()">▶️ Запустить</button>
+                <button class="btn btn-danger" onclick="stopOptimizer()">⏹️ Остановить</button>
+                <button class="btn btn-warning" onclick="testOptimizer()">🧪 Тест</button>
+                <button class="btn btn-secondary" onclick="refreshStatus()">🔄 Обновить</button>
+            </div>
+        </div>
+        
+        <!-- Настройки -->
+        <div class="config-form">
+            <h3>⚙️ Настройки</h3>
+            <form id="config-form">
+                <div class="form-group">
+                    <label class="form-label" for="optimization-interval">Интервал оптимизации (секунды):</label>
+                    <input type="number" class="form-control" id="optimization-interval" min="60" max="3600" value="600">
+                    <small class="form-text text-muted">От 60 до 3600 секунд (1 минута - 1 час)</small>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="max-chunk-tokens">Максимальный размер чанка (токены):</label>
+                    <input type="number" class="form-control" id="max-chunk-tokens" min="10000" max="100000" value="60000">
+                    <small class="form-text text-muted">От 10,000 до 100,000 токенов</small>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="night-start">Начало ночного времени:</label>
+                    <input type="time" class="form-control" id="night-start" value="23:00">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="night-end">Конец ночного времени:</label>
+                    <input type="time" class="form-control" id="night-end" value="07:00">
+                </div>
+                
+                <button type="submit" class="btn btn-primary">💾 Сохранить настройки</button>
+            </form>
+        </div>
+        
+        <!-- Уведомления -->
+        <div id="notifications"></div>
+        
+        <!-- Логи -->
+        <div class="logs-container">
+            <h3>📋 Логи Оптимизации</h3>
+            <div id="logs-display">
+                <div class="log-entry log-info">Инициализация системы логирования...</div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        let statusUpdateInterval;
+        
+        // Функции для работы с API
+        async function apiRequest(endpoint, method = 'GET', data = null) {
+            const options = {
+                method,
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            };
+            
+            if (data) {
+                options.body = JSON.stringify(data);
+            }
+            
+            try {
+                const response = await fetch(`/api/admin/memory_optimizer/${endpoint}`, options);
+                const result = await response.json();
+                
+                if (!response.ok) {
+                    throw new Error(result.detail || 'Ошибка API');
+                }
+                
+                return result;
+            } catch (error) {
+                console.error('API Error:', error);
+                showNotification('Ошибка: ' + error.message, 'danger');
+                throw error;
+            }
+        }
+        
+        // Обновление статуса
+        async function updateStatus() {
+            try {
+                const result = await apiRequest('status');
+                const optimizer = result.optimizer;
+                
+                const statusDisplay = document.getElementById('status-display');
+                const statsGrid = document.getElementById('stats-grid');
+                
+                if (optimizer) {
+                    const isRunning = optimizer.is_running;
+                    const isNightTime = optimizer.is_night_time;
+                    
+                    let statusText = isRunning ? 'Работает' : 'Остановлен';
+                    let statusClass = isRunning ? 'status-running' : 'status-stopped';
+                    
+                    if (isNightTime) {
+                        statusText += ' (Ночное время)';
+                        statusClass = 'status-night';
+                    }
+                    
+                    statusDisplay.innerHTML = `
+                        <p><span class="status-indicator ${statusClass}"></span>${statusText}</p>
+                        <p><small>Ночное время: ${optimizer.night_hours}</small></p>
+                    `;
+                    
+                    // Обновляем статистику
+                    statsGrid.innerHTML = `
+                        <div class="stat-item">
+                            <div class="stat-value">${optimizer.optimization_interval}с</div>
+                            <div class="stat-label">Интервал</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">${(optimizer.max_chunk_tokens / 1000).toFixed(0)}K</div>
+                            <div class="stat-label">Макс. чанк</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">${optimizer.old_group_messages || 0}</div>
+                            <div class="stat-label">Старые сообщения</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">${optimizer.large_vector_entries || 0}</div>
+                            <div class="stat-label">Большие записи</div>
+                        </div>
+                    `;
+                    
+                    // Обновляем форму настроек
+                    document.getElementById('optimization-interval').value = optimizer.optimization_interval;
+                    document.getElementById('max-chunk-tokens').value = optimizer.max_chunk_tokens;
+                    
+                } else {
+                    statusDisplay.innerHTML = '<p><span class="status-indicator status-stopped"></span>Не инициализирован</p>';
+                    statsGrid.innerHTML = '<div class="stat-item"><div class="stat-value">—</div><div class="stat-label">Нет данных</div></div>';
+                }
+                
+            } catch (error) {
+                console.error('Ошибка обновления статуса:', error);
+            }
+        }
+        
+        // Управление оптимизатором
+        async function startOptimizer() {
+            try {
+                const result = await apiRequest('start', 'POST');
+                showNotification(result.message, result.status === 'already_running' ? 'info' : 'success');
+                await updateStatus();
+            } catch (error) {
+                // Ошибка уже показана в apiRequest
+            }
+        }
+        
+        async function stopOptimizer() {
+            try {
+                const result = await apiRequest('stop', 'POST');
+                showNotification(result.message, result.status === 'not_running' ? 'info' : 'success');
+                await updateStatus();
+            } catch (error) {
+                // Ошибка уже показана в apiRequest
+            }
+        }
+        
+        async function testOptimizer() {
+            try {
+                showNotification('Запуск тестовой оптимизации...', 'info');
+                const result = await apiRequest('test', 'POST');
+                showNotification(result.message, 'success');
+                addLogEntry('Тестовая оптимизация выполнена', 'success');
+            } catch (error) {
+                // Ошибка уже показана в apiRequest
+            }
+        }
+        
+        async function refreshStatus() {
+            await updateStatus();
+            showNotification('Статус обновлен', 'success');
+        }
+        
+        // Сохранение настроек
+        document.getElementById('config-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const data = {
+                optimization_interval: parseInt(document.getElementById('optimization-interval').value),
+                max_chunk_tokens: parseInt(document.getElementById('max-chunk-tokens').value),
+                night_start: document.getElementById('night-start').value,
+                night_end: document.getElementById('night-end').value
+            };
+            
+            try {
+                const result = await apiRequest('config', 'POST', data);
+                showNotification(result.message, 'success');
+                await updateStatus();
+            } catch (error) {
+                // Ошибка уже показана в apiRequest
+            }
+        });
+        
+        // Уведомления
+        function showNotification(message, type = 'info') {
+            const notifications = document.getElementById('notifications');
+            const alert = document.createElement('div');
+            alert.className = `alert alert-${type}`;
+            alert.textContent = message;
+            
+            notifications.appendChild(alert);
+            
+            // Удаляем уведомление через 5 секунд
+            setTimeout(() => {
+                alert.remove();
+            }, 5000);
+        }
+        
+        // Логи
+        function addLogEntry(message, type = 'info') {
+            const logsDisplay = document.getElementById('logs-display');
+            const logEntry = document.createElement('div');
+            logEntry.className = `log-entry log-${type}`;
+            logEntry.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+            
+            logsDisplay.appendChild(logEntry);
+            
+            // Прокручиваем вниз
+            logsDisplay.scrollTop = logsDisplay.scrollHeight;
+            
+            // Ограничиваем количество записей
+            const entries = logsDisplay.querySelectorAll('.log-entry');
+            if (entries.length > 100) {
+                entries[0].remove();
+            }
+        }
+        
+        // Инициализация
+        document.addEventListener('DOMContentLoaded', async () => {
+            addLogEntry('Инициализация интерфейса оптимизатора памяти', 'info');
+            
+            // Первоначальное обновление статуса
+            await updateStatus();
+            
+            // Автоматическое обновление статуса каждые 30 секунд
+            statusUpdateInterval = setInterval(updateStatus, 30000);
+            
+            addLogEntry('Интерфейс готов к работе', 'success');
+        });
+        
+        // Очистка при закрытии страницы
+        window.addEventListener('beforeunload', () => {
+            if (statusUpdateInterval) {
+                clearInterval(statusUpdateInterval);
+            }
+        });
+    </script>
+</body>
+</html> 

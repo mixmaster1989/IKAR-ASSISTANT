@@ -1,0 +1,47 @@
+[
+  {
+    "model": "stabilityai/stable-diffusion-xl-base-1.0",
+    "type": "text-to-image",
+    "description": "SDXL Base 1.0 - проверенная рабочая модель",
+    "success": true,
+    "prompt": "a beautiful sunset over the ocean, high quality, detailed",
+    "response_time": 4.93349027633667,
+    "image_size": 48767,
+    "image_format": "JPEG",
+    "image_size_px": [
+      512,
+      512
+    ],
+    "error": null
+  },
+  {
+    "model": "stabilityai/stable-diffusion-3-medium-diffusers",
+    "type": "text-to-image",
+    "description": "SD3 Medium - новая версия",
+    "success": true,
+    "prompt": "a beautiful sunset over the ocean, high quality, detailed",
+    "response_time": 3.4006690979003906,
+    "image_size": 30916,
+    "image_format": "JPEG",
+    "image_size_px": [
+      512,
+      512
+    ],
+    "error": null
+  },
+  {
+    "model": "stabilityai/stable-diffusion-3-medium-diffusers",
+    "type": "text-to-image",
+    "description": "SD3 Medium Diffusers",
+    "success": true,
+    "prompt": "a beautiful sunset over the ocean, high quality, detailed",
+    "response_time": 0.26529574394226074,
+    "image_size": 30916,
+    "image_format": "JPEG",
+    "image_size_px": [
+      512,
+      512
+    ],
+    "error": null
+  }
+]

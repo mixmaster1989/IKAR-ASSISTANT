@@ -1,0 +1,28 @@
+[
+  {
+    "model_id": "coqui/XTTS-v2",
+    "note": "Мультиязычная TTS (включая русский), поддерживает клон голоса; Inference API обычно работает на простом inputs",
+    "supports_ru": true
+  },
+  {
+    "model_id": "suno/bark",
+    "note": "Мультиязычная (RU тоже), может быть медленной; иногда требует доп. параметров",
+    "supports_ru": true
+  },
+  {
+    "model_id": "suno/bark-small",
+    "note": "Облегчённый Bark, мультиязычный; быстрее, ниже качество",
+    "supports_ru": true
+  },
+  {
+    "model_id": "facebook/mms-tts",
+    "note": "MMS-tts семейство (включает RU; могут требоваться параметры языка/голоса)",
+    "supports_ru": true
+  },
+  {
+    "model_id": "parler-tts/parler-tts-mini-v1",
+    "note": "Parler-TTS мини; ориентирован в основном на EN, но полезен для проверки доступности API",
+    "supports_ru": false
+  }
+]
+

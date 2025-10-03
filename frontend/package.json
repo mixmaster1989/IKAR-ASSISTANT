@@ -1,0 +1,16 @@
+{
+  "name": "chatumba-frontend",
+  "version": "0.1.0",
+  "description": "Frontend for Chatumba - AI companion with character",
+  "main": "index.js",
+  "scripts": {
+    "start": "serve -s public",
+    "dev": "serve public"
+  },
+  "dependencies": {
+    "serve": "^14.0.1"
+  },
+  "devDependencies": {},
+  "author": "",
+  "license": "MIT"
+}

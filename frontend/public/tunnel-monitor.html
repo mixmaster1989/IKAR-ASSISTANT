@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Localtunnel Monitor - Мониторинг туннелей</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .monitor-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            background: #2a2a2a;
+            border-radius: 10px;
+            padding: 20px;
+            border: 1px solid #444;
+            text-align: center;
+        }
+        
+        .stat-card h3 {
+            color: #4CAF50;
+            margin: 0 0 10px 0;
+            font-size: 24px;
+        }
+        
+        .stat-card p {
+            color: #ccc;
+            margin: 0;
+            font-size: 14px;
+        }
+        
+        .tunnels-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .tunnel-card {
+            background: #2a2a2a;
+            border-radius: 10px;
+            padding: 20px;
+            border: 1px solid #444;
+        }
+        
+        .tunnel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .tunnel-name {
+            color: #4CAF50;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        
+        .tunnel-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .status-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+        
+        .status-running { background-color: #4CAF50; }
+        .status-stopped { background-color: #f44336; }
+        .status-error { background-color: #ff9800; }
+        .status-checking { background-color: #2196F3; }
+        
+        .tunnel-url {
+            color: #2196F3;
+            text-decoration: none;
+            font-size: 14px;
+            word-break: break-all;
+        }
+        
+        .tunnel-url:hover {
+            text-decoration: underline;
+        }
+        
+        .tunnel-metrics {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin: 15px 0;
+        }
+        
+        .metric {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #333;
+        }
+        
+        .metric:last-child {
+            border-bottom: none;
+        }
+        
+        .metric-label {
+            color: #ccc;
+            font-size: 12px;
+        }
+        
+        .metric-value {
+            color: #fff;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .tunnel-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .action-btn {
+            background: #333;
+            border: 1px solid #555;
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.3s;
+        }
+        
+        .action-btn:hover {
+            background: #444;
+        }
+        
+        .action-btn.primary {
+            background: #4CAF50;
+            border-color: #4CAF50;
+        }
+        
+        .action-btn.primary:hover {
+            background: #45a049;
+        }
+        
+        .action-btn.danger {
+            background: #f44336;
+            border-color: #f44336;
+        }
+        
+        .action-btn.danger:hover {
+            background: #da190b;
+        }
+        
+        .control-panel {
+            background: #2a2a2a;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+            border: 1px solid #444;
+        }
+        
+        .control-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .log-container {
+            background: #1a1a1a;
+            border-radius: 10px;
+            padding: 20px;
+            border: 1px solid #444;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .log-entry {
+            margin: 5px 0;
+            padding: 5px;
+            font-family: monospace;
+            font-size: 12px;
+        }
+        
+        .log-info { color: #4CAF50; }
+        .log-warning { color: #ff9800; }
+        .log-error { color: #f44336; }
+        
+        .refresh-indicator {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid #333;
+            border-top: 2px solid #4CAF50;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-right: 8px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="monitor-container">
+        <h1>🌐 Localtunnel Monitor</h1>
+        <p>Мониторинг всех localtunnel сервисов на сервере</p>
+        
+        <!-- Общая статистика -->
+        <div class="header-stats">
+            <div class="stat-card">
+                <h3 id="total-tunnels">0</h3>
+                <p>Всего туннелей</p>
+            </div>
+            <div class="stat-card">
+                <h3 id="enabled-tunnels">0</h3>
+                <p>Включенных</p>
+            </div>
+            <div class="stat-card">
+                <h3 id="running-tunnels">0</h3>
+                <p>Работающих</p>
+            </div>
+            <div class="stat-card">
+                <h3 id="error-tunnels">0</h3>
+                <p>С ошибками</p>
+            </div>
+        </div>
+        
+        <!-- Панель управления -->
+        <div class="control-panel">
+            <h3>🎮 Управление</h3>
+            <div class="control-buttons">
+                <button id="start-all-btn" class="action-btn primary">Запустить все</button>
+                <button id="stop-all-btn" class="action-btn danger">Остановить все</button>
+                <button id="restart-all-btn" class="action-btn">Перезапустить все</button>
+                <button id="refresh-btn" class="action-btn">
+                    <span id="refresh-icon" class="refresh-indicator"></span>
+                    Обновить
+                </button>
+                <button id="auto-refresh-btn" class="action-btn">Автообновление: ВКЛ</button>
+            </div>
+        </div>
+        
+        <!-- Список туннелей -->
+        <div id="tunnels-container">
+            <h3>🔗 Туннели</h3>
+            <div id="tunnels-grid" class="tunnels-grid">
+                <!-- Туннели будут добавлены динамически -->
+            </div>
+        </div>
+        
+        <!-- Логи -->
+        <div class="log-container">
+            <h3>📋 Логи мониторинга</h3>
+            <div id="log-content">
+                <div class="log-entry log-info">Инициализация мониторинга...</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        class TunnelMonitor {
+            constructor() {
+                this.autoRefresh = true;
+                this.refreshInterval = null;
+                this.init();
+            }
+            
+            init() {
+                this.bindEvents();
+                this.startAutoRefresh();
+                this.loadTunnels();
+            }
+            
+            bindEvents() {
+                document.getElementById('start-all-btn').addEventListener('click', () => this.startAllTunnels());
+                document.getElementById('stop-all-btn').addEventListener('click', () => this.stopAllTunnels());
+                document.getElementById('restart-all-btn').addEventListener('click', () => this.restartAllTunnels());
+                document.getElementById('refresh-btn').addEventListener('click', () => this.loadTunnels());
+                document.getElementById('auto-refresh-btn').addEventListener('click', () => this.toggleAutoRefresh());
+            }
+            
+            async loadTunnels() {
+                try {
+                    this.showRefreshIndicator(true);
+                    
+                    // Загружаем статистику
+                    const statsResponse = await fetch('/api/admin/tunnel_monitor/stats');
+                    const stats = await statsResponse.json();
+                    this.updateStats(stats);
+                    
+                    // Загружаем туннели
+                    const tunnelsResponse = await fetch('/api/admin/tunnel_monitor/tunnels');
+                    const tunnels = await tunnelsResponse.json();
+                    this.updateTunnels(tunnels);
+                    
+                    this.addLog('Данные обновлены', 'info');
+                    
+                } catch (error) {
+                    this.addLog(`Ошибка загрузки: ${error.message}`, 'error');
+                } finally {
+                    this.showRefreshIndicator(false);
+                }
+            }
+            
+            updateStats(stats) {
+                document.getElementById('total-tunnels').textContent = stats.total_tunnels || 0;
+                document.getElementById('enabled-tunnels').textContent = stats.enabled_tunnels || 0;
+                document.getElementById('running-tunnels').textContent = stats.running_tunnels || 0;
+                document.getElementById('error-tunnels').textContent = stats.error_tunnels || 0;
+            }
+            
+            updateTunnels(tunnels) {
+                const container = document.getElementById('tunnels-grid');
+                container.innerHTML = '';
+                
+                if (!tunnels || tunnels.length === 0) {
+                    container.innerHTML = '<p style="color: #ccc; grid-column: 1 / -1; text-align: center;">Туннели не найдены</p>';
+                    return;
+                }
+                
+                tunnels.forEach(tunnel => {
+                    const tunnelCard = this.createTunnelCard(tunnel);
+                    container.appendChild(tunnelCard);
+                });
+            }
+            
+            createTunnelCard(tunnel) {
+                const card = document.createElement('div');
+                card.className = 'tunnel-card';
+                
+                const uptime = this.formatUptime(tunnel.uptime);
+                const lastCheck = new Date(tunnel.last_check * 1000).toLocaleTimeString();
+                
+                card.innerHTML = `
+                    <div class="tunnel-header">
+                        <div class="tunnel-name">${tunnel.name}</div>
+                        <div class="tunnel-status">
+                            <span class="status-indicator status-${tunnel.status}"></span>
+                            <span>${this.getStatusText(tunnel.status)}</span>
+                        </div>
+                    </div>
+                    
+                    <a href="${tunnel.url}" target="_blank" class="tunnel-url">${tunnel.url}</a>
+                    
+                    <div class="tunnel-metrics">
+                        <div class="metric">
+                            <span class="metric-label">Порт:</span>
+                            <span class="metric-value">${tunnel.port}</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Поддомен:</span>
+                            <span class="metric-value">${tunnel.subdomain}</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Время работы:</span>
+                            <span class="metric-value">${uptime}</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Время ответа:</span>
+                            <span class="metric-value">${tunnel.response_time.toFixed(2)}s</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Последняя проверка:</span>
+                            <span class="metric-value">${lastCheck}</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Ошибки:</span>
+                            <span class="metric-value">${tunnel.error_count}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="tunnel-actions">
+                        <button class="action-btn primary" onclick="tunnelMonitor.startTunnel('${tunnel.name}')">Запустить</button>
+                        <button class="action-btn" onclick="tunnelMonitor.restartTunnel('${tunnel.name}')">Перезапустить</button>
+                        <button class="action-btn danger" onclick="tunnelMonitor.stopTunnel('${tunnel.name}')">Остановить</button>
+                    </div>
+                `;
+                
+                return card;
+            }
+            
+            getStatusText(status) {
+                const statusMap = {
+                    'running': 'Работает',
+                    'stopped': 'Остановлен',
+                    'error': 'Ошибка',
+                    'checking': 'Проверка'
+                };
+                return statusMap[status] || status;
+            }
+            
+            formatUptime(seconds) {
+                if (seconds < 60) return `${Math.floor(seconds)}s`;
+                if (seconds < 3600) return `${Math.floor(seconds / 60)}m`;
+                if (seconds < 86400) return `${Math.floor(seconds / 3600)}h`;
+                return `${Math.floor(seconds / 86400)}d`;
+            }
+            
+            async startTunnel(name) {
+                try {
+                    const response = await fetch(`/api/admin/tunnel_monitor/start/${name}`, {
+                        method: 'POST'
+                    });
+                    const result = await response.json();
+                    
+                    if (result.status === 'ok') {
+                        this.addLog(`Туннель ${name} запущен`, 'info');
+                    } else {
+                        this.addLog(`Ошибка запуска ${name}: ${result.message}`, 'error');
+                    }
+                    
+                    this.loadTunnels();
+                } catch (error) {
+                    this.addLog(`Ошибка запуска туннеля: ${error.message}`, 'error');
+                }
+            }
+            
+            async stopTunnel(name) {
+                try {
+                    const response = await fetch(`/api/admin/tunnel_monitor/stop/${name}`, {
+                        method: 'POST'
+                    });
+                    const result = await response.json();
+                    
+                    if (result.status === 'ok') {
+                        this.addLog(`Туннель ${name} остановлен`, 'info');
+                    } else {
+                        this.addLog(`Ошибка остановки ${name}: ${result.message}`, 'error');
+                    }
+                    
+                    this.loadTunnels();
+                } catch (error) {
+                    this.addLog(`Ошибка остановки туннеля: ${error.message}`, 'error');
+                }
+            }
+            
+            async restartTunnel(name) {
+                try {
+                    const response = await fetch(`/api/admin/tunnel_monitor/restart/${name}`, {
+                        method: 'POST'
+                    });
+                    const result = await response.json();
+                    
+                    if (result.status === 'ok') {
+                        this.addLog(`Туннель ${name} перезапущен`, 'info');
+                    } else {
+                        this.addLog(`Ошибка перезапуска ${name}: ${result.message}`, 'error');
+                    }
+                    
+                    this.loadTunnels();
+                } catch (error) {
+                    this.addLog(`Ошибка перезапуска туннеля: ${error.message}`, 'error');
+                }
+            }
+            
+            async startAllTunnels() {
+                try {
+                    const response = await fetch('/api/admin/tunnel_monitor/start_all', {
+                        method: 'POST'
+                    });
+                    const result = await response.json();
+                    
+                    if (result.status === 'ok') {
+                        this.addLog('Все туннели запущены', 'info');
+                    } else {
+                        this.addLog(`Ошибка запуска всех туннелей: ${result.message}`, 'error');
+                    }
+                    
+                    this.loadTunnels();
+                } catch (error) {
+                    this.addLog(`Ошибка запуска всех туннелей: ${error.message}`, 'error');
+                }
+            }
+            
+            async stopAllTunnels() {
+                try {
+                    const response = await fetch('/api/admin/tunnel_monitor/stop_all', {
+                        method: 'POST'
+                    });
+                    const result = await response.json();
+                    
+                    if (result.status === 'ok') {
+                        this.addLog('Все туннели остановлены', 'info');
+                    } else {
+                        this.addLog(`Ошибка остановки всех туннелей: ${result.message}`, 'error');
+                    }
+                    
+                    this.loadTunnels();
+                } catch (error) {
+                    this.addLog(`Ошибка остановки всех туннелей: ${error.message}`, 'error');
+                }
+            }
+            
+            async restartAllTunnels() {
+                try {
+                    const response = await fetch('/api/admin/tunnel_monitor/restart_all', {
+                        method: 'POST'
+                    });
+                    const result = await response.json();
+                    
+                    if (result.status === 'ok') {
+                        this.addLog('Все туннели перезапущены', 'info');
+                    } else {
+                        this.addLog(`Ошибка перезапуска всех туннелей: ${result.message}`, 'error');
+                    }
+                    
+                    this.loadTunnels();
+                } catch (error) {
+                    this.addLog(`Ошибка перезапуска всех туннелей: ${error.message}`, 'error');
+                }
+            }
+            
+            toggleAutoRefresh() {
+                this.autoRefresh = !this.autoRefresh;
+                const btn = document.getElementById('auto-refresh-btn');
+                btn.textContent = `Автообновление: ${this.autoRefresh ? 'ВКЛ' : 'ВЫКЛ'}`;
+                
+                if (this.autoRefresh) {
+                    this.startAutoRefresh();
+                } else {
+                    this.stopAutoRefresh();
+                }
+            }
+            
+            startAutoRefresh() {
+                if (this.refreshInterval) {
+                    clearInterval(this.refreshInterval);
+                }
+                this.refreshInterval = setInterval(() => {
+                    if (this.autoRefresh) {
+                        this.loadTunnels();
+                    }
+                }, 30000); // 30 секунд
+            }
+            
+            stopAutoRefresh() {
+                if (this.refreshInterval) {
+                    clearInterval(this.refreshInterval);
+                    this.refreshInterval = null;
+                }
+            }
+            
+            showRefreshIndicator(show) {
+                const icon = document.getElementById('refresh-icon');
+                icon.style.display = show ? 'inline-block' : 'none';
+            }
+            
+            addLog(message, type = 'info') {
+                const logContent = document.getElementById('log-content');
+                const timestamp = new Date().toLocaleTimeString();
+                const logEntry = document.createElement('div');
+                logEntry.className = `log-entry log-${type}`;
+                logEntry.textContent = `[${timestamp}] ${message}`;
+                
+                logContent.appendChild(logEntry);
+                logContent.scrollTop = logContent.scrollHeight;
+                
+                // Ограничиваем количество логов
+                while (logContent.children.length > 100) {
+                    logContent.removeChild(logContent.firstChild);
+                }
+            }
+        }
+        
+        // Инициализация мониторинга
+        const tunnelMonitor = new TunnelMonitor();
+    </script>
+</body>
+</html> 

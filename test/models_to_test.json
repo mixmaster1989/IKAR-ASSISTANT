@@ -1,0 +1,1842 @@
+[
+  {
+    "name": "ZB-Tech/Text-to-Image",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'text-to-image' (автор: ZB-Tech)"
+  },
+  {
+    "name": "cloudqi/cqi_text_to_image_pt_v0",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'text-to-image' (автор: cloudqi)"
+  },
+  {
+    "name": "sairajg/Text_To_Image",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'text-to-image' (автор: sairajg)"
+  },
+  {
+    "name": "lansinuote/diffusion.4.text_to_image",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'text-to-image' (автор: lansinuote)"
+  },
+  {
+    "name": "blackmariaaa/text-to-image.ai",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'text-to-image' (автор: blackmariaaa)"
+  },
+  {
+    "name": "mhbkb/stable-diffusion-base-2.0-text-to-image-06",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'text-to-image' (автор: mhbkb)"
+  },
+  {
+    "name": "saleharqam/Text-To-Image",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'text-to-image' (автор: saleharqam)"
+  },
+  {
+    "name": "mhbkb/stable-diffusion-base-2.0-text-to-image-1",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'text-to-image' (автор: mhbkb)"
+  },
+  {
+    "name": "kothariyashhh/GenAi-Texttoimage",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'text-to-image' (автор: kothariyashhh)"
+  },
+  {
+    "name": "abdalrahmanshahrour/text-to-image-v2",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'text-to-image' (автор: abdalrahmanshahrour)"
+  },
+  {
+    "name": "ziadaburas/text-to-image-shape",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'text-to-image' (автор: ziadaburas)"
+  },
+  {
+    "name": "lansinuote/diffusion.4.text_to_image.book",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'text-to-image' (автор: lansinuote)"
+  },
+  {
+    "name": "Hamzah-ALQadasi/text-to-image-clip-model",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'text-to-image' (автор: Hamzah-ALQadasi)"
+  },
+  {
+    "name": "samim2024/text-to-image",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'text-to-image' (автор: samim2024)"
+  },
+  {
+    "name": "CompVis/stable-diffusion-v1-4",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'stable-diffusion' (автор: CompVis)"
+  },
+  {
+    "name": "stable-diffusion-v1-5/stable-diffusion-v1-5",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'stable-diffusion' (автор: stable-diffusion-v1-5)"
+  },
+  {
+    "name": "stabilityai/stable-diffusion-xl-base-1.0",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'stable-diffusion' (автор: stabilityai)"
+  },
+  {
+    "name": "stable-diffusion-v1-5/stable-diffusion-inpainting",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'stable-diffusion' (автор: stable-diffusion-v1-5)"
+  },
+  {
+    "name": "CompVis/stable-diffusion-safety-checker",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'stable-diffusion' (автор: CompVis)"
+  },
+  {
+    "name": "stabilityai/stable-diffusion-2-1",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'stable-diffusion' (автор: stabilityai)"
+  },
+  {
+    "name": "crynux-ai/stable-diffusion-v1-5",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'stable-diffusion' (автор: crynux-ai)"
+  },
+  {
+    "name": "diffusers/stable-diffusion-xl-1.0-inpainting-0.1",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'stable-diffusion' (автор: diffusers)"
+  },
+  {
+    "name": "stabilityai/stable-diffusion-xl-refiner-1.0",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'stable-diffusion' (автор: stabilityai)"
+  },
+  {
+    "name": "stabilityai/stable-diffusion-3.5-medium",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'stable-diffusion' (автор: stabilityai)"
+  },
+  {
+    "name": "stabilityai/stable-diffusion-2-1-base",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'stable-diffusion' (автор: stabilityai)"
+  },
+  {
+    "name": "stabilityai/stable-diffusion-2",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'stable-diffusion' (автор: stabilityai)"
+  },
+  {
+    "name": "echarlaix/tiny-random-stable-diffusion-xl",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'stable-diffusion' (автор: echarlaix)"
+  },
+  {
+    "name": "stabilityai/stable-diffusion-2-inpainting",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'stable-diffusion' (автор: stabilityai)"
+  },
+  {
+    "name": "stabilityai/stable-video-diffusion-img2vid-xt",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'stable-diffusion' (автор: stabilityai)"
+  },
+  {
+    "name": "stabilityai/stable-diffusion-2-base",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'stable-diffusion' (автор: stabilityai)"
+  },
+  {
+    "name": "yujiepan/stable-diffusion-3-tiny-random",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'stable-diffusion' (автор: yujiepan)"
+  },
+  {
+    "name": "stabilityai/stable-diffusion-3-medium-diffusers",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'stable-diffusion' (автор: stabilityai)"
+  },
+  {
+    "name": "stabilityai/stable-diffusion-3.5-large",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'stable-diffusion' (автор: stabilityai)"
+  },
+  {
+    "name": "stablediffusionapi/juggernaut-xl-v9",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'stable-diffusion' (автор: stablediffusionapi)"
+  },
+  {
+    "name": "crynux-ai/sdxl-turbo",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'sdxl' (автор: crynux-ai)"
+  },
+  {
+    "name": "stabilityai/sdxl-vae",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'sdxl' (автор: stabilityai)"
+  },
+  {
+    "name": "madebyollin/sdxl-vae-fp16-fix",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'sdxl' (автор: madebyollin)"
+  },
+  {
+    "name": "stabilityai/sdxl-turbo",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'sdxl' (автор: stabilityai)"
+  },
+  {
+    "name": "xinsir/controlnet-union-sdxl-1.0",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'sdxl' (автор: xinsir)"
+  },
+  {
+    "name": "John6666/the-big-x-files-bigxphotodemon-sdxl",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'sdxl' (автор: John6666)"
+  },
+  {
+    "name": "openart-custom/DucHaiten-AIart-SDXL_v3",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'sdxl' (автор: openart-custom)"
+  },
+  {
+    "name": "ByteDance/SDXL-Lightning",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'sdxl' (автор: ByteDance)"
+  },
+  {
+    "name": "frankjoshua/sdxlUnstableDiffusers_v11",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'sdxl' (автор: frankjoshua)"
+  },
+  {
+    "name": "John6666/wai-nsfw-illustrious-v90-sdxl",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'sdxl' (автор: John6666)"
+  },
+  {
+    "name": "monadical-labs/minecraft-skin-generator-sdxl",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'sdxl' (автор: monadical-labs)"
+  },
+  {
+    "name": "John6666/wai-nsfw-illustrious-sdxl-v140-sdxl",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'sdxl' (автор: John6666)"
+  },
+  {
+    "name": "xinsir/controlnet-openpose-sdxl-1.0",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'sdxl' (автор: xinsir)"
+  },
+  {
+    "name": "thibaud/controlnet-openpose-sdxl-1.0",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'sdxl' (автор: thibaud)"
+  },
+  {
+    "name": "latent-consistency/lcm-lora-sdxl",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'sdxl' (автор: latent-consistency)"
+  },
+  {
+    "name": "PixArt-alpha/pixart_sigma_sdxlvae_T5_diffusers",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'sdxl' (автор: PixArt-alpha)"
+  },
+  {
+    "name": "xinsir/controlnet-tile-sdxl-1.0",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'sdxl' (автор: xinsir)"
+  },
+  {
+    "name": "xinsir/controlnet-canny-sdxl-1.0",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'sdxl' (автор: xinsir)"
+  },
+  {
+    "name": "OzzyGT/sdxl-ip-adapter",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'sdxl' (автор: OzzyGT)"
+  },
+  {
+    "name": "diffusers/controlnet-depth-sdxl-1.0",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'sdxl' (автор: diffusers)"
+  },
+  {
+    "name": "Lykon/AAM_XL_AnimeMix",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'anime' (автор: Lykon)"
+  },
+  {
+    "name": "redstonehero/animesh_prunedv21",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'anime' (автор: redstonehero)"
+  },
+  {
+    "name": "Linaqruf/anime-detailer-xl-lora",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'anime' (автор: Linaqruf)"
+  },
+  {
+    "name": "lllyasviel/control_v11p_sd15s2_lineart_anime",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'anime' (автор: lllyasviel)"
+  },
+  {
+    "name": "John6666/erotophilia-real-anime-hybrid-semi-real-illustrious-checkpoint-erotophilia-v30-sdxl",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'anime' (автор: John6666)"
+  },
+  {
+    "name": "Eugeoter/noob-sdxl-controlnet-lineart_anime",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'anime' (автор: Eugeoter)"
+  },
+  {
+    "name": "John6666/kemomimi-core-high-quality-anime-kymara-sdxl",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'anime' (автор: John6666)"
+  },
+  {
+    "name": "John6666/nova-anime-xl-il-v80-sdxl",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'anime' (автор: John6666)"
+  },
+  {
+    "name": "dreamlike-art/dreamlike-anime-1.0",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'anime' (автор: dreamlike-art)"
+  },
+  {
+    "name": "legekka/AI-Anime-Image-Detector-ViT",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'anime' (автор: legekka)"
+  },
+  {
+    "name": "John6666/natural-noob-xl-v-pred-anime-furry-experiment-v30-sdxl",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'anime' (автор: John6666)"
+  },
+  {
+    "name": "litagin/anime-whisper",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'anime' (автор: litagin)"
+  },
+  {
+    "name": "John6666/perfect-rsb-mix-illustrious-real-anime-sfw-nsfw-definitiveepsilon-sdxl",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'anime' (автор: John6666)"
+  },
+  {
+    "name": "yehiaserag/anime-pencil-diffusion",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'anime' (автор: yehiaserag)"
+  },
+  {
+    "name": "UnfilteredAI/NSFW-GEN-ANIME",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'anime' (автор: UnfilteredAI)"
+  },
+  {
+    "name": "FredZhang7/anime-anything-promptgen-v2",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'anime' (автор: FredZhang7)"
+  },
+  {
+    "name": "alvdansen/softserve_anime",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'anime' (автор: alvdansen)"
+  },
+  {
+    "name": "bdsqlsz/stable-diffusion-xl-anime-V5",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'anime' (автор: bdsqlsz)"
+  },
+  {
+    "name": "Andres77872/SmolVLM-500M-anime-caption-v0.2",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'anime' (автор: Andres77872)"
+  },
+  {
+    "name": "NovelAI/nai-anime-v2",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'anime' (автор: NovelAI)"
+  },
+  {
+    "name": "SG161222/Realistic_Vision_V5.1_noVAE",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'realistic' (автор: SG161222)"
+  },
+  {
+    "name": "SG161222/Realistic_Vision_V6.0_B1_noVAE",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'realistic' (автор: SG161222)"
+  },
+  {
+    "name": "stablediffusionapi/realistic-vision-v51",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'realistic' (автор: stablediffusionapi)"
+  },
+  {
+    "name": "SG161222/Realistic_Vision_V3.0_VAE",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'realistic' (автор: SG161222)"
+  },
+  {
+    "name": "TTPlanet/TTPLanet_SDXL_Controlnet_Tile_Realistic",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'realistic' (автор: TTPlanet)"
+  },
+  {
+    "name": "SG161222/Realistic_Vision_V5.0_noVAE",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'realistic' (автор: SG161222)"
+  },
+  {
+    "name": "SG161222/Realistic_Vision_V4.0_noVAE",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'realistic' (автор: SG161222)"
+  },
+  {
+    "name": "GeorgeQi/realisticVisionV13_v13",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'realistic' (автор: GeorgeQi)"
+  },
+  {
+    "name": "Sanster/Realistic_Vision_V1.4-inpainting",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'realistic' (автор: Sanster)"
+  },
+  {
+    "name": "jzli/majicMIX-realistic-7",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'realistic' (автор: jzli)"
+  },
+  {
+    "name": "Uminosachi/realisticVisionV51_v51VAE-inpainting",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'realistic' (автор: Uminosachi)"
+  },
+  {
+    "name": "SG161222/Realistic_Vision_V2.0",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'realistic' (автор: SG161222)"
+  },
+  {
+    "name": "krnl/realisticVisionV51_v51VAE",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'realistic' (автор: krnl)"
+  },
+  {
+    "name": "John6666/ultra-realistic-by-stable-yogi-illus-v10fp16-sdxl",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'realistic' (автор: John6666)"
+  },
+  {
+    "name": "suridov/uber-realistic-porn-merge-urpm_with_files",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'realistic' (автор: suridov)"
+  },
+  {
+    "name": "digiplay/majicMIX_realistic_v7",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'realistic' (автор: digiplay)"
+  },
+  {
+    "name": "ntc-ai/SDXL-LoRA-slider.ultra-realistic-illustration",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'realistic' (автор: ntc-ai)"
+  },
+  {
+    "name": "stereohorse/realistic-vision",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'realistic' (автор: stereohorse)"
+  },
+  {
+    "name": "SG161222/Realistic_Vision_V1.4",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'realistic' (автор: SG161222)"
+  },
+  {
+    "name": "JierongWen/realisticVisionV13_v13_safetensors",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'realistic' (автор: JierongWen)"
+  },
+  {
+    "name": "uriel353/photorealistic-nsfw",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'photorealistic' (автор: uriel353)"
+  },
+  {
+    "name": "John6666/photo-realistic-pony-v5-sdxl",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'photorealistic' (автор: John6666)"
+  },
+  {
+    "name": "prithivMLmods/SD3.5-Large-Photorealistic-LoRA",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'photorealistic' (автор: prithivMLmods)"
+  },
+  {
+    "name": "John6666/photorealistic-rdxl-v1-sdxl",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'photorealistic' (автор: John6666)"
+  },
+  {
+    "name": "ostris/photorealistic-slider-sdxl-lora",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'photorealistic' (автор: ostris)"
+  },
+  {
+    "name": "rappj/photorealistic",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'photorealistic' (автор: rappj)"
+  },
+  {
+    "name": "stablediffusionapi/photorealistic",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'photorealistic' (автор: stablediffusionapi)"
+  },
+  {
+    "name": "Luisdure/photorealistic-skin",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'photorealistic' (автор: Luisdure)"
+  },
+  {
+    "name": "claudfuen/photorealistic-fuen-v1",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'photorealistic' (автор: claudfuen)"
+  },
+  {
+    "name": "VincenzoOrrei/llama3-8b-unsloth-photorealisticprompt-q4km",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'photorealistic' (автор: VincenzoOrrei)"
+  },
+  {
+    "name": "Invincer/Photorealistic_portrait_no-trigger",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'photorealistic' (автор: Invincer)"
+  },
+  {
+    "name": "yolkailtd/photorealistic-new",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'photorealistic' (автор: yolkailtd)"
+  },
+  {
+    "name": "yolkailtd/photorealistic-base",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'photorealistic' (автор: yolkailtd)"
+  },
+  {
+    "name": "Marfuen98/photorealistic-1",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'photorealistic' (автор: Marfuen98)"
+  },
+  {
+    "name": "imagepipeline/RunDiffusion-FX-Photorealistic",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'photorealistic' (автор: imagepipeline)"
+  },
+  {
+    "name": "OnMoon/sdxl_PhotorealisticMix",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'photorealistic' (автор: OnMoon)"
+  },
+  {
+    "name": "soyng/photorealistic-wheel-v1-0",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'photorealistic' (автор: soyng)"
+  },
+  {
+    "name": "ckpt/photorealistic-fuen-v1",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'photorealistic' (автор: ckpt)"
+  },
+  {
+    "name": "ahmmu20/styles_photorealistic_anime",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'photorealistic' (автор: ahmmu20)"
+  },
+  {
+    "name": "JCTN/photorealistic-fuen-v1",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'photorealistic' (автор: JCTN)"
+  },
+  {
+    "name": "piddnad/ddcolor_artistic",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'artistic' (автор: piddnad)"
+  },
+  {
+    "name": "jkang/drawing-artistic-trend-classifier",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'artistic' (автор: jkang)"
+  },
+  {
+    "name": "Yntec/ArtisticVision",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'artistic' (автор: Yntec)"
+  },
+  {
+    "name": "Muhammadreza/mann-e-artistic-4-revised-2",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'artistic' (автор: Muhammadreza)"
+  },
+  {
+    "name": "ajrayman/Artistic_Interests_continuous",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'artistic' (автор: ajrayman)"
+  },
+  {
+    "name": "ajrayman/Artistic_Interests_binary",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'artistic' (автор: ajrayman)"
+  },
+  {
+    "name": "higgsfield/artistic-big-mistral",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'artistic' (автор: higgsfield)"
+  },
+  {
+    "name": "higgsfield/artistic-mistral-1",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'artistic' (автор: higgsfield)"
+  },
+  {
+    "name": "John6666/magnus-anime-more-artistic-anime-v10-sdxl",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'artistic' (автор: John6666)"
+  },
+  {
+    "name": "Muhammadreza/mann-e-artistic-3",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'artistic' (автор: Muhammadreza)"
+  },
+  {
+    "name": "ArtisticCorners/ailouis1-lora",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'artistic' (автор: ArtisticCorners)"
+  },
+  {
+    "name": "John6666/magnus-anime-more-artistic-anime-v20-sdxl",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'artistic' (автор: John6666)"
+  },
+  {
+    "name": "Muhammadreza/mann-e-artistic-1",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'artistic' (автор: Muhammadreza)"
+  },
+  {
+    "name": "Muhammadreza/mann-e-artistic-1-revised-2",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'artistic' (автор: Muhammadreza)"
+  },
+  {
+    "name": "Muhammadreza/mann-e-artistic-2-revised-2",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'artistic' (автор: Muhammadreza)"
+  },
+  {
+    "name": "Muhammadreza/mann-e-artistic-3-revised-2",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'artistic' (автор: Muhammadreza)"
+  },
+  {
+    "name": "Muhammadreza/mann-e-artistic-2",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'artistic' (автор: Muhammadreza)"
+  },
+  {
+    "name": "Muhammadreza/mann-e-artistic-4",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'artistic' (автор: Muhammadreza)"
+  },
+  {
+    "name": "Muhammadreza/mann-e-artistic-1-revised",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'artistic' (автор: Muhammadreza)"
+  },
+  {
+    "name": "Niggendar/artisticpony_gothicponyV10",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'artistic' (автор: Niggendar)"
+  },
+  {
+    "name": "wavymulder/portraitplus",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'portrait' (автор: wavymulder)"
+  },
+  {
+    "name": "strangerzonehf/Flux-Super-Portrait-LoRA",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'portrait' (автор: strangerzonehf)"
+  },
+  {
+    "name": "strangerzonehf/Flux-Smiley-Portrait-LoRA",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'portrait' (автор: strangerzonehf)"
+  },
+  {
+    "name": "prithivMLmods/Castor-3D-Portrait-Flux-LoRA",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'portrait' (автор: prithivMLmods)"
+  },
+  {
+    "name": "SedatAl/flux-portrait-lora",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'portrait' (автор: SedatAl)"
+  },
+  {
+    "name": "John6666/areal-cybercosnoob-portrait-relistic-cosplay-photography-v10-sdxl",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'portrait' (автор: John6666)"
+  },
+  {
+    "name": "John6666/areal-cybercosnoob-portrait-relistic-cosplay-photography-beta-01-opt-sdxl",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'portrait' (автор: John6666)"
+  },
+  {
+    "name": "strangerzonehf/Blaze.1-Portrait",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'portrait' (автор: strangerzonehf)"
+  },
+  {
+    "name": "Keltezaa/mckenna-grace-768-portrait",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'portrait' (автор: Keltezaa)"
+  },
+  {
+    "name": "segmind/portrait-finetuned",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'portrait' (автор: segmind)"
+  },
+  {
+    "name": "strangerzonehf/SD3.5-Turbo-Portrait-LoRA",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'portrait' (автор: strangerzonehf)"
+  },
+  {
+    "name": "glif-loradex-trainer/goldenark__Semi-realistic_anime_portraitsV_0",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'portrait' (автор: glif-loradex-trainer)"
+  },
+  {
+    "name": "John6666/areal-noob-realistic-photography-cosplay-portrait-nsfw-beta-016-cyberfix-sdxl",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'portrait' (автор: John6666)"
+  },
+  {
+    "name": "John6666/areal-cybercosnoob-portrait-relistic-cosplay-photography-beta-01-sdxl",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'portrait' (автор: John6666)"
+  },
+  {
+    "name": "glif-loradex-trainer/saq1b_collage_art_portrait",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'portrait' (автор: glif-loradex-trainer)"
+  },
+  {
+    "name": "Norod78/sd15-caricature-portraits-blip-captions",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'portrait' (автор: Norod78)"
+  },
+  {
+    "name": "ostris/bootlicker-corporate-photos-and-portraits",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'portrait' (автор: ostris)"
+  },
+  {
+    "name": "Kardbord/portraitplus-unsafe",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'portrait' (автор: Kardbord)"
+  },
+  {
+    "name": "Ertoip/rpg-portrait-generator",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'portrait' (автор: Ertoip)"
+  },
+  {
+    "name": "EnD-Diffusers/photography-and-landscapes",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'landscape' (автор: EnD-Diffusers)"
+  },
+  {
+    "name": "Shakker-Labs/FLUX.1-dev-LoRA-Micro-landscape-on-Mobile-Phone",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'landscape' (автор: Shakker-Labs)"
+  },
+  {
+    "name": "Remade-AI/Fantasy-Landscapes",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'landscape' (автор: Remade-AI)"
+  },
+  {
+    "name": "KappaNeuro/vertical-landscapes",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'landscape' (автор: KappaNeuro)"
+  },
+  {
+    "name": "AiWise/Flux-XL-Scenery-and-Landscape-Enhancer",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'landscape' (автор: AiWise)"
+  },
+  {
+    "name": "MirageML/lowpoly-landscape",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'landscape' (автор: MirageML)"
+  },
+  {
+    "name": "digiplay/Landscape_PhotoReal_v1",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'landscape' (автор: digiplay)"
+  },
+  {
+    "name": "Joeythemonster/sci-fi-landscape",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'landscape' (автор: Joeythemonster)"
+  },
+  {
+    "name": "Diko8/cine_landscape",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'landscape' (автор: Diko8)"
+  },
+  {
+    "name": "alkzar90/ppaine-landscape",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'landscape' (автор: alkzar90)"
+  },
+  {
+    "name": "VuDucQuang/landscape-style",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'landscape' (автор: VuDucQuang)"
+  },
+  {
+    "name": "gfalcao/landscape-generator",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'landscape' (автор: gfalcao)"
+  },
+  {
+    "name": "hakurei/waifu-diffusion",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'waifu' (автор: hakurei)"
+  },
+  {
+    "name": "waifu-diffusion/wd-1-5-beta3",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'waifu' (автор: waifu-diffusion)"
+  },
+  {
+    "name": "cafeai/cafe_waifu",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'waifu' (автор: cafeai)"
+  },
+  {
+    "name": "AdamOswald1/Ultima-Waifu-Diffusion",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'waifu' (автор: AdamOswald1)"
+  },
+  {
+    "name": "NoCanGo/WaifuGPT",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'waifu' (автор: NoCanGo)"
+  },
+  {
+    "name": "mradermacher/waifu-7b-v02-GGUF",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'waifu' (автор: mradermacher)"
+  },
+  {
+    "name": "mradermacher/Neural-Dark-Waifu-i1-GGUF",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'waifu' (автор: mradermacher)"
+  },
+  {
+    "name": "mradermacher/Neural-Dark-Waifu-v0.2-i1-GGUF",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'waifu' (автор: mradermacher)"
+  },
+  {
+    "name": "Abdulhanan2006/WaifuAI-L3-8B-8k-gguf",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'waifu' (автор: Abdulhanan2006)"
+  },
+  {
+    "name": "mradermacher/Neural_Waifu_7b_V0.1-i1-GGUF",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'waifu' (автор: mradermacher)"
+  },
+  {
+    "name": "mradermacher/Infinite-Waifu-i1-GGUF",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'waifu' (автор: mradermacher)"
+  },
+  {
+    "name": "mradermacher/gemma-3-waifu-finetune-086-GGUF",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'waifu' (автор: mradermacher)"
+  },
+  {
+    "name": "mradermacher/Neural_Waifu_7b_V0.1-GGUF",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'waifu' (автор: mradermacher)"
+  },
+  {
+    "name": "mradermacher/Dark-Waifu-7b-i1-GGUF",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'waifu' (автор: mradermacher)"
+  },
+  {
+    "name": "mradermacher/random-waifus-4x7b-GGUF",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'waifu' (автор: mradermacher)"
+  },
+  {
+    "name": "mradermacher/Neural-Dark-Waifu-v0.2-GGUF",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'waifu' (автор: mradermacher)"
+  },
+  {
+    "name": "Yntec/WaifuDiffusion",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'waifu' (автор: Yntec)"
+  },
+  {
+    "name": "mradermacher/Neural-Dark-Waifu-GGUF",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'waifu' (автор: mradermacher)"
+  },
+  {
+    "name": "WaifuLuna/LunaLoRa",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'waifu' (автор: WaifuLuna)"
+  },
+  {
+    "name": "Kagerage/wriggly-s-extra-gum-artstyle-waifudiffusion",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'waifu' (автор: Kagerage)"
+  },
+  {
+    "name": "depth-anything/Depth-Anything-V2-Small-hf",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'anything' (автор: depth-anything)"
+  },
+  {
+    "name": "LiheYoung/depth-anything-large-hf",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'anything' (автор: LiheYoung)"
+  },
+  {
+    "name": "depth-anything/Depth-Anything-V2-Base-hf",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'anything' (автор: depth-anything)"
+  },
+  {
+    "name": "depth-anything/Depth-Anything-V2-Large-hf",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'anything' (автор: depth-anything)"
+  },
+  {
+    "name": "depth-anything/Depth-Anything-V2-Large",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'anything' (автор: depth-anything)"
+  },
+  {
+    "name": "depth-anything/Depth-Anything-V2-Base",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'anything' (автор: depth-anything)"
+  },
+  {
+    "name": "LiheYoung/depth-anything-small-hf",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'anything' (автор: LiheYoung)"
+  },
+  {
+    "name": "xyn-ai/anything-v4.0",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'anything' (автор: xyn-ai)"
+  },
+  {
+    "name": "LiheYoung/depth-anything-base-hf",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'anything' (автор: LiheYoung)"
+  },
+  {
+    "name": "depth-anything/Depth-Anything-V2-Small",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'anything' (автор: depth-anything)"
+  },
+  {
+    "name": "LiheYoung/depth_anything_vitl14",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'anything' (автор: LiheYoung)"
+  },
+  {
+    "name": "depth-anything/Depth-Anything-V2-Metric-Indoor-Small-hf",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'anything' (автор: depth-anything)"
+  },
+  {
+    "name": "admruul/anything-v3.0",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'anything' (автор: admruul)"
+  },
+  {
+    "name": "LiheYoung/depth_anything_vitb14",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'anything' (автор: LiheYoung)"
+  },
+  {
+    "name": "ckpt/anything-v4.5-vae-swapped",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'anything' (автор: ckpt)"
+  },
+  {
+    "name": "Xenova/depth-anything-small-hf",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'anything' (автор: Xenova)"
+  },
+  {
+    "name": "LiheYoung/depth_anything_vits14",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'anything' (автор: LiheYoung)"
+  },
+  {
+    "name": "eienmojiki/Anything-XL",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'anything' (автор: eienmojiki)"
+  },
+  {
+    "name": "depth-anything/Depth-Anything-V2-Metric-Outdoor-Large-hf",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'anything' (автор: depth-anything)"
+  },
+  {
+    "name": "stablediffusionapi/anything-v5",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'anything' (автор: stablediffusionapi)"
+  },
+  {
+    "name": "stablediffusionapi/deliberate-v2",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'deliberate' (автор: stablediffusionapi)"
+  },
+  {
+    "name": "Yntec/Deliberate2",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'deliberate' (автор: Yntec)"
+  },
+  {
+    "name": "SdValar/deliberate2",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'deliberate' (автор: SdValar)"
+  },
+  {
+    "name": "Uminosachi/deliberate_v3-inpainting",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'deliberate' (автор: Uminosachi)"
+  },
+  {
+    "name": "Yntec/Deliberate",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'deliberate' (автор: Yntec)"
+  },
+  {
+    "name": "Yntec/DeliberateRemix",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'deliberate' (автор: Yntec)"
+  },
+  {
+    "name": "n0madic/deliberate",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'deliberate' (автор: n0madic)"
+  },
+  {
+    "name": "soren127/Deliberate",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'deliberate' (автор: soren127)"
+  },
+  {
+    "name": "Yntec/DeliberateRealisticWoop",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'deliberate' (автор: Yntec)"
+  },
+  {
+    "name": "stablediffusionapi/deliberate-v3",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'deliberate' (автор: stablediffusionapi)"
+  },
+  {
+    "name": "stablediffusionapi/deliberate-v5",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'deliberate' (автор: stablediffusionapi)"
+  },
+  {
+    "name": "5w4n/deliberate-v2-inpainting",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'deliberate' (автор: 5w4n)"
+  },
+  {
+    "name": "frankjoshua/Deliberate",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'deliberate' (автор: frankjoshua)"
+  },
+  {
+    "name": "GraydientPlatformAPI/deliberate-cyber3",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'deliberate' (автор: GraydientPlatformAPI)"
+  },
+  {
+    "name": "peterwilli/deliberate-2",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'deliberate' (автор: peterwilli)"
+  },
+  {
+    "name": "HusseinHE/hussein-deliberate-1000steps",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'deliberate' (автор: HusseinHE)"
+  },
+  {
+    "name": "Masagin/Deliberate",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'deliberate' (автор: Masagin)"
+  },
+  {
+    "name": "uf/deliberate-v2",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'deliberate' (автор: uf)"
+  },
+  {
+    "name": "8glabs/Deliberate",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'deliberate' (автор: 8glabs)"
+  },
+  {
+    "name": "kejian/deliberate-awr",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'deliberate' (автор: kejian)"
+  },
+  {
+    "name": "dreamlike-art/dreamlike-photoreal-2.0",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'dreamlike' (автор: dreamlike-art)"
+  },
+  {
+    "name": "dreamlike-art/dreamlike-diffusion-1.0",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'dreamlike' (автор: dreamlike-art)"
+  },
+  {
+    "name": "Yntec/DreamLikeRemix",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'dreamlike' (автор: Yntec)"
+  },
+  {
+    "name": "dreamlike-art/dreamlike-photoreal-1.0",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'dreamlike' (автор: dreamlike-art)"
+  },
+  {
+    "name": "Yntec/dreamlike-photoreal-remix",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'dreamlike' (автор: Yntec)"
+  },
+  {
+    "name": "Yntec/Dreamlike",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'dreamlike' (автор: Yntec)"
+  },
+  {
+    "name": "Yntec/DreamlikePhotoReal2",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'dreamlike' (автор: Yntec)"
+  },
+  {
+    "name": "Yntec/DreamlikeDiffusion",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'dreamlike' (автор: Yntec)"
+  },
+  {
+    "name": "xyn-ai/dreamlike-photoreal-2.0",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'dreamlike' (автор: xyn-ai)"
+  },
+  {
+    "name": "parlance/dreamlike-diffusion-1.0-inpainting",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'dreamlike' (автор: parlance)"
+  },
+  {
+    "name": "wsxiaoys/dreamlike-diffusion-1.0-with-safecheck",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'dreamlike' (автор: wsxiaoys)"
+  },
+  {
+    "name": "SicariusSicariiStuff/dreamlike-photoreal-2.0",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'dreamlike' (автор: SicariusSicariiStuff)"
+  },
+  {
+    "name": "PrunaAI/dreamlike-art-dreamlike-photoreal-1.0-turbo-tiny-green-smashed",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'dreamlike' (автор: PrunaAI)"
+  },
+  {
+    "name": "drexmaster00/darnel-dreamlike",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'dreamlike' (автор: drexmaster00)"
+  },
+  {
+    "name": "goliath12/dreamlike-photoreal-2.0",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'dreamlike' (автор: goliath12)"
+  },
+  {
+    "name": "utnasun/textual_inversion_dreamlike-anime",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'dreamlike' (автор: utnasun)"
+  },
+  {
+    "name": "SfinOe/dreamlike_2.0",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'dreamlike' (автор: SfinOe)"
+  },
+  {
+    "name": "jayavibhav/anime-dreamlike",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'dreamlike' (автор: jayavibhav)"
+  },
+  {
+    "name": "PrunaAI/dreamlike-art-dreamlike-photoreal-2.0-turbo-tiny-green-smashed",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'dreamlike' (автор: PrunaAI)"
+  },
+  {
+    "name": "prompthero/openjourney",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'openjourney' (автор: prompthero)"
+  },
+  {
+    "name": "prompthero/openjourney-v4",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'openjourney' (автор: prompthero)"
+  },
+  {
+    "name": "prompthero/openjourney-lora",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'openjourney' (автор: prompthero)"
+  },
+  {
+    "name": "Kardbord/openjourney-unsafe",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'openjourney' (автор: Kardbord)"
+  },
+  {
+    "name": "Sashkanik13/openjourney-text2img-gguf",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'openjourney' (автор: Sashkanik13)"
+  },
+  {
+    "name": "Abhilashvj/openjourney_copy",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'openjourney' (автор: Abhilashvj)"
+  },
+  {
+    "name": "upro/openjourney",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'openjourney' (автор: upro)"
+  },
+  {
+    "name": "pcuenq/coreml-openjourney-v4",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'openjourney' (автор: pcuenq)"
+  },
+  {
+    "name": "ilkerc/openjourney-v2",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'openjourney' (автор: ilkerc)"
+  },
+  {
+    "name": "xyn-ai/openjourney",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'openjourney' (автор: xyn-ai)"
+  },
+  {
+    "name": "PeggyWang/openjourney-v2",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'openjourney' (автор: PeggyWang)"
+  },
+  {
+    "name": "dcolish/coreml-openjourney-v2",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'openjourney' (автор: dcolish)"
+  },
+  {
+    "name": "Dodot/openjourney",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'openjourney' (автор: Dodot)"
+  },
+  {
+    "name": "PrunaAI/prompthero-openjourney-v4-turbo-tiny-green-smashed",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'openjourney' (автор: PrunaAI)"
+  },
+  {
+    "name": "lzyvegetable/openjourney",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'openjourney' (автор: lzyvegetable)"
+  },
+  {
+    "name": "flax/openjourney-v2",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'openjourney' (автор: flax)"
+  },
+  {
+    "name": "TornikeO/openjourney-v4",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'openjourney' (автор: TornikeO)"
+  },
+  {
+    "name": "PrunaAI/prompthero-openjourney-turbo-tiny-green-smashed",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'openjourney' (автор: PrunaAI)"
+  },
+  {
+    "name": "0c3107/openjourney",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'openjourney' (автор: 0c3107)"
+  },
+  {
+    "name": "fhgf/openjourney-kan",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'openjourney' (автор: fhgf)"
+  },
+  {
+    "name": "gsdf/Counterfeit-V2.5",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'counterfeit' (автор: gsdf)"
+  },
+  {
+    "name": "gsdf/CounterfeitXL",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'counterfeit' (автор: gsdf)"
+  },
+  {
+    "name": "gsdf/Counterfeit-V2.0",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'counterfeit' (автор: gsdf)"
+  },
+  {
+    "name": "votepurchase/counterfeitV30_v30",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'counterfeit' (автор: votepurchase)"
+  },
+  {
+    "name": "Kardbord/Counterfeit-V2.5-unsafe",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'counterfeit' (автор: Kardbord)"
+  },
+  {
+    "name": "Nacholmo/Counterfeit-V2.5-vae-swapped",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'counterfeit' (автор: Nacholmo)"
+  },
+  {
+    "name": "gsdf/counterfeit-v1.0",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'counterfeit' (автор: gsdf)"
+  },
+  {
+    "name": "frankjoshua/CounterfeitV3_klf8",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'counterfeit' (автор: frankjoshua)"
+  },
+  {
+    "name": "frankjoshua/counterfeitxl_v10",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'counterfeit' (автор: frankjoshua)"
+  },
+  {
+    "name": "stablediffusionapi/counterfeit-v30",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'counterfeit' (автор: stablediffusionapi)"
+  },
+  {
+    "name": "digiplay/counterfeitV2525d_tweak",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'counterfeit' (автор: digiplay)"
+  },
+  {
+    "name": "John6666/counterfeit-xl-v25-sdxl-spo",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'counterfeit' (автор: John6666)"
+  },
+  {
+    "name": "danbrown/Counterfeit-v3-0",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'counterfeit' (автор: danbrown)"
+  },
+  {
+    "name": "redstonehero/counterfeit-v30-kl-f8-vae",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'counterfeit' (автор: redstonehero)"
+  },
+  {
+    "name": "uf/counterfeit-v3",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'counterfeit' (автор: uf)"
+  },
+  {
+    "name": "hogiahien/counterfeit-v30-edited",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'counterfeit' (автор: hogiahien)"
+  },
+  {
+    "name": "Faber8/Counterfeit-V2.5_fp16-vae-swapped",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'counterfeit' (автор: Faber8)"
+  },
+  {
+    "name": "stablediffusionapi/counterfeit-v20",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'counterfeit' (автор: stablediffusionapi)"
+  },
+  {
+    "name": "handsomesteve/CounterfeitXL",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'counterfeit' (автор: handsomesteve)"
+  },
+  {
+    "name": "zhg/Counterfeit-v2.5",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'counterfeit' (автор: zhg)"
+  },
+  {
+    "name": "Meina/MeinaMix_V11",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'meinamix' (автор: Meina)"
+  },
+  {
+    "name": "Meina/MeinaMix",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'meinamix' (автор: Meina)"
+  },
+  {
+    "name": "digiplay/MeinaMix_v11",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'meinamix' (автор: digiplay)"
+  },
+  {
+    "name": "songkey/meinamix_v12Final",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'meinamix' (автор: songkey)"
+  },
+  {
+    "name": "Meina/MeinaMix_V10",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'meinamix' (автор: Meina)"
+  },
+  {
+    "name": "digiplay/MeinaMix_v7",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'meinamix' (автор: digiplay)"
+  },
+  {
+    "name": "finnstrom3693/meinamix-sd-1.5-v12",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'meinamix' (автор: finnstrom3693)"
+  },
+  {
+    "name": "Enzo3GX/meinamix_meinaV11",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'meinamix' (автор: Enzo3GX)"
+  },
+  {
+    "name": "danbrown/MeinaMix-v9",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'meinamix' (автор: danbrown)"
+  },
+  {
+    "name": "sinkinai/MeinaMix-v10",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'meinamix' (автор: sinkinai)"
+  },
+  {
+    "name": "andro-flock/MeinaMix-V12_-Final",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'meinamix' (автор: andro-flock)"
+  },
+  {
+    "name": "Nacholmo/meinamixv7-diffusers",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'meinamix' (автор: Nacholmo)"
+  },
+  {
+    "name": "stablediffusionapi/meinamix-meinav11",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'meinamix' (автор: stablediffusionapi)"
+  },
+  {
+    "name": "stablediffusionapi/meinamix",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'meinamix' (автор: stablediffusionapi)"
+  },
+  {
+    "name": "dreMaz/meinamix_v12Final",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'meinamix' (автор: dreMaz)"
+  },
+  {
+    "name": "softwareweaver/Meinamix-Olive-Onnx",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'meinamix' (автор: softwareweaver)"
+  },
+  {
+    "name": "kamillaova/MeinaMix",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'meinamix' (автор: kamillaova)"
+  },
+  {
+    "name": "stablediffusionapi/meinamix-sd",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'meinamix' (автор: stablediffusionapi)"
+  },
+  {
+    "name": "stablediffusionapi/meinamix-v12final",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'meinamix' (автор: stablediffusionapi)"
+  },
+  {
+    "name": "stablediffusionapi/chilloutmix",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'chilloutmix' (автор: stablediffusionapi)"
+  },
+  {
+    "name": "digiplay/chilloutmix_NiPrunedFp16Fix",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'chilloutmix' (автор: digiplay)"
+  },
+  {
+    "name": "emilianJR/chilloutmix_NiPrunedFp32Fix",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'chilloutmix' (автор: emilianJR)"
+  },
+  {
+    "name": "windwhinny/chilloutmix",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'chilloutmix' (автор: windwhinny)"
+  },
+  {
+    "name": "Yntec/ChilloutMix",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'chilloutmix' (автор: Yntec)"
+  },
+  {
+    "name": "votepurchase/ChilloutMix",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'chilloutmix' (автор: votepurchase)"
+  },
+  {
+    "name": "mfrashad/chilloutmix_NiPrunedFp32Fix",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'chilloutmix' (автор: mfrashad)"
+  },
+  {
+    "name": "tensor-diffusion/chilloutmix-NI",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'chilloutmix' (автор: tensor-diffusion)"
+  },
+  {
+    "name": "philz1337x/chilloutmix",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'chilloutmix' (автор: philz1337x)"
+  },
+  {
+    "name": "stablediffusionapi/hc-chilloutmixnickpt",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'chilloutmix' (автор: stablediffusionapi)"
+  },
+  {
+    "name": "ckpt/MoS-potter-hermione-thanos-chilloutmix",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'chilloutmix' (автор: ckpt)"
+  },
+  {
+    "name": "HelloSun/chilloutmix_NiPrunedFp32Fix-openvino",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'chilloutmix' (автор: HelloSun)"
+  },
+  {
+    "name": "guyuchao/MixofShow_Fused_ChilloutMix_SixConcepts",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'chilloutmix' (автор: guyuchao)"
+  },
+  {
+    "name": "5w4n/chilloutmix-inpainting",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'chilloutmix' (автор: 5w4n)"
+  },
+  {
+    "name": "NickKolok/ChillOutMix-Ni-pruned-fp32-fix-FC2511737A",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'chilloutmix' (автор: NickKolok)"
+  },
+  {
+    "name": "uf/chilloutmix_NiPrunedFp32Fix",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'chilloutmix' (автор: uf)"
+  },
+  {
+    "name": "stablediffusionapi/chilloutmixsf",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'chilloutmix' (автор: stablediffusionapi)"
+  },
+  {
+    "name": "stablediffusionapi/chillout-mix-appfact",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'chilloutmix' (автор: stablediffusionapi)"
+  },
+  {
+    "name": "SillyL12324/chilloutmix_100ep",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'chilloutmix' (автор: SillyL12324)"
+  },
+  {
+    "name": "ductridev/chilloutmix_NiPrunedFp32Fix",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'chilloutmix' (автор: ductridev)"
+  },
+  {
+    "name": "kandinsky-community/kandinsky-2-2-prior",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'kandinsky' (автор: kandinsky-community)"
+  },
+  {
+    "name": "kandinsky-community/kandinsky-2-2-decoder-inpaint",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'kandinsky' (автор: kandinsky-community)"
+  },
+  {
+    "name": "kandinsky-community/kandinsky-2-2-decoder",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'kandinsky' (автор: kandinsky-community)"
+  },
+  {
+    "name": "kandinsky-community/kandinsky-3",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'kandinsky' (автор: kandinsky-community)"
+  },
+  {
+    "name": "kandinsky-community/kandinsky-2-1",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'kandinsky' (автор: kandinsky-community)"
+  },
+  {
+    "name": "kandinsky-community/kandinsky-2-1-prior",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'kandinsky' (автор: kandinsky-community)"
+  },
+  {
+    "name": "kandinsky-community/kandinsky-2-2-controlnet-depth",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'kandinsky' (автор: kandinsky-community)"
+  },
+  {
+    "name": "kandinsky-community/kandinsky-2-1-inpaint",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'kandinsky' (автор: kandinsky-community)"
+  },
+  {
+    "name": "ai-forever/kandinsky3_controlnet_v2_depth",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'kandinsky' (автор: ai-forever)"
+  },
+  {
+    "name": "glif-loradex-trainer/an303042_Kandinskyan_Chaos_v1",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'kandinsky' (автор: glif-loradex-trainer)"
+  },
+  {
+    "name": "kandinsky-community/kandinsky-2-2-decoder-refiner",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'kandinsky' (автор: kandinsky-community)"
+  },
+  {
+    "name": "ECLIPSE-Community/ECLIPSE_KandinskyV22_Prior",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'kandinsky' (автор: ECLIPSE-Community)"
+  },
+  {
+    "name": "AhmetTek41/kandinskytest",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'kandinsky' (автор: AhmetTek41)"
+  },
+  {
+    "name": "Shaleen123/kandinsky_2.5",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'kandinsky' (автор: Shaleen123)"
+  },
+  {
+    "name": "ai-forever/kandinsky3_ip_adapter",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'kandinsky' (автор: ai-forever)"
+  },
+  {
+    "name": "YiYiXu/kandinsky_prior_pokemon",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'kandinsky' (автор: YiYiXu)"
+  },
+  {
+    "name": "YiYiXu/kandinsky_2.2_decoder_lora_pokemon",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'kandinsky' (автор: YiYiXu)"
+  },
+  {
+    "name": "YiYiXu/pokeman_kandinsky_decoder_lora",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'kandinsky' (автор: YiYiXu)"
+  },
+  {
+    "name": "YiYiXu/pokeman_kandinsky_prior_lora",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'kandinsky' (автор: YiYiXu)"
+  },
+  {
+    "name": "ai-forever/kandinsky-4-v2a",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'kandinsky' (автор: ai-forever)"
+  },
+  {
+    "name": "scenario-labs/Realistic_Vision_V5.1_noVAE",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'realistic-vision' (автор: scenario-labs)"
+  },
+  {
+    "name": "second-state/Realistic_Vision_V6.0_B1-GGUF",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'realistic-vision' (автор: second-state)"
+  },
+  {
+    "name": "stablediffusionapi/realistic-vision-v60",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'realistic-vision' (автор: stablediffusionapi)"
+  },
+  {
+    "name": "stablediffusionapi/realistic-vision-v6.0-b1-inpaint",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'realistic-vision' (автор: stablediffusionapi)"
+  },
+  {
+    "name": "zbmacro/Realistic-Vision-V6.0-B1",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'realistic-vision' (автор: zbmacro)"
+  },
+  {
+    "name": "songkey/realisticVisionV60B1_v51VAE",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'realistic-vision' (автор: songkey)"
+  },
+  {
+    "name": "nitrosocke/redshift-diffusion",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'redshift' (автор: nitrosocke)"
+  },
+  {
+    "name": "BuniRemo/Redshift-WD12-SD14-NAI-FMD_Checkpoint_Merger_-_Hyper-Versatile_Stable_Diffusion_Model",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'redshift' (автор: BuniRemo)"
+  },
+  {
+    "name": "nitrosocke/redshift-diffusion-768",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'redshift' (автор: nitrosocke)"
+  },
+  {
+    "name": "Kardbord/redshift-diffusion-unsafe",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'redshift' (автор: Kardbord)"
+  },
+  {
+    "name": "flax/redshift-diffusion",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'redshift' (автор: flax)"
+  },
+  {
+    "name": "PrunaAI/nitrosocke-redshift-diffusion-turbo-tiny-green-smashed",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'redshift' (автор: PrunaAI)"
+  },
+  {
+    "name": "TheyCallMeHex/Redshift-Diffusion-ONNX",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'redshift' (автор: TheyCallMeHex)"
+  },
+  {
+    "name": "TornikeO/redshift-diffusion-fp16",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'redshift' (автор: TornikeO)"
+  },
+  {
+    "name": "coreml-community/coreml-redshift-diffusion",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'redshift' (автор: coreml-community)"
+  },
+  {
+    "name": "davidmunechika/coreml-redshift-diffusion",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'redshift' (автор: davidmunechika)"
+  },
+  {
+    "name": "PrunaAI/nitrosocke-redshift-diffusion-turbo-green-smashed",
+    "type": "text-to-image",
+    "description": "Найдена через поиск 'redshift' (автор: PrunaAI)"
+  },
+  {
+    "name": "tekoaly4/sievi-nilkkuri-simpletuner-lora",
+    "type": "text-to-image",
+    "description": "Новая модель (добавлена 2025-07-14) (автор: tekoaly4)"
+  },
+  {
+    "name": "tera0711/lora",
+    "type": "text-to-image",
+    "description": "Новая модель (добавлена 2025-07-14) (автор: tera0711)"
+  },
+  {
+    "name": "black-forest-labs/FLUX.1-dev",
+    "type": "text-to-image",
+    "description": "Трендовая модель (10882 лайков) (автор: black-forest-labs)"
+  },
+  {
+    "name": "stabilityai/stable-diffusion-3-medium",
+    "type": "text-to-image",
+    "description": "Трендовая модель (4799 лайков) (автор: stabilityai)"
+  },
+  {
+    "name": "black-forest-labs/FLUX.1-schnell",
+    "type": "text-to-image",
+    "description": "Трендовая модель (4082 лайков) (автор: black-forest-labs)"
+  },
+  {
+    "name": "WarriorMama777/OrangeMixs",
+    "type": "text-to-image",
+    "description": "Трендовая модель (3847 лайков) (автор: WarriorMama777)"
+  },
+  {
+    "name": "deepseek-ai/Janus-Pro-7B",
+    "type": "text-to-image",
+    "description": "Трендовая модель (3455 лайков) (автор: deepseek-ai)"
+  },
+  {
+    "name": "CompVis/stable-diffusion-v-1-4-original",
+    "type": "text-to-image",
+    "description": "Трендовая модель (2807 лайков) (автор: CompVis)"
+  }
+]

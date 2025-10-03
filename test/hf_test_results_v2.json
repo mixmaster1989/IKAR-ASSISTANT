@@ -1,0 +1,647 @@
+[
+  {
+    "model": "stabilityai/stable-diffusion-xl-base-1.0",
+    "type": "text-to-image",
+    "description": "SDXL Base 1.0 - проверенная рабочая модель",
+    "success": true,
+    "prompt": "a beautiful sunset over the ocean, high quality, detailed",
+    "response_time": 4.93349027633667,
+    "image_size": 48767,
+    "image_format": "JPEG",
+    "image_size_px": [
+      512,
+      512
+    ],
+    "error": null
+  },
+  {
+    "model": "stabilityai/sdxl-turbo",
+    "type": "text-to-image",
+    "description": "SDXL Turbo - быстрая генерация",
+    "success": false,
+    "prompt": null,
+    "response_time": null,
+    "image_size": null,
+    "error": "Все промпты не сработали"
+  },
+  {
+    "model": "stabilityai/sdxl-base-0.9",
+    "type": "text-to-image",
+    "description": "SDXL Base 0.9",
+    "success": false,
+    "prompt": null,
+    "response_time": null,
+    "image_size": null,
+    "error": "Все промпты не сработали"
+  },
+  {
+    "model": "stabilityai/sdxl-refiner-0.9",
+    "type": "text-to-image",
+    "description": "SDXL Refiner 0.9",
+    "success": false,
+    "prompt": null,
+    "response_time": null,
+    "image_size": null,
+    "error": "Все промпты не сработали"
+  },
+  {
+    "model": "stabilityai/stable-diffusion-3-medium-diffusers",
+    "type": "text-to-image",
+    "description": "SD3 Medium - новая версия",
+    "success": true,
+    "prompt": "a beautiful sunset over the ocean, high quality, detailed",
+    "response_time": 3.4006690979003906,
+    "image_size": 30916,
+    "image_format": "JPEG",
+    "image_size_px": [
+      512,
+      512
+    ],
+    "error": null
+  },
+  {
+    "model": "stabilityai/stable-diffusion-3-small-diffusers",
+    "type": "text-to-image",
+    "description": "SD3 Small - быстрая версия",
+    "success": false,
+    "prompt": null,
+    "response_time": null,
+    "image_size": null,
+    "error": "Все промпты не сработали"
+  },
+  {
+    "model": "stabilityai/stable-diffusion-3-medium-inpainting",
+    "type": "text-to-image",
+    "description": "SD3 Medium Inpainting",
+    "success": false,
+    "prompt": null,
+    "response_time": null,
+    "image_size": null,
+    "error": "Все промпты не сработали"
+  },
+  {
+    "model": "cagliostrolab/animagine-xl-3.1",
+    "type": "text-to-image",
+    "description": "Animagine XL 3.1 - современное аниме",
+    "success": false,
+    "prompt": null,
+    "response_time": null,
+    "image_size": null,
+    "error": "Все промпты не сработали"
+  },
+  {
+    "model": "cagliostrolab/animagine-xl-3.0",
+    "type": "text-to-image",
+    "description": "Animagine XL 3.0",
+    "success": false,
+    "prompt": null,
+    "response_time": null,
+    "image_size": null,
+    "error": "Все промпты не сработали"
+  },
+  {
+    "model": "cagliostrolab/animagine-xl-2.0",
+    "type": "text-to-image",
+    "description": "Animagine XL 2.0",
+    "success": false,
+    "prompt": null,
+    "response_time": null,
+    "image_size": null,
+    "error": "Все промпты не сработали"
+  },
+  {
+    "model": "cagliostrolab/animagine-xl",
+    "type": "text-to-image",
+    "description": "Animagine XL 1.0",
+    "success": false,
+    "prompt": null,
+    "response_time": null,
+    "image_size": null,
+    "error": "Все промпты не сработали"
+  },
+  {
+    "model": "Linaqruf/anything-v5",
+    "type": "text-to-image",
+    "description": "Anything v5 - аниме",
+    "success": false,
+    "prompt": null,
+    "response_time": null,
+    "image_size": null,
+    "error": "Все промпты не сработали"
+  },
+  {
+    "model": "Linaqruf/anything-v4.0",
+    "type": "text-to-image",
+    "description": "Anything v4.0",
+    "success": false,
+    "prompt": null,
+    "response_time": null,
+    "image_size": null,
+    "error": "Все промпты не сработали"
+  },
+  {
+    "model": "Linaqruf/anything-v3.0",
+    "type": "text-to-image",
+    "description": "Anything v3.0",
+    "success": false,
+    "prompt": null,
+    "response_time": null,
+    "image_size": null,
+    "error": "Все промпты не сработали"
+  },
+  {
+    "model": "SG161222/Realistic_Vision_V5.1_noVAE",
+    "type": "text-to-image",
+    "description": "Realistic Vision V5.1 noVAE",
+    "success": false,
+    "prompt": null,
+    "response_time": null,
+    "image_size": null,
+    "error": "Все промпты не сработали"
+  },
+  {
+    "model": "SG161222/Realistic_Vision_V4.0_noVAE",
+    "type": "text-to-image",
+    "description": "Realistic Vision V4.0 noVAE",
+    "success": false,
+    "prompt": null,
+    "response_time": null,
+    "image_size": null,
+    "error": "Все промпты не сработали"
+  },
+  {
+    "model": "SG161222/Realistic_Vision_V3.0_Full",
+    "type": "text-to-image",
+    "description": "Realistic Vision V3.0 Full",
+    "success": false,
+    "prompt": null,
+    "response_time": null,
+    "image_size": null,
+    "error": "Все промпты не сработали"
+  },
+  {
+    "model": "XpucT/Deliberate-v3",
+    "type": "text-to-image",
+    "description": "Deliberate v3 - художественная модель",
+    "success": false,
+    "prompt": null,
+    "response_time": null,
+    "image_size": null,
+    "error": "Все промпты не сработали"
+  },
+  {
+    "model": "XpucT/Deliberate-v2",
+    "type": "text-to-image",
+    "description": "Deliberate v2",
+    "success": false,
+    "prompt": null,
+    "response_time": null,
+    "image_size": null,
+    "error": "Все промпты не сработали"
+  },
+  {
+    "model": "XpucT/Deliberate",
+    "type": "text-to-image",
+    "description": "Deliberate v1",
+    "success": false,
+    "prompt": null,
+    "response_time": null,
+    "image_size": null,
+    "error": "Все промпты не сработали"
+  },
+  {
+    "model": "dreamlike-art/dreamlike-photoreal-2.0",
+    "type": "text-to-image",
+    "description": "Dreamlike Photoreal 2.0",
+    "success": false,
+    "prompt": null,
+    "response_time": null,
+    "image_size": null,
+    "error": "Все промпты не сработали"
+  },
+  {
+    "model": "dreamlike-art/dreamlike-diffusion-1.0",
+    "type": "text-to-image",
+    "description": "Dreamlike Diffusion 1.0",
+    "success": false,
+    "prompt": null,
+    "response_time": null,
+    "image_size": null,
+    "error": "Все промпты не сработали"
+  },
+  {
+    "model": "dreamlike-art/dreamlike-diffusion-2.0",
+    "type": "text-to-image",
+    "description": "Dreamlike Diffusion 2.0",
+    "success": false,
+    "prompt": null,
+    "response_time": null,
+    "image_size": null,
+    "error": "Все промпты не сработали"
+  },
+  {
+    "model": "prompthero/openjourney-v4",
+    "type": "text-to-image",
+    "description": "Openjourney v4 - стиль Midjourney",
+    "success": false,
+    "prompt": null,
+    "response_time": null,
+    "image_size": null,
+    "error": "Все промпты не сработали"
+  },
+  {
+    "model": "prompthero/openjourney-v2",
+    "type": "text-to-image",
+    "description": "Openjourney v2",
+    "success": false,
+    "prompt": null,
+    "response_time": null,
+    "image_size": null,
+    "error": "Все промпты не сработали"
+  },
+  {
+    "model": "prompthero/openjourney",
+    "type": "text-to-image",
+    "description": "Openjourney v1",
+    "success": false,
+    "prompt": null,
+    "response_time": null,
+    "image_size": null,
+    "error": "Все промпты не сработали"
+  },
+  {
+    "model": "gsdf/Counterfeit-V3.0",
+    "type": "text-to-image",
+    "description": "Counterfeit v3.0 - аниме",
+    "success": false,
+    "prompt": null,
+    "response_time": null,
+    "image_size": null,
+    "error": "Все промпты не сработали"
+  },
+  {
+    "model": "gsdf/Counterfeit-V2.5",
+    "type": "text-to-image",
+    "description": "Counterfeit v2.5",
+    "success": false,
+    "prompt": null,
+    "response_time": null,
+    "image_size": null,
+    "error": "Все промпты не сработали"
+  },
+  {
+    "model": "gsdf/Counterfeit-V2.0",
+    "type": "text-to-image",
+    "description": "Counterfeit v2.0",
+    "success": false,
+    "prompt": null,
+    "response_time": null,
+    "image_size": null,
+    "error": "Все промпты не сработали"
+  },
+  {
+    "model": "Meina/MeinaMix_V11",
+    "type": "text-to-image",
+    "description": "MeinaMix v11 - аниме",
+    "success": false,
+    "prompt": null,
+    "response_time": null,
+    "image_size": null,
+    "error": "Все промпты не сработали"
+  },
+  {
+    "model": "Meina/MeinaMix_V10",
+    "type": "text-to-image",
+    "description": "MeinaMix v10",
+    "success": false,
+    "prompt": null,
+    "response_time": null,
+    "image_size": null,
+    "error": "Все промпты не сработали"
+  },
+  {
+    "model": "Meina/MeinaMix",
+    "type": "text-to-image",
+    "description": "MeinaMix v9",
+    "success": false,
+    "prompt": null,
+    "response_time": null,
+    "image_size": null,
+    "error": "Все промпты не сработали"
+  },
+  {
+    "model": "wavymulder/chilloutmix",
+    "type": "text-to-image",
+    "description": "Chilloutmix - портреты",
+    "success": false,
+    "prompt": null,
+    "response_time": null,
+    "image_size": null,
+    "error": "Все промпты не сработали"
+  },
+  {
+    "model": "wavymulder/chilloutmix-ni",
+    "type": "text-to-image",
+    "description": "Chilloutmix NI",
+    "success": false,
+    "prompt": null,
+    "response_time": null,
+    "image_size": null,
+    "error": "Все промпты не сработали"
+  },
+  {
+    "model": "ai-forever/Kandinsky2.2",
+    "type": "text-to-image",
+    "description": "Kandinsky 2.2 - российская модель",
+    "success": false,
+    "prompt": null,
+    "response_time": null,
+    "image_size": null,
+    "error": "Все промпты не сработали"
+  },
+  {
+    "model": "ai-forever/Kandinsky2.1",
+    "type": "text-to-image",
+    "description": "Kandinsky 2.1",
+    "success": false,
+    "prompt": null,
+    "response_time": null,
+    "image_size": null,
+    "error": "Все промпты не сработали"
+  },
+  {
+    "model": "ai-forever/Kandinsky-2.1",
+    "type": "text-to-image",
+    "description": "Kandinsky 2.1 (альтернативное название)",
+    "success": false,
+    "prompt": null,
+    "response_time": null,
+    "image_size": null,
+    "error": "Все промпты не сработали"
+  },
+  {
+    "model": "stabilityai/stable-diffusion-2-1-base",
+    "type": "text-to-image",
+    "description": "SD 2.1 Base",
+    "success": false,
+    "prompt": null,
+    "response_time": null,
+    "image_size": null,
+    "error": "Все промпты не сработали"
+  },
+  {
+    "model": "stabilityai/stable-diffusion-2-base",
+    "type": "text-to-image",
+    "description": "SD 2.0 Base",
+    "success": false,
+    "prompt": null,
+    "response_time": null,
+    "image_size": null,
+    "error": "Все промпты не сработали"
+  },
+  {
+    "model": "runwayml/stable-diffusion-v1-5",
+    "type": "text-to-image",
+    "description": "RunwayML SD 1.5",
+    "success": false,
+    "prompt": null,
+    "response_time": null,
+    "image_size": null,
+    "error": "Все промпты не сработали"
+  },
+  {
+    "model": "CompVis/stable-diffusion-v1-4",
+    "type": "text-to-image",
+    "description": "CompVis SD 1.4",
+    "success": false,
+    "prompt": null,
+    "response_time": null,
+    "image_size": null,
+    "error": "Все промпты не сработали"
+  },
+  {
+    "model": "hakurei/waifu-diffusion-v1-4",
+    "type": "text-to-image",
+    "description": "Waifu Diffusion v1.4",
+    "success": false,
+    "prompt": null,
+    "response_time": null,
+    "image_size": null,
+    "error": "Все промпты не сработали"
+  },
+  {
+    "model": "hakurei/waifu-diffusion",
+    "type": "text-to-image",
+    "description": "Waifu Diffusion v1.3",
+    "success": false,
+    "prompt": null,
+    "response_time": null,
+    "image_size": null,
+    "error": "Все промпты не сработали"
+  },
+  {
+    "model": "nitrosocke/Ghibli-Diffusion",
+    "type": "text-to-image",
+    "description": "Ghibli Diffusion - аниме стиль",
+    "success": false,
+    "prompt": null,
+    "response_time": null,
+    "image_size": null,
+    "error": "Все промпты не сработали"
+  },
+  {
+    "model": "redstonehero/redshift-diffusion",
+    "type": "text-to-image",
+    "description": "Redshift Diffusion - художественная",
+    "success": false,
+    "prompt": null,
+    "response_time": null,
+    "image_size": null,
+    "error": "Все промпты не сработали"
+  },
+  {
+    "model": "redstonehero/redshift-diffusion-v2",
+    "type": "text-to-image",
+    "description": "Redshift Diffusion v2",
+    "success": false,
+    "prompt": null,
+    "response_time": null,
+    "image_size": null,
+    "error": "Все промпты не сработали"
+  },
+  {
+    "model": "stabilityai/stable-diffusion-2-depth",
+    "type": "text-to-image",
+    "description": "SD2 Depth - с глубиной",
+    "success": false,
+    "prompt": null,
+    "response_time": null,
+    "image_size": null,
+    "error": "Все промпты не сработали"
+  },
+  {
+    "model": "stabilityai/stable-diffusion-2-inpainting",
+    "type": "text-to-image",
+    "description": "SD2 Inpainting - восстановление",
+    "success": false,
+    "prompt": null,
+    "response_time": null,
+    "image_size": null,
+    "error": "Все промпты не сработали"
+  },
+  {
+    "model": "timbrooks/instruct-pix2pix",
+    "type": "text-to-image",
+    "description": "InstructPix2Pix - редактирование",
+    "success": false,
+    "prompt": null,
+    "response_time": null,
+    "image_size": null,
+    "error": "Все промпты не сработали"
+  },
+  {
+    "model": "timbrooks/instruct-pix2pix-216",
+    "type": "text-to-image",
+    "description": "InstructPix2Pix 216",
+    "success": false,
+    "prompt": null,
+    "response_time": null,
+    "image_size": null,
+    "error": "Все промпты не сработали"
+  },
+  {
+    "model": "stabilityai/stable-diffusion-3-small-inpainting",
+    "type": "text-to-image",
+    "description": "SD3 Small Inpainting",
+    "success": false,
+    "prompt": null,
+    "response_time": null,
+    "image_size": null,
+    "error": "Все промпты не сработали"
+  },
+  {
+    "model": "stabilityai/stable-diffusion-xl-refiner-1.0",
+    "type": "text-to-image",
+    "description": "SDXL Refiner 1.0",
+    "success": false,
+    "prompt": null,
+    "response_time": null,
+    "image_size": null,
+    "error": "Все промпты не сработали"
+  },
+  {
+    "model": "WarriorMama777/OrangeMixs",
+    "type": "text-to-image",
+    "description": "AbyssOrangeMix",
+    "success": false,
+    "prompt": null,
+    "response_time": null,
+    "image_size": null,
+    "error": "Все промпты не сработали"
+  },
+  {
+    "model": "WarriorMama777/OrangeMixs_SB",
+    "type": "text-to-image",
+    "description": "AbyssOrangeMix SB",
+    "success": false,
+    "prompt": null,
+    "response_time": null,
+    "image_size": null,
+    "error": "Все промпты не сработали"
+  },
+  {
+    "model": "hakurei/waifu-diffusion-v1-4-e2",
+    "type": "text-to-image",
+    "description": "NovelAI style",
+    "success": false,
+    "prompt": null,
+    "response_time": null,
+    "image_size": null,
+    "error": "Все промпты не сработали"
+  },
+  {
+    "model": "stabilityai/stable-diffusion-3-medium-diffusers",
+    "type": "text-to-image",
+    "description": "SD3 Medium Diffusers",
+    "success": true,
+    "prompt": "a beautiful sunset over the ocean, high quality, detailed",
+    "response_time": 0.26529574394226074,
+    "image_size": 30916,
+    "image_format": "JPEG",
+    "image_size_px": [
+      512,
+      512
+    ],
+    "error": null
+  },
+  {
+    "model": "stabilityai/stable-diffusion-3-small-diffusers",
+    "type": "text-to-image",
+    "description": "SD3 Small Diffusers",
+    "success": false,
+    "prompt": null,
+    "response_time": null,
+    "image_size": null,
+    "error": "Все промпты не сработали"
+  },
+  {
+    "model": "cjwbw/anything-v3.0",
+    "type": "text-to-image",
+    "description": "Anything v3.0 (альтернативная версия)",
+    "success": false,
+    "prompt": null,
+    "response_time": null,
+    "image_size": null,
+    "error": "Все промпты не сработали"
+  },
+  {
+    "model": "cjwbw/anything-v4.0",
+    "type": "text-to-image",
+    "description": "Anything v4.0 (альтернативная версия)",
+    "success": false,
+    "prompt": null,
+    "response_time": null,
+    "image_size": null,
+    "error": "Все промпты не сработали"
+  },
+  {
+    "model": "cjwbw/anything-v5",
+    "type": "text-to-image",
+    "description": "Anything v5 (альтернативная версия)",
+    "success": false,
+    "prompt": null,
+    "response_time": null,
+    "image_size": null,
+    "error": "Все промпты не сработали"
+  },
+  {
+    "model": "cjwbw/realistic-vision-v5.1",
+    "type": "text-to-image",
+    "description": "Realistic Vision v5.1 (альтернативная версия)",
+    "success": false,
+    "prompt": null,
+    "response_time": null,
+    "image_size": null,
+    "error": "Все промпты не сработали"
+  },
+  {
+    "model": "cjwbw/realistic-vision-v4.0",
+    "type": "text-to-image",
+    "description": "Realistic Vision v4.0 (альтернативная версия)",
+    "success": false,
+    "prompt": null,
+    "response_time": null,
+    "image_size": null,
+    "error": "Все промпты не сработали"
+  },
+  {
+    "model": "cjwbw/realistic-vision-v3.0",
+    "type": "text-to-image",
+    "description": "Realistic Vision v3.0 (альтернативная версия)",
+    "success": false,
+    "prompt": null,
+    "response_time": null,
+    "image_size": null,
+    "error": "Все промпты не сработали"
+  }
+]

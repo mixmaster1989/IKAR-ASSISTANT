@@ -1,0 +1,64 @@
+--extra-index-url https://download.pytorch.org/whl/cpu
+
+# FastAPI и веб-сервер
+fastapi>=0.110,<1.0
+uvicorn[standard]>=0.20.0
+python-multipart
+aiofiles
+pydantic>=2.4,<3
+
+# Работа с переменными окружения
+python-dotenv
+
+# HTTP клиент
+aiohttp
+requests
+
+# Работа с данными
+numpy
+pandas
+
+# Машинное обучение и эмбеддинги (упрощено для ассистента)
+# sentence-transformers удалён, torch удалён, transformers оставлен для LLM-клиентов при необходимости
+transformers
+omegaconf
+huggingface_hub>=0.23.0
+
+# Векторная база данных (faiss удален для облегчения установки)
+
+# База данных
+aiosqlite
+
+# LLM интеграция
+tiktoken
+openai>=1.0.0
+
+# Голосовые технологии (бесплатные) - убраны проблемные пакеты
+# rhvoice-wrapper-bin  # Проблемный пакет, занимает много места
+# rhvoice-wrapper-data
+gtts>=2.3.0
+SpeechRecognition
+librosa
+soundfile
+pydub
+
+# Дополнительные утилиты
+Pillow
+
+# Локальный анализ изображений отключён (ultralytics/opencv удалены)
+
+# Криптографические функции для API подписей
+cryptography>=3.4.8
+
+# Дополнительные зависимости для FastAPI
+starlette
+typing-extensions
+
+# Улучшенный парсинг контента (совместимо с Python 3.10)
+trafilatura>=2.0.0,<3
+newspaper3k>=0.2.8
+beautifulsoup4>=4.12.0
+readability-lxml>=0.8.1
+justext>=3.0.0
+nltk>=3.8.0
+json5>=0.9.14
