@@ -1904,6 +1904,8 @@ async def play_showroad_sequence(chat_id: str):
             if isinstance(mid, int):
                 sent_ids.append(mid)
             await asyncio.sleep(4)
+        # Пауза перед удалением, чтобы пользователь успел просмотреть последовательность
+        await asyncio.sleep(5)
         for mid in sent_ids:
             await delete_telegram_message(chat_id, mid)
             await asyncio.sleep(1)
