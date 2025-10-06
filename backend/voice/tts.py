@@ -239,30 +239,10 @@ class TextToSpeech:
     
     def _parse_text_with_actions(self, text: str) -> List[Tuple[str, str]]:
         """
-        Парсит текст, выделяя обычную речь и действия в *.
+        РАНЕЕ: парсили действия в * и резали на части. Теперь отключено — возвращаем единый блок речи.
         """
-        parts = []
-        pattern = r'\*([^*]+)\*'
-        last_end = 0
-        
-        for match in re.finditer(pattern, text):
-            if match.start() > last_end:
-                speech_text = text[last_end:match.start()].strip()
-                if speech_text:
-                    parts.append((speech_text, 'speech'))
-            
-            action_text = match.group(1).strip()
-            if action_text:
-                parts.append((action_text, 'action'))
-            
-            last_end = match.end()
-        
-        if last_end < len(text):
-            remaining_text = text[last_end:].strip()
-            if remaining_text:
-                parts.append((remaining_text, 'speech'))
-        
-        return parts
+        cleaned = text.replace('*', '')
+        return [(cleaned.strip(), 'speech')]
     
     # Удален silero-провайдер
     
@@ -407,29 +387,19 @@ class TextToSpeech:
             logger.info(f"✅ ПРОСТОЕ АУДИО: {output_path}")
             return str(output_path)
         
-        # Создаем аудио для каждой части
-        temp_files = []
-        
-        for i, (part_text, part_type) in enumerate(parts):
-            is_action = (part_type == 'action')
-            
-            if self.use_elevenlabs:
-                audio_path = self._create_elevenlabs_audio(part_text, is_action)
-            elif self.use_rhvoice:
-                audio_path = self._create_rhvoice_audio(part_text, is_action)
-            else:
-                audio_path = self._create_gtts_audio(part_text, is_action)
-            
-            if audio_path:
-                temp_files.append(audio_path)
-        
-        # Объединяем все части
-        if temp_files:
-            self._combine_audio_files(temp_files, str(output_path))
-            logger.info(f"✅ МНОГОСЛОЙНОЕ АУДИО: {output_path}")
+        # Создаем одно аудио без склейки частей
+        if self.use_elevenlabs:
+            audio_path = self._create_elevenlabs_audio(parts[0][0], False)
+        elif self.use_rhvoice:
+            audio_path = self._create_rhvoice_audio(parts[0][0], False)
         else:
-            logger.error("❌ НЕ УДАЛОСЬ СОЗДАТЬ АУДИО ЧАСТИ")
-        
+            audio_path = self._create_gtts_audio(parts[0][0], False)
+        if audio_path and os.path.exists(audio_path):
+            import shutil
+            shutil.move(audio_path, str(output_path))
+            logger.info(f"✅ ОДИНАРНОЕ АУДИО: {output_path}")
+            return str(output_path)
+        logger.error("❌ Не удалось создать аудио")
         return str(output_path)
 
     def _create_elevenlabs_audio_custom(
