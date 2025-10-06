@@ -2362,7 +2362,28 @@ async def parse_and_generate_image(response_text: str, chat_id: str) -> Optional
             except Exception as e:
                 logger.error(f"Ошибка генерации/отправки озвучки: {e}")
         else:
-            logger.info("🎤 SPEAK! JSON не найден, пропускаем TTS")
+            # Fallback: попробуем вытащить SPEAK! даже если парсер вернул пусто
+            import re
+            m = re.search(r'SPEAK!\s*(\{[\s\S]*?\})', response_text, flags=re.IGNORECASE)
+            if m:
+                try:
+                    import json
+                    speak_obj = json.loads(m.group(1))
+                    speak_text = speak_obj.get("text") or ""
+                    tts_dict = speak_obj.get("tts") or {}
+                    if speak_text:
+                        logger.info(f"🎤 Fallback SPEAK найден, запускаем TTS")
+                        tts = TextToSpeech()
+                        audio_path = tts.text_to_speech_with_params(speak_text, tts_dict)
+                        if audio_path and os.path.exists(audio_path):
+                            await send_voice_message(chat_id, audio_path)
+                            cleaned_text = re.sub(r'SPEAK!\s*(\{[\s\S]*?\})', "", cleaned_text, flags=re.IGNORECASE)
+                        else:
+                            logger.error("🎤 Fallback TTS не создал файл")
+                except Exception as _e:
+                    logger.warning(f"🎤 Fallback SPEAK парсинг не удался: {_e}")
+            else:
+                logger.info("🎤 SPEAK! JSON не найден, пропускаем TTS")
 
         cleaned_text = cleaned_text.strip()
         return cleaned_text
