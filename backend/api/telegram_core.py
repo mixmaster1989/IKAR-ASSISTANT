@@ -849,7 +849,7 @@ async def send_telegram_voice(chat_id: str, audio_path: str):
         logger.error(f"Ошибка при отправке голосового сообщения в Telegram: {e}")
 
 async def send_telegram_photo(chat_id: str, photo_path: str, caption: str = None):
-    """Отправляет фотографию в Telegram."""
+    """Отправляет фотографию в Telegram и возвращает message_id при успехе."""
     if not TELEGRAM_CONFIG["token"] or not os.path.exists(photo_path):
         logger.error(f"❌ Не удалось отправить фото: token={'есть' if TELEGRAM_CONFIG['token'] else 'нет'}, файл существует={os.path.exists(photo_path)}")
         return
@@ -870,13 +870,17 @@ async def send_telegram_photo(chat_id: str, photo_path: str, caption: str = None
                     if response.status != 200:
                         error_text = await response.text()
                         logger.error(f"❌ Ошибка отправки фото в Telegram: {response.status} - {error_text}")
+                        return None
                     else:
-                        logger.info(f"🖼️ Фотография отправлена в Telegram (чат: {chat_id})")
+                        resp = await response.json()
+                        mid = resp.get("result", {}).get("message_id")
+                        logger.info(f"🖼️ Фотография отправлена в Telegram (чат: {chat_id}), message_id={mid}")
+                        return mid
     except Exception as e:
         logger.error(f"❌ Ошибка при отправке фотографии в Telegram: {e}")
 
 async def send_telegram_video(chat_id: str, video_path: str, caption: str = None):
-    """Отправляет видео в Telegram."""
+    """Отправляет видео в Telegram и возвращает message_id при успехе."""
     if not TELEGRAM_CONFIG["token"] or not os.path.exists(video_path):
         logger.error(f"❌ Не удалось отправить видео: token={'есть' if TELEGRAM_CONFIG['token'] else 'нет'}, файл существует={os.path.exists(video_path)}")
         return
@@ -897,8 +901,12 @@ async def send_telegram_video(chat_id: str, video_path: str, caption: str = None
                     if response.status != 200:
                         error_text = await response.text()
                         logger.error(f"❌ Ошибка отправки видео в Telegram: {response.status} - {error_text}")
+                        return None
                     else:
-                        logger.info(f"🎬 Видео отправлено в Telegram (чат: {chat_id})")
+                        resp = await response.json()
+                        mid = resp.get("result", {}).get("message_id")
+                        logger.info(f"🎬 Видео отправлено в Telegram (чат: {chat_id}), message_id={mid}")
+                        return mid
     except Exception as e:
         logger.error(f"❌ Ошибка при отправке видео в Telegram: {e}")
 
