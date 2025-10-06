@@ -381,8 +381,8 @@ async def telegram_polling():
                                 else:
                                     await send_telegram_message(chat_id, "Формат: @username Имя", None)
                                 continue
-                            # Если режим сбора имён, игнорируем остальные сообщения
-                            if group_names_mode.get(chat_id) != 'active':
+                            # Если режим сбора имён активен, игнорируем остальные сообщения
+                            if group_names_mode.get(chat_id) == 'active':
                                 continue
                         # Сохраняем текстовые сообщения
                         if "text" in message:
