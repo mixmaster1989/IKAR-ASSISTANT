@@ -246,7 +246,7 @@ def parse_image_json(response_text: str) -> Dict[str, Any]:
             json_str = json_str[:-3]
         json_str = json_str.strip()
         
-        # Используем крутой парсер
+        # Используем крутой парсер (единый детектор) и классифицируем
         json_objects = robust_json_parser(json_str)
         
         if json_objects and len(json_objects) > 0:
@@ -304,16 +304,25 @@ def parse_speak_json(response_text: str) -> Dict[str, Any]:
         if not match:
             logger.warning("🎤 JSON для озвучки не найден ни в одном формате")
             return {}
-        
+
         json_str = match.group(1)
-        # РАННИЙ ФИЛЬТР: если это блок для эмо-видео, не считаем его озвучкой и не логируем как SPEAK
+        # РАННИЙ ФИЛЬТР: игнорируем служебные JSON и невалидные SPEAK
         try:
-            import re as _re2
-            if _re2.search(r'"emotion_video"\s*:', json_str, _re2.IGNORECASE):
-                logger.info("🎤 Пропускаем JSON с emotion_video — это не SPEAK")
+            import json as _json
+            temp_obj = _json.loads(json_str)
+            if not isinstance(temp_obj, dict):
+                return {}
+            if "emotion_video" in temp_obj or "showroad" in temp_obj:
+                logger.info("🎤 Пропускаем служебный JSON (emotion_video/showroad) — это не SPEAK")
+                return {}
+            speak_flag = temp_obj.get("speak") is True
+            speak_text = temp_obj.get("text")
+            if not speak_flag or not isinstance(speak_text, str) or not speak_text.strip():
+                logger.info("🎤 JSON без валидных полей speak/text — пропускаем")
                 return {}
         except Exception:
-            pass
+            # Если не смогли распарсить — не считаем это SPEAK
+            return {}
         logger.info(f"🎤 Найден JSON для озвучки: {json_str[:100]}...")
         
         # Очищаем JSON от лишних символов (как в parse_image_json)
