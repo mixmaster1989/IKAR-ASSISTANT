@@ -250,7 +250,18 @@ def parse_image_json(response_text: str) -> Dict[str, Any]:
         json_objects = robust_json_parser(json_str)
         
         if json_objects and len(json_objects) > 0:
-            return json_objects[0]  # Возвращаем первый найденный объект
+            candidate = json_objects[0]
+            # ФИЛЬТР: если это видео-only блок (только emotion_video) — не считать его изображением
+            try:
+                if isinstance(candidate, dict) and ("emotion_video" in candidate):
+                    # поля, характерные для изображения
+                    image_keys = {"description", "scene", "Сцена", "Фокус", "Стиль", "Цвета"}
+                    if not any(k in candidate and candidate[k] for k in image_keys):
+                        # Тихо игнорируем, чтобы не засорять логи предупреждениями
+                        return {}
+            except Exception:
+                pass
+            return candidate  # Возвращаем первый найденный объект
         
         return {}
         
