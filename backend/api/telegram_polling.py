@@ -411,9 +411,11 @@ async def telegram_polling():
                                     quoted_message_id = reply_to_message.get("message_id")
                                     logger.info(f"🔗 Обнаружено цитирование бота: {quoted_message_id}")
                             
-                            # Триггер "бот" - точное распознавание слова "бот" или цитирование
+                            # Триггер "бот"/обращение к Икар Икарыч
+                            logger.info(f"[ГРУППА {chat_id}] Проверяем триггер Икар Икарыч | quote={is_quote} | text='{message_text[:80]}'")
                             from .group_bot_integration import check_and_handle_bot_trigger
                             bot_triggered = await check_and_handle_bot_trigger(chat_id, message_text, str(from_user), is_quote, quoted_message_id)
+                            logger.info(f"[ГРУППА {chat_id}] Результат триггера: {bot_triggered}")
                             if bot_triggered:
                                 continue
                             
