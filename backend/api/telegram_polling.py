@@ -495,6 +495,17 @@ async def telegram_polling():
                                 content=recognized_text or "[voice]",
                                 timestamp=ts
                             )
+                            # После распознавания прогоняем через тот же смарт-триггер, что и текст
+                            if recognized_text:
+                                try:
+                                    from .group_bot_integration import check_and_handle_bot_trigger
+                                    logger.info(f"[ГРУППА {chat_id}] Проверяем триггер Икар Икарыч (VOICE) | text='{recognized_text[:80]}'")
+                                    bot_triggered = await check_and_handle_bot_trigger(chat_id, recognized_text, str(from_user), False, None)
+                                    logger.info(f"[ГРУППА {chat_id}] Результат триггера (VOICE): {bot_triggered}")
+                                    if bot_triggered:
+                                        continue
+                                except Exception as e:
+                                    logger.error(f"❌ Ошибка триггера для голосового: {e}")
                         continue  # Не отвечаем в группу мгновенно
                     # === КОНЕЦ ГРУППОВОГО ЧАТА ===
 
