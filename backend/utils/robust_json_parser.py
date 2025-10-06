@@ -317,6 +317,10 @@ def parse_speak_json(response_text: str) -> Dict[str, Any]:
             # Исправляем двойные пробелы в тексте
             fixed_json = re.sub(r'"text":\s*"([^"]*?)"', lambda m: f'"text": "{m.group(1).replace("  ", " ")}"', fixed_json)
             result = json.loads(fixed_json)
+            # ФИЛЬТР: игнорируем JSON, предназначенный для видео, если он не содержит явных полей TTS
+            if isinstance(result, dict) and ("emotion_video" in result) and not any(k in result for k in ("text", "tts", "voice")):
+                logger.info("🎤 Игнорируем JSON с emotion_video для SPEAK! (нет полей text/tts/voice)")
+                return {}
             logger.info(f"🎤 Стандартный JSON парсинг успешен: {list(result.keys())}")
             return result
         except Exception as e:
@@ -329,6 +333,10 @@ def parse_speak_json(response_text: str) -> Dict[str, Any]:
             # Возвращаем первый найденный объект
             result = json_objects[0]
             logger.info(f"🎤 Крутой парсер вернул: {list(result.keys())}")
+            # ФИЛЬТР: повторно проверяем на видео-only JSON
+            if isinstance(result, dict) and ("emotion_video" in result) and not any(k in result for k in ("text", "tts", "voice")):
+                logger.info("🎤 Игнорируем JSON с emotion_video для SPEAK! (fallback)")
+                return {}
             
             # Если в результате есть только voice, но нет tts, создаем полную структуру
             if "voice" in result and "tts" not in result:
