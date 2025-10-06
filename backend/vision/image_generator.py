@@ -30,7 +30,7 @@ logger = logging.getLogger(__name__)
 try:
     HF_API_KEY
 except NameError:
-HF_API_KEY = os.environ.get("HF_API_KEY", "")
+    HF_API_KEY = os.environ.get("HF_API_KEY", "")
 
 # Pollinations.ai конфигурация (ОСНОВНОЙ ГЕНЕРАТОР)
 POLLINATIONS_BASE_URL = "https://image.pollinations.ai/prompt"
