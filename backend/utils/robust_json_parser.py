@@ -306,6 +306,14 @@ def parse_speak_json(response_text: str) -> Dict[str, Any]:
             return {}
         
         json_str = match.group(1)
+        # РАННИЙ ФИЛЬТР: если это блок для эмо-видео, не считаем его озвучкой и не логируем как SPEAK
+        try:
+            import re as _re2
+            if _re2.search(r'"emotion_video"\s*:', json_str, _re2.IGNORECASE):
+                logger.info("🎤 Пропускаем JSON с emotion_video — это не SPEAK")
+                return {}
+        except Exception:
+            pass
         logger.info(f"🎤 Найден JSON для озвучки: {json_str[:100]}...")
         
         # Очищаем JSON от лишних символов (как в parse_image_json)
