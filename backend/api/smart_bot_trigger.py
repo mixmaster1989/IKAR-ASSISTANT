@@ -445,6 +445,12 @@ class SmartBotTrigger:
 {{"emotion_video": "название_видео.mp4"}}
 ```
 
+🚗 ПОКАЗ ДОРОГИ ДО ОФИСА (ШЕВЧЕНКО, 76):
+Если пользователь просит показать путь/дорогу до офиса по адресу Шевченко 76 — добавь в конец ответа JSON:
+```json
+{{"showroad": true}}
+```
+
 Ответь как опытный сотрудник компании ИКАР - профессионально и по контексту. Используй память умно, но приоритет у текущего разговора. Можешь помочь с вопросами по автоматизации, кассовой технике, 1С, СБИС, ЭВОТОР, АТОЛ, ЕГАИС, ЧЕСТНЫЙ ЗНАК."""
             
             # Логируем промпты перед отправкой
@@ -493,6 +499,12 @@ class SmartBotTrigger:
                     emotion_video = await self._parse_emotion_video(processed_response, chat_id)
                     if emotion_video:
                         return emotion_video
+
+                    # Проверяем на показ дороги (showroad)
+                    road_triggered = await self._parse_and_run_showroad(processed_response, chat_id)
+                    if road_triggered:
+                        # Возвращаем исходный текст без JSON
+                        return road_triggered
                     
                     return processed_response
                 except Exception as e:
@@ -992,6 +1004,32 @@ SPEAK!{"speak": true, "text": "Хорошо, спасибо!", "tts": {"provider
                 
         except Exception as e:
             logger.error(f"❌ Ошибка обработки эмоционального видео: {e}")
+            return None
+
+    async def _parse_and_run_showroad(self, response: str, chat_id: str) -> Optional[str]:
+        """Ищет JSON {"showroad": true}, запускает показ маршрута и возвращает очищенный текст."""
+        try:
+            import re, json
+            json_pattern = r'```json\s*(\{.*?\})\s*```'
+            match = re.search(json_pattern, response, re.DOTALL | re.IGNORECASE)
+            if not match:
+                return None
+            data = json.loads(match.group(1))
+            if not isinstance(data, dict) or not data.get("showroad"):
+                return None
+            # Убираем JSON из ответа
+            clean_response = re.sub(json_pattern, '', response, flags=re.DOTALL | re.IGNORECASE).strip()
+            # Запускаем показ
+            try:
+                from api.telegram_core import play_showroad_sequence
+                import asyncio
+                asyncio.create_task(play_showroad_sequence(chat_id))
+                logger.info("🚗 Запущен показ маршрута showroad")
+            except Exception as e:
+                logger.error(f"❌ Ошибка запуска showroad: {e}")
+            return clean_response
+        except Exception as e:
+            logger.error(f"❌ Ошибка парсинга showroad: {e}")
             return None
 
     def _create_context_hash(self, context_data: Dict[str, Any]) -> str:

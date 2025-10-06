@@ -1888,6 +1888,28 @@ async def delete_telegram_message(chat_id: str, message_id: int):
         logger.error(f"❌ Исключение при удалении сообщения {message_id} в чате {chat_id}: {e}")
         return False
 
+async def play_showroad_sequence(chat_id: str):
+    """Отправляет 1..5.png из папки showroad с паузой 4с, затем удаляет их по очереди."""
+    try:
+        import asyncio, os
+        base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
+        road_dir = os.path.join(base_dir, "showroad")
+        files = [os.path.join(road_dir, f"{i}.png") for i in range(1, 6)]
+        sent_ids = []
+        for path in files:
+            if not os.path.exists(path):
+                logger.warning(f"showroad: файл не найден: {path}")
+                continue
+            mid = await send_telegram_photo(chat_id, path)
+            if isinstance(mid, int):
+                sent_ids.append(mid)
+            await asyncio.sleep(4)
+        for mid in sent_ids:
+            await delete_telegram_message(chat_id, mid)
+            await asyncio.sleep(1)
+    except Exception as e:
+        logger.error(f"showroad: ошибка последовательности: {e}")
+
 async def send_long_telegram_message(chat_id, text, parse_mode=None):
     """
     Отправляет длинное сообщение в Telegram, разбивая на части по лимиту символов.
