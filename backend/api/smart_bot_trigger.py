@@ -966,9 +966,9 @@ SPEAK!{"speak": true, "text": "Хорошо, спасибо!", "tts": {"provider
                     logger.warning(f"⚠️ Видео не найдено: {video_path}")
                     return clean_response
                 
-                # Отправляем видео
+                # Отправляем видео БЕЗ подписи — текст пойдёт отдельным сообщением
                 from api.telegram_core import send_telegram_video
-                await send_telegram_video(chat_id, video_path, clean_response)
+                await send_telegram_video(chat_id, video_path, None)
                 
                 logger.info(f"🎬 Отправлено эмоциональное видео: {video_name}")
                 return clean_response
