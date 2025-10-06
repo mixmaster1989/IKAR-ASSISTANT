@@ -2430,6 +2430,13 @@ async def _maybe_send_kkt_picture(response_text: str, chat_id: str) -> None:
             (r"эвотор\s*5i\b|\bevotor\s*5i\b|эвотор\s*5i\b", "5i.png"),
             (r"эвотор\s*5\b|\bevotor\s*5\b", "5.jpeg"),
             (r"эвотор\s*power\b|power\s*фр\b|power\b|пауэр\b|пауер\b|фр\b", "power.jpg"),
+            # ATOL / АТОЛ линейка
+            (r"\b(атол|atol)\s*91\s*ф?\b|\b91ф\b", "91.png"),
+            (r"\b(атол|atol)\s*30\s*ф?\b|\b30ф\b", "30.jpeg"),
+            (r"\b(атол|atol)\s*20\s*ф?\b|\b20ф\b", "20.jpeg"),
+            (r"\b(атол|atol)\s*sigma\s*10\b|\bсигма\s*10\b", "sigma10.jpeg"),
+            (r"\b(атол|atol)\s*sigma\s*7\b|\bсигма\s*7\b", "sigma7.jpeg"),
+            (r"\b(атол|atol)\s*sigma\s*8\b|\bсигма\s*8\b", "atol-sigma-8.png"),
         ]
         for pat, filename in patterns:
             if re.search(pat, text, re.IGNORECASE):
