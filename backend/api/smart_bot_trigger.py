@@ -1041,15 +1041,27 @@ SPEAK!{"speak": true, "text": "Хорошо, спасибо!", "tts": {"provider
         """Ищет JSON {"showroad": true}, запускает показ маршрута и возвращает очищенный текст."""
         try:
             import re, json
-            json_pattern = r'```json\s*(\{.*?\})\s*```'
-            match = re.search(json_pattern, response, re.DOTALL | re.IGNORECASE)
-            if not match:
+            # Ищем ВСЕ fenced JSON-блоки и проверяем каждый
+            fenced_pattern = r'```json\s*(\{[\s\S]*?\})\s*```'
+            blocks = re.findall(fenced_pattern, response, flags=re.IGNORECASE)
+            showroad_found = False
+            clean_response = response
+            for blk in blocks:
+                try:
+                    data = json.loads(blk)
+                    if isinstance(data, dict) and data.get("showroad") is True:
+                        showroad_found = True
+                        # Удаляем именно этот блок из текста
+                        clean_response = re.sub(rf"```json\s*{re.escape(blk)}\s*```", '', clean_response, flags=re.IGNORECASE).strip()
+                except Exception:
+                    continue
+            if not showroad_found:
+                # Дополнительно ищем нефенсенный короткий вариант
+                if re.search(r'\{\s*"showroad"\s*:\s*true\s*\}', response, flags=re.IGNORECASE):
+                    showroad_found = True
+                    clean_response = re.sub(r'\{\s*"showroad"\s*:\s*true\s*\}', '', clean_response, flags=re.IGNORECASE).strip()
+            if not showroad_found:
                 return None
-            data = json.loads(match.group(1))
-            if not isinstance(data, dict) or not data.get("showroad"):
-                return None
-            # Убираем JSON из ответа
-            clean_response = re.sub(json_pattern, '', response, flags=re.DOTALL | re.IGNORECASE).strip()
             # Запускаем показ
             try:
                 from api.telegram_core import play_showroad_sequence
