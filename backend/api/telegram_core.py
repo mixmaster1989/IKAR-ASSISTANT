@@ -2269,6 +2269,12 @@ async def parse_and_generate_image(response_text: str, chat_id: str) -> Optional
             # Также удаляем нефенсенный одиночный JSON, если он состоит только из showroad/emotion_video
             sanitized_text = _re.sub(r"\{\s*\"showroad\"\s*:\s*true\s*\}", "", sanitized_text, flags=_re.IGNORECASE)
             sanitized_text = _re.sub(r"\{\s*\"emotion_video\"\s*:\s*\"[^\"]+\"\s*\}", "", sanitized_text, flags=_re.IGNORECASE)
+            # НОВОЕ: параллельно проверяем упоминания моделей Эвотор и отправляем соответствующее изображение
+            try:
+                import asyncio as _asyncio
+                _asyncio.create_task(_maybe_send_kkt_picture(original_text, chat_id))
+            except Exception as _e:
+                logger.warning(f"kktpictures: не удалось запустить отправку изображения: {_e}")
             if sanitized_text != original_text:
                 logger.info("🧹 Удалены служебные JSON-блоки (showroad/emotion_video) без обрезки текста")
             logger.info("🔍 Ни IMAGE JSON, ни SPEAK JSON не найдены — возвращаем очищенный текст")
@@ -2386,8 +2392,53 @@ async def parse_and_generate_image(response_text: str, chat_id: str) -> Optional
                 logger.info("🎤 SPEAK! JSON не найден, пропускаем TTS")
 
         cleaned_text = cleaned_text.strip()
+        # НОВОЕ: проверяем упоминания моделей Эвотор и отправляем изображение (не изменяя текст)
+        try:
+            import asyncio as _asyncio
+            _asyncio.create_task(_maybe_send_kkt_picture(response_text, chat_id))
+        except Exception as _e:
+            logger.warning(f"kktpictures: не удалось запустить отправку изображения: {_e}")
         return cleaned_text
         
     except Exception as e:
         logger.error(f"Ошибка обработки изображения: {e}")
         return response_text
+
+
+async def _maybe_send_kkt_picture(response_text: str, chat_id: str) -> None:
+    """Проверяет упоминания моделей Эвотор в тексте и отправляет подходящее фото из kktpictures.
+
+    Поддерживаемые соответствия:
+      - Эвотор 10 -> kktpictures/10.jpeg
+      - Эвотор 7.3 -> kktpictures/7.3.png
+      - Эвотор 7.2 -> kktpictures/7.2.jpeg
+      - Эвотор 6 -> kktpictures/6.jpeg
+      - Эвотор 5i -> kktpictures/5i.png
+      - Эвотор 5 -> kktpictures/5.jpeg
+      - Эвотор Power (ФР) -> kktpictures/power.jpg
+    Отправляется первая найденная релевантная картинка.
+    """
+    try:
+        import os, re
+        base_dir = "/root/IKAR-ASSISTANT/kktpictures"
+        text = response_text.lower()
+        patterns = [
+            (r"эвотор\s*10\b|\bevotor\s*10\b|\bэватор\s*10\b", "10.jpeg"),
+            (r"эвотор\s*7\s*[\.-]?\s*3\b|\bevotor\s*7\s*[\.-]?\s*3\b", "7.3.png"),
+            (r"эвотор\s*7\s*[\.-]?\s*2\b|\bevotor\s*7\s*[\.-]?\s*2\b", "7.2.jpeg"),
+            (r"эвотор\s*6\b|\bevotor\s*6\b", "6.jpeg"),
+            (r"эвотор\s*5i\b|\bevotor\s*5i\b|эвотор\s*5i\b", "5i.png"),
+            (r"эвотор\s*5\b|\bevotor\s*5\b", "5.jpeg"),
+            (r"эвотор\s*power\b|power\s*фр\b|power\b|пауэр\b|пауер\b|фр\b", "power.jpg"),
+        ]
+        for pat, filename in patterns:
+            if re.search(pat, text, re.IGNORECASE):
+                path = os.path.join(base_dir, filename)
+                if os.path.exists(path):
+                    logger.info(f"kktpictures: отправляем изображение модели: {filename}")
+                    await send_telegram_photo(chat_id, path)
+                else:
+                    logger.warning(f"kktpictures: файл не найден: {path}")
+                break
+    except Exception as e:
+        logger.error(f"kktpictures: ошибка отправки изображения: {e}")
