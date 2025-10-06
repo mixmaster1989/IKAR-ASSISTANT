@@ -2438,14 +2438,29 @@ async def _maybe_send_kkt_picture(response_text: str, chat_id: str) -> None:
             (r"\b(атол|atol)\s*sigma\s*7\b|\bсигма\s*7\b", "sigma7.jpeg"),
             (r"\b(атол|atol)\s*sigma\s*8\b|\bсигма\s*8\b", "atol-sigma-8.png"),
         ]
+        # Собираем ВСЕ совпадения с позицией появления
+        hits = []  # (pos, filename)
         for pat, filename in patterns:
-            if re.search(pat, text, re.IGNORECASE):
-                path = os.path.join(base_dir, filename)
-                if os.path.exists(path):
-                    logger.info(f"kktpictures: отправляем изображение модели: {filename}")
-                    await send_telegram_photo(chat_id, path)
-                else:
-                    logger.warning(f"kktpictures: файл не найден: {path}")
+            for m in re.finditer(pat, text, re.IGNORECASE):
+                hits.append((m.start(), filename))
+        if not hits:
+            return
+        # Сортируем по позиции, берём до двух уникальных файлов
+        hits.sort(key=lambda x: x[0])
+        sent = set()
+        to_send = []
+        for _, fname in hits:
+            if fname not in sent:
+                to_send.append(fname)
+                sent.add(fname)
+            if len(to_send) >= 2:
                 break
+        for fname in to_send:
+            path = os.path.join(base_dir, fname)
+            if os.path.exists(path):
+                logger.info(f"kktpictures: отправляем изображение модели: {fname}")
+                await send_telegram_photo(chat_id, path)
+            else:
+                logger.warning(f"kktpictures: файл не найден: {path}")
     except Exception as e:
         logger.error(f"kktpictures: ошибка отправки изображения: {e}")
