@@ -1906,8 +1906,10 @@ async def play_showroad_sequence(chat_id: str):
             await asyncio.sleep(4)
         # Пауза перед удалением, чтобы пользователь успел просмотреть последовательность
         await asyncio.sleep(5)
+        logger.info(f"showroad: начинаю удаление {len(sent_ids)} сообщений: {sent_ids}")
         for mid in sent_ids:
-            await delete_telegram_message(chat_id, mid)
+            ok = await delete_telegram_message(chat_id, mid)
+            logger.info(f"showroad: удаление message_id={mid} -> {'OK' if ok else 'FAIL'}")
             await asyncio.sleep(1)
     except Exception as e:
         logger.error(f"showroad: ошибка последовательности: {e}")
