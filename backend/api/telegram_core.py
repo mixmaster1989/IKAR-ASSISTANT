@@ -1901,8 +1901,12 @@ async def play_showroad_sequence(chat_id: str):
                 logger.warning(f"showroad: файл не найден: {path}")
                 continue
             mid = await send_telegram_photo(chat_id, path)
-            if isinstance(mid, int):
-                sent_ids.append(mid)
+            # На некоторых маршрутах message_id может прийти строкой — приводим к int
+            if mid is not None:
+                try:
+                    sent_ids.append(int(mid))
+                except Exception:
+                    logger.warning(f"showroad: неожиданный тип message_id: {type(mid)} | значение={mid}")
             await asyncio.sleep(4)
         # Пауза перед удалением, чтобы пользователь успел просмотреть последовательность
         await asyncio.sleep(5)
