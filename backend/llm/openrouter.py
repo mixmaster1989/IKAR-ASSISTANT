@@ -57,8 +57,9 @@ class OpenRouterClient:
 
         # Если в конфиге явно указана модель/температура/макс.токены — используем их,
         # иначе применяем значения согласно требованиям.
-        self.default_model = llm_cfg.get("model", "x-ai/grok-4-fast:free")  # Рабочая модель
-        self.fallback_model = llm_cfg.get("fallback_model", "deepseek/deepseek-chat-v3.1:free")
+        # По умолчанию используем DeepSeek как основную модель, OpenAI GPT-OSS как fallback
+        self.default_model = llm_cfg.get("model", "deepseek/deepseek-chat-v3.1:free")
+        self.fallback_model = llm_cfg.get("fallback_model", "openai/gpt-oss-20b:free")
         self.max_tokens = llm_cfg.get("max_tokens", 200000)  # Согласно требованиям
         self.temperature = llm_cfg.get("temperature", 0.6)    # Согласно требованиям
         
