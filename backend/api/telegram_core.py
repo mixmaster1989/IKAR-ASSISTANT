@@ -2260,23 +2260,19 @@ async def parse_and_generate_image(response_text: str, chat_id: str) -> Optional
         logger.info(f"🔍 SPEAK! JSON результат: {speak_params}")
 
         if not image_data and not speak_params:
-            # Даже если JSON не найден — подчистим возможные хвосты SPEAK!/параметров в конце
+            # Мягкая очистка: удаляем только markdown JSON-блоки с служебными инструкциями, не трогая остальной текст
             import re as _re
             original_text = response_text
             sanitized_text = original_text
-            # Срезаем всё от SPEAK! и до конца
-            sanitized_text = _re.sub(r'SPEAK![\s\S]*$', "", sanitized_text, flags=_re.IGNORECASE)
-            # Сигнатуры возможных хвостов параметров ElevenLabs (если выпали без префикса SPEAK!)
-            tail_keys = [
-                'model_id', 'output_format', 'stability',
-                'similarity_boost', 'style', 'use_speaker_boost'
-            ]
-            for key in tail_keys:
-                sanitized_text = _re.sub(rf',\s*"{key}"\s*:[\s\S]*$', "", sanitized_text, flags=_re.IGNORECASE)
+            # Удаляем fenced ```json {...} блоки с showroad/emotion_video
+            sanitized_text = _re.sub(r"```json\s*\{[^`]*?\}\s*```", lambda m: "" if ("showroad" in m.group(0).lower() or "emotion_video" in m.group(0).lower()) else m.group(0), sanitized_text, flags=_re.IGNORECASE)
+            # Также удаляем нефенсенный одиночный JSON, если он состоит только из showroad/emotion_video
+            sanitized_text = _re.sub(r"\{\s*\"showroad\"\s*:\s*true\s*\}", "", sanitized_text, flags=_re.IGNORECASE)
+            sanitized_text = _re.sub(r"\{\s*\"emotion_video\"\s*:\s*\"[^\"]+\"\s*\}", "", sanitized_text, flags=_re.IGNORECASE)
             if sanitized_text != original_text:
-                logger.info(f"🧹 Обрезан хвост TTS-параметров. Было: '{original_text[-120:]}' → Стало: '{sanitized_text[-120:]}'")
+                logger.info("🧹 Удалены служебные JSON-блоки (showroad/emotion_video) без обрезки текста")
             logger.info("🔍 Ни IMAGE JSON, ни SPEAK JSON не найдены — возвращаем очищенный текст")
-            return sanitized_text
+            return sanitized_text.strip()
         
         logger.info(f"🎨 Крутой парсер нашел JSON: {list(image_data.keys())}")
         
