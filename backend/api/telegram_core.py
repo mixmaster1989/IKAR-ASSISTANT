@@ -875,6 +875,33 @@ async def send_telegram_photo(chat_id: str, photo_path: str, caption: str = None
     except Exception as e:
         logger.error(f"❌ Ошибка при отправке фотографии в Telegram: {e}")
 
+async def send_telegram_video(chat_id: str, video_path: str, caption: str = None):
+    """Отправляет видео в Telegram."""
+    if not TELEGRAM_CONFIG["token"] or not os.path.exists(video_path):
+        logger.error(f"❌ Не удалось отправить видео: token={'есть' if TELEGRAM_CONFIG['token'] else 'нет'}, файл существует={os.path.exists(video_path)}")
+        return
+    
+    url = f"https://api.telegram.org/bot{TELEGRAM_CONFIG['token']}/sendVideo"
+    
+    try:
+        with open(video_path, 'rb') as video_file:
+            data = aiohttp.FormData()
+            data.add_field('chat_id', chat_id)
+            data.add_field('video', video_file, filename=os.path.basename(video_path))
+            
+            if caption:
+                data.add_field('caption', caption)
+            
+            async with aiohttp.ClientSession() as session:
+                async with session.post(url, data=data) as response:
+                    if response.status != 200:
+                        error_text = await response.text()
+                        logger.error(f"❌ Ошибка отправки видео в Telegram: {response.status} - {error_text}")
+                    else:
+                        logger.info(f"🎬 Видео отправлено в Telegram (чат: {chat_id})")
+    except Exception as e:
+        logger.error(f"❌ Ошибка при отправке видео в Telegram: {e}")
+
 async def send_telegram_document(chat_id: str, file_path: str, filename: str = None) -> bool:
     """Отправляет документ в Telegram."""
     if not TELEGRAM_CONFIG["token"] or not os.path.exists(file_path):
