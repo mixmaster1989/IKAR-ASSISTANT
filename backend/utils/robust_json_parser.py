@@ -277,6 +277,10 @@ def parse_speak_json(response_text: str) -> Dict[str, Any]:
     """
     try:
         import re
+        # Нормализация невидимых пробелов и zero-width символов, которые ломают регексы
+        invisible = "\u00A0\u200B\u200C\u200D\u2060"
+        response_text = re.sub(f"[{invisible}]", " ", response_text)
+        response_text = re.sub(r"[ \t\f\r\v]+", " ", response_text)
         # 1. Сначала ищем JSON с SPEAK! (улучшенный паттерн для длинных текстов)
         speak_pattern = r'SPEAK!\s*(\{(?:[^{}]|(?:\{[^{}]*\}[^{}]*))*\})'
         match = re.search(speak_pattern, response_text, re.IGNORECASE | re.DOTALL)
@@ -306,13 +310,13 @@ def parse_speak_json(response_text: str) -> Dict[str, Any]:
             return {}
 
         json_str = match.group(1)
-        # РАННИЙ ФИЛЬТР: игнорируем служебные JSON и невалидные SPEAK
+        # РАННИЙ ФИЛЬТР: аккуратно валидируем, не отбрасывая при первом промахе
         try:
             import json as _json
             temp_obj = _json.loads(json_str)
             if not isinstance(temp_obj, dict):
                 return {}
-            if "emotion_video" in temp_obj or "showroad" in temp_obj:
+            if "emotion_video" in temp_obj or ("showroad" in temp_obj and temp_obj.get("showroad") is True):
                 logger.info("🎤 Пропускаем служебный JSON (emotion_video/showroad) — это не SPEAK")
                 return {}
             speak_flag = temp_obj.get("speak") is True
@@ -321,8 +325,8 @@ def parse_speak_json(response_text: str) -> Dict[str, Any]:
                 logger.info("🎤 JSON без валидных полей speak/text — пропускаем")
                 return {}
         except Exception:
-            # Если не смогли распарсить — не считаем это SPEAK
-            return {}
+            # Продолжим попытки ниже (не отбрасываем сразу)
+            pass
         logger.info(f"🎤 Найден JSON для озвучки: {json_str[:100]}...")
         
         # Очищаем JSON от лишних символов (как в parse_image_json)
@@ -339,13 +343,13 @@ def parse_speak_json(response_text: str) -> Dict[str, Any]:
         # СНАЧАЛА пробуем стандартный JSON парсер
         try:
             import json
-            import re
+            import re as _re
             # Исправляем JSON более радикально для длинных текстов
             fixed_json = json_str.replace('\n', '\\n').replace('\r', '\\r').replace('\t', '\\t')
             # Исправляем двойные пробелы в тексте
-            fixed_json = re.sub(r'"text":\s*"([^"]*?)"', lambda m: f'"text": "{m.group(1).replace("  ", " ")}"', fixed_json)
-            # Убираем лишние кавычки и экранируем специальные символы
-            fixed_json = re.sub(r'\\+', '\\', fixed_json)  # Убираем двойные слеши
+            fixed_json = _re.sub(r'"text":\s*"([^"]*?)"', lambda m: f'"text": "{m.group(1).replace("  ", " ")}"', fixed_json)
+            # Убираем лишние экранирования
+            fixed_json = _re.sub(r'\\+(?=["/\\])', r'\\', fixed_json)
             result = json.loads(fixed_json)
             # ФИЛЬТР: игнорируем JSON, предназначенный для видео, если он не содержит явных полей TTS
             if isinstance(result, dict) and ("emotion_video" in result) and not any(k in result for k in ("text", "tts", "voice")):
@@ -355,8 +359,7 @@ def parse_speak_json(response_text: str) -> Dict[str, Any]:
             return result
         except Exception as e:
             logger.warning(f"🎤 Стандартный JSON парсинг не сработал: {e}")
-        
-        # Fallback: используем крутой парсер
+        # Fallback: используем крутой парсер на исходной подстроке
         json_objects = robust_json_parser(json_str)
         
         if json_objects and len(json_objects) > 0:
