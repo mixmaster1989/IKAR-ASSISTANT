@@ -35,6 +35,7 @@ def get_all_openrouter_keys() -> List[str]:
     """
     Динамически собирает все доступные OpenRouter API ключи из переменных окружения.
     Поддерживает любые имена переменных, начинающиеся с OPENROUTER_API_KEY.
+    Собирает ключи по номерам: OPENROUTER_API_KEY, OPENROUTER_API_KEY1, OPENROUTER_API_KEY2, и т.д.
     """
     keys = []
     
@@ -43,24 +44,19 @@ def get_all_openrouter_keys() -> List[str]:
     if main_key and main_key != "your_openrouter_api_key":
         keys.append(main_key)
     
-    # Затем сканируем все переменные окружения
-    for key, value in os.environ.items():
-        if key.startswith("OPENROUTER_API_KEY") and key != "OPENROUTER_API_KEY":
-            if value and value != "your_openrouter_api_key":
-                keys.append(value)
+    # Затем ищем ключи по номерам (1, 2, 3, ...)
+    i = 1
+    while True:
+        key_name = f"OPENROUTER_API_KEY{i}"
+        key_value = os.environ.get(key_name, "")
+        if key_value and key_value != "your_openrouter_api_key":
+            keys.append(key_value)
+            i += 1
+        else:
+            # Если ключ не найден, прекращаем поиск
+            break
     
-    # Сортируем ключи для стабильности (основной ключ всегда первый)
-    sorted_keys = []
-    if main_key and main_key != "your_openrouter_api_key":
-        sorted_keys.append(main_key)
-    
-    # Добавляем остальные ключи в алфавитном порядке
-    other_keys = [value for key, value in os.environ.items() 
-                  if key.startswith("OPENROUTER_API_KEY") and key != "OPENROUTER_API_KEY"
-                  and value and value != "your_openrouter_api_key"]
-    sorted_keys.extend(sorted(other_keys))
-    
-    return sorted_keys
+    return keys
 
 # Получаем все доступные ключи
 OPENROUTER_API_KEYS = get_all_openrouter_keys()
