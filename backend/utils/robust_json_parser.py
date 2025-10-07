@@ -281,35 +281,40 @@ def parse_speak_json(response_text: str) -> Dict[str, Any]:
         invisible = "\u00A0\u200B\u200C\u200D\u2060"
         response_text = re.sub(f"[{invisible}]", " ", response_text)
         response_text = re.sub(r"[ \t\f\r\v]+", " ", response_text)
-        # 1. Сначала ищем JSON с SPEAK! (улучшенный паттерн для длинных текстов)
-        speak_pattern = r'SPEAK!\s*(\{(?:[^{}]|(?:\{[^{}]*\}[^{}]*))*\})'
-        match = re.search(speak_pattern, response_text, re.IGNORECASE | re.DOTALL)
-        
-        if not match:
-            # 2. Fallback: ищем простой JSON с SPEAK! (для коротких)
-            simple_pattern = r'SPEAK!\s*(\{.*?\})'
-            match = re.search(simple_pattern, response_text, re.IGNORECASE | re.DOTALL)
-            
-        if not match:
-            # 3. НОВЫЙ: ищем JSON в markdown блоках (без префикса SPEAK!)
-            markdown_pattern = r'```json\s*(\{(?:[^{}]|(?:\{[^{}]*\}[^{}]*))*\})'
-            match = re.search(markdown_pattern, response_text, re.IGNORECASE | re.DOTALL)
-            
-        if not match:
-            # 4. Fallback: ищем любой JSON блок в markdown
-            any_markdown_pattern = r'```\s*(\{(?:[^{}]|(?:\{[^{}]*\}[^{}]*))*\})'
-            match = re.search(any_markdown_pattern, response_text, re.IGNORECASE | re.DOTALL)
-            
-        if not match:
-            # 5. Последний шанс: ищем JSON без markdown
-            json_pattern = r'(\{(?:[^{}]|(?:\{[^{}]*\}[^{}]*))*\})'
-            match = re.search(json_pattern, response_text, re.IGNORECASE | re.DOTALL)
-            
-        if not match:
+        # 1. Пытаемся найти метку SPEAK! и извлечь балансный JSON после неё
+        speak_pos = response_text.lower().find('speak!')
+        json_str = None
+        if speak_pos != -1:
+            # Ищем первую '{' после SPEAK!
+            brace_pos = response_text.find('{', speak_pos)
+            if brace_pos != -1:
+                # Используем балансный извлекатель на срезе, начинающемся с '{'
+                candidate = _extract_first_balanced_json(response_text[brace_pos:])
+                if candidate and candidate.strip().startswith('{'):
+                    json_str = candidate
+
+        # 2. Если не удалось — пробуем регексы (как раньше)
+        if not json_str:
+            speak_pattern = r'SPEAK!\s*(\{(?:[^{}]|(?:\{[^{}]*\}[^{}]*))*\})'
+            match = re.search(speak_pattern, response_text, re.IGNORECASE | re.DOTALL)
+            if not match:
+                simple_pattern = r'SPEAK!\s*(\{.*?\})'
+                match = re.search(simple_pattern, response_text, re.IGNORECASE | re.DOTALL)
+            if not match:
+                markdown_pattern = r'```json\s*(\{(?:[^{}]|(?:\{[^{}]*\}[^{}]*))*\})'
+                match = re.search(markdown_pattern, response_text, re.IGNORECASE | re.DOTALL)
+            if not match:
+                any_markdown_pattern = r'```\s*(\{(?:[^{}]|(?:\{[^{}]*\}[^{}]*))*\})'
+                match = re.search(any_markdown_pattern, response_text, re.IGNORECASE | re.DOTALL)
+            if not match:
+                json_pattern = r'(\{(?:[^{}]|(?:\{[^{}]*\}[^{}]*))*\})'
+                match = re.search(json_pattern, response_text, re.IGNORECASE | re.DOTALL)
+            if match:
+                json_str = match.group(1)
+
+        if not json_str:
             logger.warning("🎤 JSON для озвучки не найден ни в одном формате")
             return {}
-
-        json_str = match.group(1)
         # РАННИЙ ФИЛЬТР: аккуратно валидируем, не отбрасывая при первом промахе
         try:
             import json as _json
