@@ -82,12 +82,16 @@ class NightOptimizer:
             logger.error(f"❌ Ошибка в цикле оптимизации: {e}")
     
     async def _get_unprocessed_messages(self) -> List[MemoryMessage]:
-        """Получает необработанные сообщения"""
+        """Получает необработанные сообщения только из основной группы"""
         try:
             import sqlite3
+            import os
             
             conn = sqlite3.connect(self.memory_manager.db_path)
             cursor = conn.cursor()
+            
+            # Получаем ID основной группы из .env
+            main_chat_id = os.getenv('TELEGRAM_CHANNEL_ID', '-1002952589195')
             
             # Берем сообщения старше 1 часа (чтобы не мешать активному общению)
             cutoff_time = time.time() - 3600
@@ -95,9 +99,9 @@ class NightOptimizer:
             cursor.execute("""
                 SELECT id, chat_id, user_id, content, timestamp, processed
                 FROM group_messages
-                WHERE processed = FALSE AND timestamp < ?
-                ORDER BY chat_id, timestamp
-            """, (cutoff_time,))
+                WHERE processed = FALSE AND timestamp < ? AND chat_id = ?
+                ORDER BY timestamp
+            """, (cutoff_time, main_chat_id))
             
             messages = []
             for row in cursor.fetchall():
@@ -111,7 +115,7 @@ class NightOptimizer:
                 ))
             
             conn.close()
-            logger.info(f"📊 Найдено {len(messages)} необработанных сообщений")
+            logger.info(f"📊 Найдено {len(messages)} необработанных сообщений из основной группы {main_chat_id}")
             return messages
             
         except Exception as e:
@@ -135,13 +139,24 @@ class NightOptimizer:
             # Группируем сообщения по временным периодам
             message_groups = self._group_messages_by_time(messages)
             
-            # Создаем чанки для каждой группы
+            # Создаем чанки для каждой группы (с rate limiting)
+            processed_groups = 0
+            max_groups_per_cycle = 5  # Максимум 5 групп за цикл
+            
             for group in message_groups:
+                if processed_groups >= max_groups_per_cycle:
+                    logger.info(f"⏸️ Достигнут лимит групп за цикл ({max_groups_per_cycle}), останавливаемся")
+                    break
+                    
                 if len(group) >= self.min_messages_for_chunk:
                     chunk = await self._create_memory_chunk(chat_id, group)
                     if chunk:
                         await self._save_memory_chunk(chunk)
                         await self._mark_messages_processed([msg.id for msg in group])
+                        processed_groups += 1
+                        
+                        # Rate limiting: пауза между запросами
+                        await asyncio.sleep(2)
                 else:
                     # Если сообщений мало, просто помечаем как обработанные
                     await self._mark_messages_processed([msg.id for msg in group])
@@ -293,7 +308,7 @@ class NightOptimizer:
             logger.info(f"🔍 Парсим ответ LLM: {response[:200]}...")
             
             # Импортируем крутой парсер
-            from utils.json_surgeon import parse_first_json_object, parse_all_json
+            from utils.robust_json_parser import parse_all_json
             
             # Очищаем от тегов <think> для DeepSeek R1
             cleaned_response = response
@@ -305,7 +320,7 @@ class NightOptimizer:
                     logger.debug("🧠 Убрали блок <think> из ответа DeepSeek R1")
             
             # Используем крутой парсер
-            json_objects = robust_json_parser(cleaned_response)
+            json_objects = parse_all_json(cleaned_response)
             
             if not json_objects:
                 logger.warning("⚠️ Крутой парсер не нашел JSON объектов")
