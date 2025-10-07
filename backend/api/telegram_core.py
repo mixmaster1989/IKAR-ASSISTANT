@@ -2370,11 +2370,17 @@ async def parse_and_generate_image(response_text: str, chat_id: str) -> Optional
         else:
             # Fallback: попробуем вытащить SPEAK! даже если парсер вернул пусто
             import re
-            m = re.search(r'SPEAK!\s*(\{[\s\S]*?\})', response_text, flags=re.IGNORECASE)
+            # Улучшенный паттерн для длинных JSON
+            m = re.search(r'SPEAK!\s*(\{(?:[^{}]|(?:\{[^{}]*\}[^{}]*))*\})', response_text, flags=re.IGNORECASE | re.DOTALL)
             if m:
                 try:
                     import json
-                    speak_obj = json.loads(m.group(1))
+                    json_str = m.group(1)
+                    # Обрабатываем длинные JSON как в robust_json_parser
+                    fixed_json = json_str.replace('\n', '\\n').replace('\r', '\\r').replace('\t', '\\t')
+                    fixed_json = re.sub(r'\\+', '\\', fixed_json)  # Убираем двойные слеши
+                    
+                    speak_obj = json.loads(fixed_json)
                     speak_text = speak_obj.get("text") or ""
                     tts_dict = speak_obj.get("tts") or {}
                     if speak_text:

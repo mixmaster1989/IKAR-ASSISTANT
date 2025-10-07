@@ -277,14 +277,14 @@ def parse_speak_json(response_text: str) -> Dict[str, Any]:
     """
     try:
         import re
-        # 1. Сначала ищем простой JSON с SPEAK! (более надежно)
-        simple_pattern = r'SPEAK!\s*(\{.*\})'
-        match = re.search(simple_pattern, response_text, re.IGNORECASE | re.DOTALL)
+        # 1. Сначала ищем JSON с SPEAK! (улучшенный паттерн для длинных текстов)
+        speak_pattern = r'SPEAK!\s*(\{(?:[^{}]|(?:\{[^{}]*\}[^{}]*))*\})'
+        match = re.search(speak_pattern, response_text, re.IGNORECASE | re.DOTALL)
         
         if not match:
-            # 2. Fallback: ищем сложный JSON с SPEAK!
-            speak_pattern = r'SPEAK!\s*(\{(?:[^{}]|(?:\{[^{}]*\}[^{}]*))*\})'
-            match = re.search(speak_pattern, response_text, re.IGNORECASE | re.DOTALL)
+            # 2. Fallback: ищем простой JSON с SPEAK! (для коротких)
+            simple_pattern = r'SPEAK!\s*(\{.*?\})'
+            match = re.search(simple_pattern, response_text, re.IGNORECASE | re.DOTALL)
             
         if not match:
             # 3. НОВЫЙ: ищем JSON в markdown блоках (без префикса SPEAK!)
@@ -340,10 +340,12 @@ def parse_speak_json(response_text: str) -> Dict[str, Any]:
         try:
             import json
             import re
-            # Исправляем JSON более радикально
-            fixed_json = json_str.replace('\n', '\\n').replace('\r', '\\r')
+            # Исправляем JSON более радикально для длинных текстов
+            fixed_json = json_str.replace('\n', '\\n').replace('\r', '\\r').replace('\t', '\\t')
             # Исправляем двойные пробелы в тексте
             fixed_json = re.sub(r'"text":\s*"([^"]*?)"', lambda m: f'"text": "{m.group(1).replace("  ", " ")}"', fixed_json)
+            # Убираем лишние кавычки и экранируем специальные символы
+            fixed_json = re.sub(r'\\+', '\\', fixed_json)  # Убираем двойные слеши
             result = json.loads(fixed_json)
             # ФИЛЬТР: игнорируем JSON, предназначенный для видео, если он не содержит явных полей TTS
             if isinstance(result, dict) and ("emotion_video" in result) and not any(k in result for k in ("text", "tts", "voice")):
