@@ -288,11 +288,24 @@ def parse_speak_json(response_text: str) -> Dict[str, Any]:
             # Ищем первую '{' после SPEAK!
             brace_pos = response_text.find('{', speak_pos)
             if brace_pos != -1:
-                # Используем существующий robust_json_parser для извлечения балансного JSON
+                # Используем существующий robust_json_parser для извлечения всех JSON-объектов
                 candidate_objects = robust_json_parser(response_text[brace_pos:])
-                if candidate_objects and len(candidate_objects) > 0:
-                    import json
-                    json_str = json.dumps(candidate_objects[0], ensure_ascii=False)
+                if candidate_objects:
+                    # Выбираем тот, где speak==true и есть непустой text
+                    import json as _json
+                    selected = None
+                    for obj in candidate_objects:
+                        if isinstance(obj, dict) and obj.get('speak') is True and isinstance(obj.get('text'), str) and obj.get('text').strip():
+                            selected = obj
+                            break
+                    if selected is None:
+                        # Если не найден нужный, попробуем взять самый крупный словарь, который выглядит как SPEAK (содержит tts/text)
+                        for obj in candidate_objects:
+                            if isinstance(obj, dict) and ('text' in obj or 'tts' in obj):
+                                selected = obj
+                                break
+                    if selected is not None:
+                        json_str = _json.dumps(selected, ensure_ascii=False)
 
         # 2. Если не удалось — пробуем регексы (как раньше)
         if not json_str:
