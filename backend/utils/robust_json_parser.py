@@ -288,10 +288,11 @@ def parse_speak_json(response_text: str) -> Dict[str, Any]:
             # Ищем первую '{' после SPEAK!
             brace_pos = response_text.find('{', speak_pos)
             if brace_pos != -1:
-                # Используем балансный извлекатель на срезе, начинающемся с '{'
-                candidate = _extract_first_balanced_json(response_text[brace_pos:])
-                if candidate and candidate.strip().startswith('{'):
-                    json_str = candidate
+                # Используем существующий robust_json_parser для извлечения балансного JSON
+                candidate_objects = robust_json_parser(response_text[brace_pos:])
+                if candidate_objects and len(candidate_objects) > 0:
+                    import json
+                    json_str = json.dumps(candidate_objects[0], ensure_ascii=False)
 
         # 2. Если не удалось — пробуем регексы (как раньше)
         if not json_str:
