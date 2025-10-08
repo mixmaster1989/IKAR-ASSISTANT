@@ -41,8 +41,8 @@ class NightOptimizer:
                 logger.info(f"🌙 Проверка ночного времени: {is_night}")
                 
                 if is_night:
-                    logger.info("🌙 Ночное время - запускаем оптимизацию")
-                    await self._run_optimization_cycle()
+                    logger.info("🌙 Ночное время - ОТКЛЮЧЕНО (жрет ключи)")
+                    # await self._run_optimization_cycle()  # ОТКЛЮЧЕНО
                 else:
                     logger.info("☀️ Дневное время - пропускаем оптимизацию")
                 
@@ -308,7 +308,7 @@ class NightOptimizer:
             logger.info(f"🔍 Парсим ответ LLM: {response[:200]}...")
             
             # Импортируем крутой парсер
-            from utils.robust_json_parser import parse_all_json
+            from utils.robust_json_parser import robust_json_parser
             
             # Очищаем от тегов <think> для DeepSeek R1
             cleaned_response = response
@@ -320,7 +320,7 @@ class NightOptimizer:
                     logger.debug("🧠 Убрали блок <think> из ответа DeepSeek R1")
             
             # Используем крутой парсер
-            json_objects = parse_all_json(cleaned_response)
+            json_objects = robust_json_parser(cleaned_response)
             
             if not json_objects:
                 logger.warning("⚠️ Крутой парсер не нашел JSON объектов")
