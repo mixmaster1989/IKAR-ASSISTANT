@@ -193,6 +193,15 @@ class OpenRouterClient:
                             model, max_tokens, temperature, user_id, **kwargs
                         )
                     
+                    # 404 — ключ заблокирован или не найден endpoints
+                    if response.status == 404:
+                        logger.warning(f"API ключ #{self.current_key_index + 1} заблокирован (404), переключаемся на следующий (попытка {self.attempt_count}/{self.max_attempts})")
+                        self.rotate_api_key()
+                        return await self.generate_response(
+                            prompt, context, use_memory, memory_budget, 
+                            model, max_tokens, temperature, user_id, **kwargs
+                        )
+                    
                     if response.status == 429:
                         logger.warning(f"Превышен лимит запросов, ожидаем... (попытка {self.attempt_count}/{self.max_attempts})")
                         await asyncio.sleep(2)  # Уменьшили паузу
