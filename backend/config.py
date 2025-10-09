@@ -95,10 +95,10 @@ BINGX_CONFIG = {
 
 # Настройки LLM
 LLM_CONFIG = {
-    "model": "deepseek/deepseek-chat-v3.1:free",  # Рабочая модель (основная)
-    "fallback_model": "openai/gpt-oss-20b:free",  # Fallback модель
+    "model": "openai/gpt-oss-20b:free",  # Рабочая модель (основная)
+    "fallback_model": "deepseek/deepseek-chat-v3.1:free",  # Fallback модель
     "temperature": 0.6,  # Согласно требованиям
-    "max_tokens": 200000,  # Согласно требованиям
+    "max_tokens": 8000,  # Оптимальный лимит для gpt-oss-20b
     "top_p": 0.95,
 }
 

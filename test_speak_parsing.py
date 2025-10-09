@@ -32,8 +32,8 @@ from config import Config
 class SpeakParsingTester:
     def __init__(self):
         self.config = Config()
-        # Принудительно используем ключи с 5 по 9
-        self.force_use_keys_5_to_9()
+        # Принудительно используем ключи с 6 по 9
+        self.force_use_keys_6_to_9()
         self.llm_client = OpenRouterClient(self.config)
         # Отключаем память для теста, чтобы не влияла и не тратила лимиты
         try:
@@ -43,22 +43,43 @@ class SpeakParsingTester:
         self.success_count = 0
         self.total_attempts = 0
         self.results = []
+        self.num_keys = len(getattr(self.config, 'OPENROUTER_API_KEYS', []) or [])
+
+    def rotate_api_key(self):
+        """Явная ротация ключа перед запросом."""
+        try:
+            if self.num_keys:
+                cur = getattr(self.llm_client, 'current_key_index', -1)
+                nxt = (cur + 1) % self.num_keys
+                setattr(self.llm_client, 'current_key_index', nxt)
+                # Жёстко подменяем ключ в окружении и в клиенте
+                selected_key = self.config.OPENROUTER_API_KEYS[nxt]
+                os.environ['OPENROUTER_API_KEY'] = selected_key
+                # Попытка выставить напрямую в клиенте
+                if hasattr(self.llm_client, 'api_key'):
+                    setattr(self.llm_client, 'api_key', selected_key)
+                if hasattr(self.llm_client, 'headers') and isinstance(self.llm_client.headers, dict):
+                    self.llm_client.headers['Authorization'] = f'Bearer {selected_key}'
+                if hasattr(self.llm_client, 'api_keys') and isinstance(self.llm_client.api_keys, list):
+                    self.llm_client.api_keys = [selected_key]
+        except Exception:
+            pass
     
-    def force_use_keys_5_to_9(self):
-        """Принудительно используем только ключи с 5 по 9"""
-        keys_5_to_9 = []
-        for i in range(5, 10):  # 5, 6, 7, 8, 9
+    def force_use_keys_6_to_9(self):
+        """Принудительно используем только ключи с 6 по 9"""
+        keys_6_to_9 = []
+        for i in range(6, 10):  # 6, 7, 8, 9
             key = os.getenv(f'OPENROUTER_API_KEY{i}')
             if key and key != 'your_openrouter_api_key':
-                keys_5_to_9.append(key)
+                keys_6_to_9.append(key)
         
-        if keys_5_to_9:
-            self.config.OPENROUTER_API_KEYS = keys_5_to_9
-            print(f"🔑 Используем ключи с 5 по 9: {len(keys_5_to_9)} ключей")
-            for i, key in enumerate(keys_5_to_9, 5):
+        if keys_6_to_9:
+            self.config.OPENROUTER_API_KEYS = keys_6_to_9
+            print(f"🔑 Используем ключи с 6 по 9: {len(keys_6_to_9)} ключей")
+            for i, key in enumerate(keys_6_to_9, 6):
                 print(f"  KEY{i}: {key[:20]}...")
         else:
-            print("❌ Ключи с 5 по 9 не найдены!")
+            print("❌ Ключи с 6 по 9 не найдены!")
             # Fallback на все ключи
             self.config.OPENROUTER_API_KEYS = self.config.get_all_openrouter_keys()
         
@@ -84,17 +105,31 @@ SPEAK!{"speak": true, "text": "ТЕКСТ ДЛЯ ОЗВУЧКИ", "tts": {"provi
         print(f"{'='*60}")
         
         try:
-            # 1. Генерируем ответ от модели
+            # 1. Ротируем ключ и генерируем ответ от модели
             print("🤖 Генерируем ответ от LLM...")
-            print(f"🔑 Используем ключ #{self.llm_client.current_key_index + 1}")
-            
-            response = await self.llm_client.chat_completion(
-                user_message="Расскажи о кассе Эвотор 7.3 с озвучкой",
-                system_prompt=self.build_test_prompt(),
-                temperature=0.4,
-                max_tokens=800,
-                use_memory=False
-            )
+            self.rotate_api_key()
+            print(f"🔑 Используем ключ #{getattr(self.llm_client, 'current_key_index', 0) + 1}")
+
+            # Быстрый retry c сменой ключа
+            response = None
+            last_err = None
+            for attempt in range(3):
+                try:
+                    response = await self.llm_client.chat_completion(
+                        user_message="Расскажи о кассе Эвотор 7.3 с озвучкой",
+                        system_prompt=self.build_test_prompt(),
+                        temperature=0.4,
+                        max_tokens=800,
+                        use_memory=False
+                    )
+                    if response:
+                        break
+                except Exception as e:
+                    last_err = e
+                # сменим ключ и повторим быстро
+                self.rotate_api_key()
+                print(f"↪️ Переключаюсь на ключ #{getattr(self.llm_client, 'current_key_index', 0) + 1} и повторяю...")
+                await asyncio.sleep(0.2)
             
             print(f"⏱️ LLM ответ получен за {attempt_num} попыток")
             
