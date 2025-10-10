@@ -1917,6 +1917,37 @@ async def send_telegram_message_with_buttons(chat_id: str, text: str, buttons: l
         logger.error(f"❌ Исключение при отправке сообщения с кнопками: {e}")
         return False
 
+async def edit_telegram_message(chat_id: str, message_id: int, new_text: str, parse_mode: str = None) -> bool:
+    """Редактирует существующее сообщение в Telegram"""
+    if not TELEGRAM_CONFIG["token"]:
+        logger.error("❌ Токен Telegram не настроен")
+        return False
+    
+    url = f"https://api.telegram.org/bot{TELEGRAM_CONFIG['token']}/editMessageText"
+    
+    data = {
+        "chat_id": chat_id,
+        "message_id": message_id,
+        "text": new_text
+    }
+    
+    if parse_mode:
+        data["parse_mode"] = parse_mode
+    
+    try:
+        async with aiohttp.ClientSession() as session:
+            async with session.post(url, json=data) as response:
+                if response.status == 200:
+                    logger.info(f"✏️ Сообщение {message_id} отредактировано в чате {chat_id}")
+                    return True
+                else:
+                    error_text = await response.text()
+                    logger.error(f"❌ Ошибка редактирования сообщения: {response.status} - {error_text}")
+                    return False
+    except Exception as e:
+        logger.error(f"❌ Исключение при редактировании сообщения: {e}")
+        return False
+
 async def delete_telegram_message(chat_id: str, message_id: int):
     """Удаляет сообщение в Telegram по chat_id и message_id.
 
