@@ -515,15 +515,15 @@ class SmartBotTrigger:
                     except Exception as e:
                         logger.error(f"❌ Ошибка отправки статуса 'загружает фото': {e}")
                 
-                # Обрабатываем showroad и видео ДО санитайзера, чтобы не потерять JSON
+                # Обрабатываем видео и showroad ДО санитайзера, чтобы не потерять JSON
                 try:
-                    # 1) Сначала запускаем showroad (если есть), убираем JSON
-                    cleaned_after_road = await self._parse_and_run_showroad(response, chat_id) or response
-                    # 2) Затем видео (если есть), убираем JSON
-                    cleaned_after_video = await self._parse_emotion_video(cleaned_after_road, chat_id) or cleaned_after_road
+                    # 1) Сначала видео (если есть), убираем JSON
+                    cleaned_after_video = await self._parse_emotion_video(response, chat_id) or response
+                    # 2) Затем запускаем showroad (если есть), убираем JSON
+                    cleaned_after_road = await self._parse_and_run_showroad(cleaned_after_video, chat_id) or cleaned_after_video
                     # 3) Теперь санитайзер изображений и SPEAK (он не должен ломать showroad/video)
                     from api.telegram import parse_and_generate_image
-                    processed_response = await parse_and_generate_image(cleaned_after_video, chat_id)
+                    processed_response = await parse_and_generate_image(cleaned_after_road, chat_id)
                     return processed_response
                 except Exception as e:
                     logger.error(f"❌ Ошибка обработки изображения: {e}")
