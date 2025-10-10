@@ -27,6 +27,7 @@ async def test_smart_notifications():
     for process_type, templates in notifications.notification_templates.items():
         print(f"   {process_type}: {len(templates)} шаблонов")
         print(f"   Пример: {templates[0]}")
+        print(f"   Markdown: {templates[0].replace('*', '').replace('\\.', '.')}")
     
     print("\n2. Тестирование активных уведомлений:")
     print(f"   Активных уведомлений: {len(notifications.active_notifications)}")

@@ -489,11 +489,11 @@ class SmartBotTrigger:
             
             try:
                 # Обновляем уведомление - ищем в памяти
-                await smart_notifications.update_notification(chat_id, "📚 Ищу в памяти релевантную информацию...")
+                await smart_notifications.update_notification(chat_id, "📚 *Ищу в памяти релевантную информацию*\\.\\.\\.")
                 await asyncio.sleep(1)  # Небольшая пауза для эффекта
                 
                 # Генерируем ответ
-                await smart_notifications.update_notification(chat_id, "🧠 Формирую идеальный ответ...")
+                await smart_notifications.update_notification(chat_id, "🧠 *Формирую идеальный ответ*\\.\\.\\.")
                 response = await self._llm_client.chat_completion(
                     user_message=user_message,
                     system_prompt=system_prompt,
@@ -504,7 +504,7 @@ class SmartBotTrigger:
                 )
                 
                 # Завершаем уведомление
-                await smart_notifications.complete_notification(chat_id, "✅ Ответ готов!")
+                await smart_notifications.complete_notification(chat_id, "✅ *Ответ готов!*")
                 
             finally:
                 # Останавливаем обновление статуса как только ответ готов
@@ -534,20 +534,20 @@ class SmartBotTrigger:
                 try:
                     # 1) Сначала видео (если есть), убираем JSON
                     if "emotion_video" in response:
-                        await smart_notifications.update_notification(chat_id, "🎭 Подготавливаю эмоциональное видео...")
+                        await smart_notifications.update_notification(chat_id, "🎭 *Подготавливаю эмоциональное видео*\\.\\.\\.")
                     cleaned_after_video = await self._parse_emotion_video(response, chat_id) or response
                     
                     # 2) Затем запускаем showroad (если есть), убираем JSON
                     if "showroad" in response:
-                        await smart_notifications.update_notification(chat_id, "🚗 Подготавливаю маршрут к офису...")
+                        await smart_notifications.update_notification(chat_id, "🚗 *Подготавливаю маршрут к офису*\\.\\.\\.")
                     cleaned_after_road = await self._parse_and_run_showroad(cleaned_after_video, chat_id) or cleaned_after_video
                     
                     # 3) Теперь санитайзер изображений и SPEAK (он не должен ломать showroad/video)
                     if "IMAGE!" in response or "SPEAK!" in response:
                         if "IMAGE!" in response:
-                            await smart_notifications.update_notification(chat_id, "🎨 Создаю изображение для вас...")
+                            await smart_notifications.update_notification(chat_id, "🎨 *Создаю изображение для вас*\\.\\.\\.")
                         if "SPEAK!" in response:
-                            await smart_notifications.update_notification(chat_id, "🎤 Создаю голосовое сообщение...")
+                            await smart_notifications.update_notification(chat_id, "🎤 *Создаю голосовое сообщение*\\.\\.\\.")
                     
                     from api.telegram import parse_and_generate_image
                     processed_response = await parse_and_generate_image(cleaned_after_road, chat_id)
