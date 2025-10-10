@@ -51,8 +51,9 @@ class TelegramMemoryIntegration:
             return False
     
     async def handle_smart_bot_trigger(self, chat_id: str, message_text: str, user_id: str, 
-                                      is_quote: bool = False, quoted_message_id: int = None) -> Optional[str]:
-        """Обрабатывает умный триггер бота (обычный или через цитирование)"""
+                                      is_quote: bool = False, quoted_message_id: int = None, 
+                                      is_mention: bool = False) -> Optional[str]:
+        """Обрабатывает умный триггер бота (обычный, через цитирование или @username)"""
         if not self.initialized:
             logger.warning("⚠️ Интеграция не инициализирована")
             return None
@@ -64,7 +65,7 @@ class TelegramMemoryIntegration:
             self.save_group_message(chat_id, user_id, message_text)
             
             # Затем обрабатываем триггер
-            response = await process_smart_bot_trigger(chat_id, message_text, user_id, is_quote, quoted_message_id)
+            response = await process_smart_bot_trigger(chat_id, message_text, user_id, is_quote, quoted_message_id, is_mention)
             
             return response
             

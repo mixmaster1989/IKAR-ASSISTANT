@@ -751,16 +751,64 @@ async def process_telegram_message(user_id: str, message_text: str, use_voice_re
 
 async def send_telegram_message(chat_id: str, text: str, parse_mode: Optional[str] = None, 
                                save_dialogue: bool = False, user_message: str = None, user_id: str = None) -> Optional[int]:
-    """Отправляет текстовое сообщение в Telegram."""
+    """Отправляет текстовое сообщение в Telegram.
+    Если найдена Markdown-таблица, рендерит её через matplotlib и отправляет как изображение.
+    """
     if not TELEGRAM_CONFIG["token"]:
         return None
-    
+
+    # Попытка авто-рендеринга таблицы
+    try:
+        stripped = (text or "").strip()
+        lines = stripped.splitlines()
+        def _is_sep(row: str) -> bool:
+            r = row.strip()
+            if not (r.startswith('|') and r.endswith('|')):
+                return False
+            inner = r[1:-1]
+            parts = [c.strip() for c in inner.split('|')]
+            if not parts:
+                return False
+            import re as _re
+            return all(_re.fullmatch(r':?-{3,}:?', c) for c in parts)
+
+        has_table = False
+        for i in range(len(lines) - 1):
+            if lines[i].strip().startswith('|') and _is_sep(lines[i + 1]):
+                has_table = True
+                break
+
+        if has_table:
+            from backend.utils.table_generator import create_table_from_markdown
+            image_path = create_table_from_markdown(text)
+            caption = None
+            header = lines[0] if lines else ""
+            if header and not header.strip().startswith('|'):
+                caption = header.strip()
+                if len(caption) > 900:
+                    caption = caption[:897] + '…'
+            mid = await send_telegram_photo(chat_id, image_path, caption)
+            if save_dialogue and user_message and user_id and mid:
+                try:
+                    from memory.dialogue_context import get_dialogue_context_manager
+                    dialogue_manager = get_dialogue_context_manager()
+                    dialogue_manager.save_dialogue_turn(
+                        chat_id=chat_id,
+                        user_id=user_id,
+                        user_message=user_message,
+                        bot_response='[image: table]',
+                        message_id=mid,
+                        is_quote=False
+                    )
+                    logger.debug(f"💾 Диалог сохранен (image): {chat_id} | {user_id} | {mid}")
+                except Exception as e:
+                    logger.error(f"❌ Ошибка сохранения диалога: {e}")
+            return mid
+    except Exception as e:
+        logger.error(f"Авто-рендеринг таблицы отключен из-за ошибки: {e}")
+
     url = f"https://api.telegram.org/bot{TELEGRAM_CONFIG['token']}/sendMessage"
-    
-    data = {
-        "chat_id": chat_id,
-        "text": text,
-    }
+    data = {"chat_id": chat_id, "text": text}
     if parse_mode:
         data["parse_mode"] = parse_mode
 
@@ -771,29 +819,25 @@ async def send_telegram_message(chat_id: str, text: str, parse_mode: Optional[st
                     error_text = await response.text()
                     logger.error(f"Ошибка отправки в Telegram: {response.status} - {error_text}")
                     return None
-                else:
-                    response_data = await response.json()
-                    message_id = response_data.get("result", {}).get("message_id")
-                    
-                    # Сохраняем диалог если нужно
-                    if save_dialogue and user_message and user_id and message_id:
-                        try:
-                            from memory.dialogue_context import get_dialogue_context_manager
-                            dialogue_manager = get_dialogue_context_manager()
-                            dialogue_manager.save_dialogue_turn(
-                                chat_id=chat_id,
-                                user_id=user_id,
-                                user_message=user_message,
-                                bot_response=text,
-                                message_id=message_id,
-                                is_quote=False
-                            )
-                            logger.debug(f"💾 Диалог сохранен: {chat_id} | {user_id} | {message_id}")
-                        except Exception as e:
-                            logger.error(f"❌ Ошибка сохранения диалога: {e}")
-                    
-                    logger.info(f"✅ Текстовое сообщение отправлено в Telegram (ID: {message_id})")
-                    return message_id
+                response_data = await response.json()
+                message_id = response_data.get("result", {}).get("message_id")
+                if save_dialogue and user_message and user_id and message_id:
+                    try:
+                        from memory.dialogue_context import get_dialogue_context_manager
+                        dialogue_manager = get_dialogue_context_manager()
+                        dialogue_manager.save_dialogue_turn(
+                            chat_id=chat_id,
+                            user_id=user_id,
+                            user_message=user_message,
+                            bot_response=text,
+                            message_id=message_id,
+                            is_quote=False
+                        )
+                        logger.debug(f"💾 Диалог сохранен: {chat_id} | {user_id} | {message_id}")
+                    except Exception as e:
+                        logger.error(f"❌ Ошибка сохранения диалога: {e}")
+                logger.info(f"✅ Текстовое сообщение отправлено в Telegram (ID: {message_id})")
+                return message_id
     except Exception as e:
         logger.error(f"Ошибка при отправке сообщения в Telegram: {e}")
         return None

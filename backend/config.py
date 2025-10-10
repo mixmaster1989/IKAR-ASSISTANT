@@ -34,29 +34,38 @@ for dir_path in [DATA_DIR, MEMORY_DIR]:
 def get_all_openrouter_keys() -> List[str]:
     """
     Динамически собирает все доступные OpenRouter API ключи из переменных окружения.
-    Поддерживает любые имена переменных, начинающиеся с OPENROUTER_API_KEY.
-    Собирает ключи по номерам: OPENROUTER_API_KEY, OPENROUTER_API_KEY1, OPENROUTER_API_KEY2, и т.д.
+    Поддерживает ЛЮБЫЕ имена, начинающиеся с OPENROUTER_API_KEY (включая OPENROUTER_API_KEY_PAID и т.п.).
+    Порядок приоритета:
+    1) OPENROUTER_API_KEY (основной)
+    2) Нумерованные: OPENROUTER_API_KEY1, OPENROUTER_API_KEY2, ...
+    3) Прочие: все переменные, начинающиеся с OPENROUTER_API_KEY, в алфавитном порядке
+    Дубликаты исключаются, порядок первой встречи сохраняется.
     """
-    keys = []
-    
-    # Сначала проверяем основной ключ
-    main_key = os.environ.get("OPENROUTER_API_KEY", "")
-    if main_key and main_key != "your_openrouter_api_key":
-        keys.append(main_key)
-    
-    # Затем ищем ключи по номерам (1, 2, 3, ...)
+    ordered_keys: List[str] = []
+
+    def add_key(value: str):
+        if value and value != "your_openrouter_api_key" and value not in ordered_keys:
+            ordered_keys.append(value)
+
+    # 1) Основной
+    add_key(os.environ.get("OPENROUTER_API_KEY", ""))
+
+    # 2) Нумерованные по возрастанию
     i = 1
     while True:
-        key_name = f"OPENROUTER_API_KEY{i}"
-        key_value = os.environ.get(key_name, "")
-        if key_value and key_value != "your_openrouter_api_key":
-            keys.append(key_value)
-            i += 1
-        else:
-            # Если ключ не найден, прекращаем поиск
+        env_name = f"OPENROUTER_API_KEY{i}"
+        val = os.environ.get(env_name, "")
+        if not val:
             break
-    
-    return keys
+        add_key(val)
+        i += 1
+
+    # 3) Прочие начинающиеся с OPENROUTER_API_KEY (например, *_PAID)
+    for env_name in sorted(os.environ.keys()):
+        if env_name.startswith("OPENROUTER_API_KEY") and not env_name[len("OPENROUTER_API_KEY"):].isdigit():
+            add_key(os.environ.get(env_name, ""))
+
+    return ordered_keys
 
 # Получаем все доступные ключи
 OPENROUTER_API_KEYS = get_all_openrouter_keys()
@@ -95,8 +104,8 @@ BINGX_CONFIG = {
 
 # Настройки LLM
 LLM_CONFIG = {
-    "model": "deepseek/deepseek-chat-v3.1:free",  # Рабочая модель (основная)
-    "fallback_model": "openai/gpt-oss-20b:free",  # Fallback модель
+    "model": "x-ai/grok-4-fast",  # Платная модель с поддержкой кэширования
+    "fallback_model": "openai/gpt-oss-20b:free",  # Fallback на бесплатную
     "temperature": 0.6,  # Согласно требованиям
     "max_tokens": 200000,  # Согласно требованиям
     "top_p": 0.95,

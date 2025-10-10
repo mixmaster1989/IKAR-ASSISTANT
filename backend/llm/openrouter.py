@@ -58,8 +58,8 @@ class OpenRouterClient:
         # Если в конфиге явно указана модель/температура/макс.токены — используем их,
         # иначе применяем значения согласно требованиям.
         # По умолчанию используем DeepSeek как основную модель, OpenAI GPT-OSS как fallback
-        self.default_model = llm_cfg.get("model", "deepseek/deepseek-chat-v3.1:free")
-        self.fallback_model = llm_cfg.get("fallback_model", "openai/gpt-oss-20b:free")
+        self.default_model = llm_cfg.get("model", "openai/gpt-oss-20b:free")
+        self.fallback_model = llm_cfg.get("fallback_model", "deepseek/deepseek-chat-v3.1:free")
         self.max_tokens = llm_cfg.get("max_tokens", 200000)  # Согласно требованиям
         self.temperature = llm_cfg.get("temperature", 0.6)    # Согласно требованиям
         
@@ -79,10 +79,28 @@ class OpenRouterClient:
         logger.info(f"OpenRouter клиент инициализирован с {len(self.api_keys)} ключами")
         logger.info(f"Коллективная память: {'включена' if self.memory_enabled else 'отключена'}")
 
-    def get_current_api_key(self) -> str:
-        """Получение текущего API ключа"""
+    def get_current_api_key(self, model: str = None) -> str:
+        """Получение текущего API ключа с учетом типа модели"""
         if not self.api_keys:
             raise ValueError("API ключи OpenRouter не настроены")
+        
+        # Для Grok используем ТОЛЬКО платный ключ
+        if model and 'grok' in model.lower():
+            # Ищем конкретный платный ключ (OPENROUTER_API_KEY_PAID)
+            import os
+            from dotenv import load_dotenv
+            load_dotenv("/root/IKAR-ASSISTANT/.env")
+            paid_key = os.getenv("OPENROUTER_API_KEY_PAID")
+            
+            if paid_key and paid_key in self.api_keys:
+                logger.info(f"🔑 Используем платный ключ для модели {model}")
+                return paid_key
+            else:
+                # Если платный ключ не найден - ошибка
+                raise ValueError(f"Платный ключ OPENROUTER_API_KEY_PAID не найден для модели {model}")
+        
+        # Для всех остальных моделей используем обычную ротацию (бесплатные ключи)
+        logger.info(f"🔑 Используем бесплатный ключ #{self.current_key_index + 1} для модели {model}")
         return self.api_keys[self.current_key_index]
     
     def rotate_api_key(self):
@@ -150,20 +168,68 @@ class OpenRouterClient:
 
             # Подготовка запроса к API
             headers = {
-                "Authorization": f"Bearer {self.get_current_api_key()}",
+                "Authorization": f"Bearer {self.get_current_api_key(model)}",
                 "Content-Type": "application/json",
                 "HTTP-Referer": "https://github.com/yourusername/ikar",
                 "X-Title": "IKAR Collective Mind"
             }
             
-            payload = {
-                "model": model,
-                "messages": [
-                    {
+            # Формируем сообщения с поддержкой кэширования
+            messages = []
+            
+            # Проверяем, есть ли системный промпт в enhanced_prompt
+            if enhanced_prompt.startswith("Ты — Икар Икарыч") or "ИКАР" in enhanced_prompt[:500]:
+                # Разделяем системный промпт и пользовательское сообщение
+                try:
+                    from backend.prompts.ikar_system_prompt import IKAR_SYSTEM_PROMPT
+                    
+                    # Ищем разделитель между системным промптом и пользовательским сообщением
+                    if "ТЕКУЩЕЕ ВРЕМЯ:" in enhanced_prompt:
+                        parts = enhanced_prompt.split("ТЕКУЩЕЕ ВРЕМЯ:")
+                        if len(parts) >= 2:
+                            system_part = parts[0].strip()
+                            user_part = "ТЕКУЩЕЕ ВРЕМЯ:" + "ТЕКУЩЕЕ ВРЕМЯ:".join(parts[1:])
+                            
+                            # Используем кэшированный системный промпт
+                            messages.append({
+                                "role": "system",
+                                "content": IKAR_SYSTEM_PROMPT,
+                                "metadata": {"cache": True}
+                            })
+                            
+                            # Добавляем динамические части как отдельное сообщение
+                            messages.append({
+                                "role": "user", 
+                                "content": user_part
+                            })
+                        else:
+                            # Fallback: весь промпт как пользовательское сообщение
+                            messages.append({
+                                "role": "user",
+                                "content": enhanced_prompt
+                            })
+                    else:
+                        # Fallback: весь промпт как пользовательское сообщение
+                        messages.append({
+                            "role": "user",
+                            "content": enhanced_prompt
+                        })
+                except ImportError:
+                    # Fallback: весь промпт как пользовательское сообщение
+                    messages.append({
                         "role": "user",
                         "content": enhanced_prompt
-                    }
-                ],
+                    })
+            else:
+                # Обычный промпт без системного промпта
+                messages.append({
+                    "role": "user",
+                    "content": enhanced_prompt
+                })
+            
+            payload = {
+                "model": model,
+                "messages": messages,
                 "max_tokens": max_tokens,
                 "temperature": temperature,
                 "stream": False,
@@ -186,6 +252,11 @@ class OpenRouterClient:
                         return "Извините, все API ключи недоступны. Попробуйте позже."
                     
                     if response.status == 401:
+                        # Для Grok не переключаем ключи - используем только платный
+                        if model and 'grok' in model.lower():
+                            logger.error(f"❌ Платный ключ для Grok неверный! Проверьте OPENROUTER_API_KEY_PAID.")
+                            raise ValueError(f"Платный ключ для модели {model} неверный. Проверьте OPENROUTER_API_KEY_PAID.")
+                        
                         logger.warning(f"Неверный API ключ #{self.current_key_index + 1}, пробуем следующий (попытка {self.attempt_count}/{self.max_attempts})")
                         self.rotate_api_key()
                         return await self.generate_response(
@@ -195,6 +266,11 @@ class OpenRouterClient:
                     
                     # 404 — ключ заблокирован или не найден endpoints
                     if response.status == 404:
+                        # Для Grok не переключаем ключи - используем только платный
+                        if model and 'grok' in model.lower():
+                            logger.error(f"❌ Платный ключ для Grok заблокирован! Проверьте OPENROUTER_API_KEY_PAID.")
+                            raise ValueError(f"Платный ключ для модели {model} заблокирован. Проверьте OPENROUTER_API_KEY_PAID.")
+                        
                         logger.warning(f"API ключ #{self.current_key_index + 1} заблокирован (404), переключаемся на следующий (попытка {self.attempt_count}/{self.max_attempts})")
                         self.rotate_api_key()
                         return await self.generate_response(
@@ -203,6 +279,15 @@ class OpenRouterClient:
                         )
                     
                     if response.status == 429:
+                        # Для Grok не переключаем ключи - используем только платный
+                        if model and 'grok' in model.lower():
+                            logger.warning(f"⚠️ Превышен лимит запросов для Grok, ожидаем...")
+                            await asyncio.sleep(5)  # Больше пауза для платного ключа
+                            return await self.generate_response(
+                                prompt, context, use_memory, memory_budget,
+                                model, max_tokens, temperature, user_id, **kwargs
+                            )
+                        
                         logger.warning(f"Превышен лимит запросов, ожидаем... (попытка {self.attempt_count}/{self.max_attempts})")
                         await asyncio.sleep(2)  # Уменьшили паузу
                         self.rotate_api_key()
@@ -213,6 +298,11 @@ class OpenRouterClient:
 
                     # 402 — недостаточно кредитов на текущем ключе
                     if response.status == 402:
+                        # Для Grok не переключаем ключи - используем только платный
+                        if model and 'grok' in model.lower():
+                            logger.error(f"❌ Платный ключ для Grok исчерпан! Нужно пополнить баланс.")
+                            raise ValueError(f"Платный ключ для модели {model} исчерпан. Пополните баланс OpenRouter.")
+                        
                         logger.warning(f"Недостаточно кредитов на ключе #{self.current_key_index + 1}, переключаемся на следующий (попытка {self.attempt_count}/{self.max_attempts})")
                         self.rotate_api_key()
                         return await self.generate_response(
@@ -235,6 +325,11 @@ class OpenRouterClient:
                             )
                         else:
                             # После 3 попыток переключаемся на следующий ключ
+                            # Для Grok не переключаем ключи - используем только платный
+                            if model and 'grok' in model.lower():
+                                logger.error(f"❌ 502 ошибка для Grok после 3 попыток! Проблема с платным ключом.")
+                                raise ValueError(f"502 ошибка для модели {model} после 3 попыток. Проблема с платным ключом.")
+                            
                             logger.warning("502 ретраи исчерпаны, переключаемся на следующий ключ")
                             self._502_retry_count = 0  # Сбрасываем счетчик
                             self.rotate_api_key()
@@ -246,7 +341,13 @@ class OpenRouterClient:
                     response_data = await response.json()
                     
                     # Логируем ответ для диагностики
-                    logger.debug(f"Ответ API: {response_data}")
+                    logger.info(f"🔍 Ответ API: {response_data}")
+                    
+                    # Проверяем наличие usage в ответе
+                    if 'usage' in response_data:
+                        logger.info(f"🔍 Usage найден в ответе: {response_data['usage']}")
+                    else:
+                        logger.warning("⚠️ Usage НЕ найден в ответе API!")
                     
                     if response.status != 200:
                         logger.error(f"Ошибка API: {response.status}, {response_data}")
@@ -255,6 +356,26 @@ class OpenRouterClient:
                     # Извлекаем ответ
                     if 'choices' in response_data and response_data['choices']:
                         generated_text = response_data['choices'][0]['message']['content']
+                        
+                        # Логируем токены из usage
+                        if 'usage' in response_data:
+                            usage = response_data['usage']
+                            prompt_tokens = usage.get('prompt_tokens', 0)
+                            completion_tokens = usage.get('completion_tokens', 0)
+                            total_tokens = usage.get('total_tokens', 0)
+                            
+                            # Проверяем, используется ли кэш
+                            cache_status = "❓"
+                            if len(messages) > 1 and any(msg.get('metadata', {}).get('cache') for msg in messages):
+                                cache_status = "💾 КЭШ"
+                            elif len(messages) == 1 and messages[0].get('role') == 'user':
+                                cache_status = "📝 ОБЫЧНЫЙ"
+                            
+                            logger.info(f"📊 ТОКЕНЫ {cache_status}: входные={prompt_tokens:,}, выходные={completion_tokens:,}, всего={total_tokens:,}")
+                            
+                            # Дополнительная диагностика кэша
+                            if cache_status == "💾 КЭШ":
+                                logger.info(f"🔍 КЭШИРОВАНИЕ: системный промпт кэширован, динамические части: {len(messages)-1} сообщений")
                         
                         # Логируем использование памяти
                         if use_memory and memory_analysis:

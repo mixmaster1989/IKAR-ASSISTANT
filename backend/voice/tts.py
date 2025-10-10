@@ -239,10 +239,10 @@ class TextToSpeech:
     
     def _parse_text_with_actions(self, text: str) -> List[Tuple[str, str]]:
         """
-        РАНЕЕ: парсили действия в * и резали на части. Теперь отключено — возвращаем единый блок речи.
+        Упрощенная версия - возвращаем единый блок речи без парсинга.
         """
-        cleaned = text.replace('*', '')
-        return [(cleaned.strip(), 'speech')]
+        cleaned = text.replace('*', '').strip()
+        return [(cleaned, 'speech')]
     
     # Удален silero-провайдер
     
@@ -367,10 +367,6 @@ class TextToSpeech:
         
         # Парсим текст на части
         parts = self._parse_text_with_actions(text)
-        
-        logger.info(f"📝 НАЙДЕНО ЧАСТЕЙ: {len(parts)}")
-        for i, (part_text, part_type) in enumerate(parts):
-            logger.info(f"  {i+1}. {part_type}: {part_text[:30]}...")
         
         # Если только одна часть без действий, создаем простое аудио
         if len(parts) == 1 and parts[0][1] == 'speech':

@@ -10,9 +10,10 @@ from typing import Optional
 logger = logging.getLogger("chatumba.group_bot_integration")
 
 async def handle_bot_trigger_in_group(chat_id: str, message_text: str, user_id: str, 
-                                     is_quote: bool = False, quoted_message_id: int = None) -> bool:
+                                     is_quote: bool = False, quoted_message_id: int = None, 
+                                     is_mention: bool = False) -> bool:
     """
-    Обрабатывает умный триггер "бот" в групповом чате (обычный или через цитирование)
+    Обрабатывает умный триггер "бот" в групповом чате (обычный, через цитирование или @username)
     
     Args:
         chat_id: ID чата
@@ -20,6 +21,7 @@ async def handle_bot_trigger_in_group(chat_id: str, message_text: str, user_id: 
         user_id: ID пользователя
         is_quote: Является ли это цитированием
         quoted_message_id: ID цитируемого сообщения
+        is_mention: Является ли это упоминанием через @username
         
     Returns:
         bool: True если триггер сработал и был обработан
@@ -33,7 +35,7 @@ async def handle_bot_trigger_in_group(chat_id: str, message_text: str, user_id: 
             await integration.initialize()
         
         # Обрабатываем умный триггер
-        response = await integration.handle_smart_bot_trigger(chat_id, message_text, user_id, is_quote, quoted_message_id)
+        response = await integration.handle_smart_bot_trigger(chat_id, message_text, user_id, is_quote, quoted_message_id, is_mention)
         
         if response:
             # Проверяем, не является ли это специальным флагом подтверждения
@@ -61,9 +63,9 @@ async def handle_bot_trigger_in_group(chat_id: str, message_text: str, user_id: 
 
 async def check_and_handle_bot_trigger(chat_id: str, message_text: str, user_id: str, 
                                       is_quote: bool = False, quoted_message_id: int = None, 
-                                      group_names_mode: dict = None) -> bool:
+                                      is_mention: bool = False, group_names_mode: dict = None) -> bool:
     """
-    Проверяет и обрабатывает умный триггер "бот" в любой группе (обычный или через цитирование)
+    Проверяет и обрабатывает умный триггер "бот" в любой группе (обычный, через цитирование или @username)
     
     Args:
         chat_id: ID чата
@@ -71,6 +73,7 @@ async def check_and_handle_bot_trigger(chat_id: str, message_text: str, user_id:
         user_id: ID пользователя
         is_quote: Является ли это цитированием
         quoted_message_id: ID цитируемого сообщения
+        is_mention: Является ли это упоминанием через @username
         group_names_mode: Словарь режимов групп (не используется)
         
     Returns:
@@ -80,7 +83,7 @@ async def check_and_handle_bot_trigger(chat_id: str, message_text: str, user_id:
     # Автоматически сохраняет сообщения в память и использует умный контекст
     
     # Обрабатываем триггер
-    return await handle_bot_trigger_in_group(chat_id, message_text, user_id, is_quote, quoted_message_id)
+    return await handle_bot_trigger_in_group(chat_id, message_text, user_id, is_quote, quoted_message_id, is_mention)
 
 async def handle_memory_export_trigger_in_group(chat_id: str, message_text: str, user_id: str) -> bool:
     """

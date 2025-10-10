@@ -411,10 +411,21 @@ async def telegram_polling():
                                     quoted_message_id = reply_to_message.get("message_id")
                                     logger.info(f"🔗 Обнаружено цитирование бота: {quoted_message_id}")
                             
-                            # Триггер "бот"/обращение к Икар Икарыч
-                            logger.info(f"[ГРУППА {chat_id}] Проверяем триггер Икар Икарыч | quote={is_quote} | text='{message_text[:80]}'")
+                            # Проверяем упоминание бота через @username
+                            is_mention = False
+                            if "entities" in message:
+                                for ent in message["entities"]:
+                                    if ent.get("type") == "mention":
+                                        mention_text = message_text[ent["offset"]:ent["offset"]+ent["length"]]
+                                        if mention_text.lower() == "@ikar_ikarych_bot":
+                                            is_mention = True
+                                            logger.info(f"🔗 Обнаружено упоминание бота: {mention_text}")
+                                            break
+                            
+                            # Триггер "бот"/обращение к Икар Икарыч (включая @username)
+                            logger.info(f"[ГРУППА {chat_id}] Проверяем триггер Икар Икарыч | quote={is_quote} | mention={is_mention} | text='{message_text[:80]}'")
                             from .group_bot_integration import check_and_handle_bot_trigger
-                            bot_triggered = await check_and_handle_bot_trigger(chat_id, message_text, str(from_user), is_quote, quoted_message_id)
+                            bot_triggered = await check_and_handle_bot_trigger(chat_id, message_text, str(from_user), is_quote, quoted_message_id, is_mention)
                             logger.info(f"[ГРУППА {chat_id}] Результат триггера: {bot_triggered}")
                             if bot_triggered:
                                 continue
@@ -500,7 +511,7 @@ async def telegram_polling():
                                 try:
                                     from .group_bot_integration import check_and_handle_bot_trigger
                                     logger.info(f"[ГРУППА {chat_id}] Проверяем триггер Икар Икарыч (VOICE) | text='{recognized_text[:80]}'")
-                                    bot_triggered = await check_and_handle_bot_trigger(chat_id, recognized_text, str(from_user), False, None)
+                                    bot_triggered = await check_and_handle_bot_trigger(chat_id, recognized_text, str(from_user), False, None, False)
                                     logger.info(f"[ГРУППА {chat_id}] Результат триггера (VOICE): {bot_triggered}")
                                     if bot_triggered:
                                         continue

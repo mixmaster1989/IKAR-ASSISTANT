@@ -17,7 +17,7 @@ class MemoryExportTrigger:
     """Триггер для экспорта всех чанков памяти группы в текстовый файл"""
     
     def __init__(self):
-        self.cooldown_sec = 300  # 5 минут cooldown между экспортами
+        self.cooldown_sec = 0  # УБРАЛИ КУЛДАУН НАХУЙ!
         self.last_export_time = {}  # {chat_id: timestamp}
         
         # Компоненты системы памяти (инициализируются при первом использовании)

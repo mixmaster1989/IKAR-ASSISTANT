@@ -18,6 +18,8 @@ ENV/
 
 # Environment variables
 .env
+.env.backup
+.env.*
 
 # IDE files
 .idea/

@@ -15,7 +15,7 @@ last_image_trigger_time = {}
 
 class GroupImageTrigger:
     def __init__(self):
-        self.cooldown_sec = 120  # 2 минуты cooldown для генерации изображений
+        self.cooldown_sec = 0  # УБРАЛИ КУЛДАУН НАХУЙ!
         self.trigger_word = "картинка:"
         
     async def try_trigger(self, chat_id: str, message_text: str, send_telegram_photo):
