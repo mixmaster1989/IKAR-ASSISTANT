@@ -522,23 +522,28 @@ class SmartBotTrigger:
             logger.info(f"🤖 SYSTEM PROMPT: {system_prompt}")
             logger.info(f"🤖 USER MESSAGE: {user_message}")
             
-            # Отправляем статус "печатает" перед генерацией
-            try:
-                from .telegram_core import send_chat_action
-                await send_chat_action(chat_id, "typing")
-                logger.info(f"⌨️ Отправлен статус 'печатает' в чат {chat_id}")
-            except Exception as e:
-                logger.error(f"❌ Ошибка отправки статуса 'печатает': {e}")
+            # Запускаем постоянное обновление статуса "печатает"
+            typing_task = asyncio.create_task(self._keep_typing_status(chat_id))
+            logger.info(f"⌨️ Запущено постоянное обновление статуса 'печатает' для чата {chat_id}")
             
-            # Генерируем ответ
-            response = await self._llm_client.chat_completion(
-                user_message=user_message,
-                system_prompt=system_prompt,
-                temperature=0.4,
-                max_tokens=20000,
-                frequency_penalty=0.5,
-                presence_penalty=0.3
-            )
+            try:
+                # Генерируем ответ
+                response = await self._llm_client.chat_completion(
+                    user_message=user_message,
+                    system_prompt=system_prompt,
+                    temperature=0.4,
+                    max_tokens=20000,
+                    frequency_penalty=0.5,
+                    presence_penalty=0.3
+                )
+            finally:
+                # Останавливаем обновление статуса как только ответ готов
+                typing_task.cancel()
+                try:
+                    await typing_task
+                except asyncio.CancelledError:
+                    pass
+                logger.info(f"⏹️ Остановлено обновление статуса 'печатает' для чата {chat_id}")
             
             # Логируем ответ только один раз
             if response:
@@ -1200,6 +1205,22 @@ SPEAK!{"speak": true, "text": "Хорошо, спасибо!", "tts": {"provider
             logger.error(f"❌ Ошибка создания хэша контекста: {e}")
             return "default"
     
+    async def _keep_typing_status(self, chat_id: str):
+        """Периодически обновляет статус 'печатает' каждые 4 секунды"""
+        try:
+            from .telegram_core import send_chat_action
+            
+            while True:
+                await send_chat_action(chat_id, "typing")
+                logger.debug(f"⌨️ Обновлен статус 'печатает' в чат {chat_id}")
+                await asyncio.sleep(4)  # Обновляем каждые 4 секунды
+                
+        except asyncio.CancelledError:
+            logger.debug(f"⏹️ Остановлено обновление статуса 'печатает' для чата {chat_id}")
+            raise
+        except Exception as e:
+            logger.error(f"❌ Ошибка обновления статуса 'печатает': {e}")
+
     def get_stats(self) -> Dict[str, Any]:
         """Возвращает статистику триггера"""
         return {
