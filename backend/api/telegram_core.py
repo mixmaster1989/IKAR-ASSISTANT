@@ -807,37 +807,74 @@ async def send_telegram_message(chat_id: str, text: str, parse_mode: Optional[st
     except Exception as e:
         logger.error(f"Авто-рендеринг таблицы отключен из-за ошибки: {e}")
 
-    url = f"https://api.telegram.org/bot{TELEGRAM_CONFIG['token']}/sendMessage"
-    data = {"chat_id": chat_id, "text": text}
-    if parse_mode:
-        data["parse_mode"] = parse_mode
+    # Чанкование и надёжная отправка с fallback на plain text
+    def _chunk(txt: str, limit: int = 3500) -> list:
+        s = (txt or "")
+        if len(s) <= limit:
+            return [s]
+        parts, buf, size = [], [], 0
+        for line in s.splitlines(True):
+            if size + len(line) > limit and buf:
+                parts.append("".join(buf))
+                buf, size = [], 0
+            buf.append(line)
+            size += len(line)
+        if buf:
+            parts.append("".join(buf))
+        if len(parts) > 1:
+            total = len(parts)
+            parts = [f"({i+1}/{total})\n" + p for i, p in enumerate(parts)]
+        return parts
 
+    async def _send_one(session, payload: dict) -> Optional[int]:
+        url = f"https://api.telegram.org/bot{TELEGRAM_CONFIG['token']}/sendMessage"
+        async with session.post(url, json=payload) as response:
+            if response.status != 200:
+                error_text = await response.text()
+                logger.error(f"Ошибка отправки в Telegram: {response.status} - {error_text}")
+                return None
+            response_data = await response.json()
+            return response_data.get("result", {}).get("message_id")
+
+    chunks = _chunk(text)
+    last_mid: Optional[int] = None
     try:
         async with aiohttp.ClientSession() as session:
-            async with session.post(url, json=data) as response:
-                if response.status != 200:
-                    error_text = await response.text()
-                    logger.error(f"Ошибка отправки в Telegram: {response.status} - {error_text}")
-                    return None
-                response_data = await response.json()
-                message_id = response_data.get("result", {}).get("message_id")
-                if save_dialogue and user_message and user_id and message_id:
-                    try:
-                        from memory.dialogue_context import get_dialogue_context_manager
-                        dialogue_manager = get_dialogue_context_manager()
-                        dialogue_manager.save_dialogue_turn(
-                            chat_id=chat_id,
-                            user_id=user_id,
-                            user_message=user_message,
-                            bot_response=text,
-                            message_id=message_id,
-                            is_quote=False
-                        )
-                        logger.debug(f"💾 Диалог сохранен: {chat_id} | {user_id} | {message_id}")
-                    except Exception as e:
-                        logger.error(f"❌ Ошибка сохранения диалога: {e}")
-                logger.info(f"✅ Текстовое сообщение отправлено в Telegram (ID: {message_id})")
-                return message_id
+            # Если один чанк и задан parse_mode — пробуем разметку, иначе plain text
+            if parse_mode and len(chunks) == 1:
+                payload = {"chat_id": chat_id, "text": chunks[0], "parse_mode": parse_mode}
+                mid = await _send_one(session, payload)
+                if mid is None:
+                    # Fallback: plain text
+                    payload = {"chat_id": chat_id, "text": chunks[0]}
+                    mid = await _send_one(session, payload)
+                last_mid = mid
+            else:
+                # Несколько частей — всегда plain text
+                for part in chunks:
+                    payload = {"chat_id": chat_id, "text": part}
+                    mid = await _send_one(session, payload)
+                    if mid:
+                        last_mid = mid
+
+        if last_mid and save_dialogue and user_message and user_id:
+            try:
+                from memory.dialogue_context import get_dialogue_context_manager
+                dialogue_manager = get_dialogue_context_manager()
+                dialogue_manager.save_dialogue_turn(
+                    chat_id=chat_id,
+                    user_id=user_id,
+                    user_message=user_message,
+                    bot_response=text,
+                    message_id=last_mid,
+                    is_quote=False
+                )
+                logger.debug(f"💾 Диалог сохранен: {chat_id} | {user_id} | {last_mid}")
+            except Exception as e:
+                logger.error(f"❌ Ошибка сохранения диалога: {e}")
+        if last_mid:
+            logger.info(f"✅ Текст отправлен в Telegram (частей: {len(chunks)}), последний ID: {last_mid}")
+        return last_mid
     except Exception as e:
         logger.error(f"Ошибка при отправке сообщения в Telegram: {e}")
         return None
