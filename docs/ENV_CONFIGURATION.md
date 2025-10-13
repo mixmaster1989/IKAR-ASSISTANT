@@ -59,6 +59,12 @@ OPENROUTER_API_KEY5=sk-or-v1-fifth-key
 - Поддержка любого количества ключей
 
 **Получение ключей:**
+### **Платный ключ для Grok (OpenRouter)**
+```bash
+# Используется для модели x-ai/grok-4-fast
+OPENROUTER_API_KEY_PAID=sk-or-paid-your-key
+```
+
 1. Зарегистрируйтесь на [OpenRouter.ai](https://openrouter.ai/)
 2. Перейдите в раздел "Keys"
 3. Создайте новый API ключ
@@ -211,6 +217,8 @@ OPENROUTER_API_KEY2=sk-or-v1-secondary-key-here
 OPENROUTER_API_KEY3=sk-or-v1-tertiary-key-here
 OPENROUTER_API_KEY4=sk-or-v1-fourth-key-here
 OPENROUTER_API_KEY5=sk-or-v1-fifth-key-here
+# Платный ключ для Grok
+OPENROUTER_API_KEY_PAID=sk-or-paid-key-here
 
 # === TELEGRAM ===
 TELEGRAM_BOT_TOKEN=1234567890:ABCDEFGHIJKLMNOPQRSTUVWXYZ
