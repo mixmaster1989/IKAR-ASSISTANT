@@ -757,7 +757,8 @@ async def send_telegram_message(chat_id: str, text: str, parse_mode: Optional[st
     if not TELEGRAM_CONFIG["token"]:
         return None
 
-    # Попытка авто-рендеринга таблицы
+    # Детекция крупной таблицы: если занимает >40% текста — приложим как изображение ДОПОЛНИТЕЛЬНО
+    table_image_to_send = None
     try:
         stripped = (text or "").strip()
         lines = stripped.splitlines()
@@ -772,38 +773,24 @@ async def send_telegram_message(chat_id: str, text: str, parse_mode: Optional[st
             import re as _re
             return all(_re.fullmatch(r':?-{3,}:?', c) for c in parts)
 
-        has_table = False
+        # Находим блок таблицы
+        start = -1
+        end = -1
         for i in range(len(lines) - 1):
             if lines[i].strip().startswith('|') and _is_sep(lines[i + 1]):
-                has_table = True
+                # ищем границы блока
+                start = i - 1 if i - 1 >= 0 else i
+                j = i + 2
+                while j < len(lines) and lines[j].strip().startswith('|'):
+                    j += 1
+                end = j
                 break
-
-        if has_table:
-            from backend.utils.table_generator import create_table_from_markdown
-            image_path = create_table_from_markdown(text)
-            caption = None
-            header = lines[0] if lines else ""
-            if header and not header.strip().startswith('|'):
-                caption = header.strip()
-                if len(caption) > 900:
-                    caption = caption[:897] + '…'
-            mid = await send_telegram_photo(chat_id, image_path, caption)
-            if save_dialogue and user_message and user_id and mid:
-                try:
-                    from memory.dialogue_context import get_dialogue_context_manager
-                    dialogue_manager = get_dialogue_context_manager()
-                    dialogue_manager.save_dialogue_turn(
-                        chat_id=chat_id,
-                        user_id=user_id,
-                        user_message=user_message,
-                        bot_response='[image: table]',
-                        message_id=mid,
-                        is_quote=False
-                    )
-                    logger.debug(f"💾 Диалог сохранен (image): {chat_id} | {user_id} | {mid}")
-                except Exception as e:
-                    logger.error(f"❌ Ошибка сохранения диалога: {e}")
-            return mid
+        if start >= 0 and end > start:
+            table_block = "\n".join(lines[start:end])
+            ratio = len(table_block) / max(1, len(stripped))
+            if ratio >= 0.4:
+                from backend.utils.table_generator import create_table_from_markdown
+                table_image_to_send = create_table_from_markdown("\n".join(lines[start: end]))
     except Exception as e:
         logger.error(f"Авто-рендеринг таблицы отключен из-за ошибки: {e}")
 
@@ -856,6 +843,12 @@ async def send_telegram_message(chat_id: str, text: str, parse_mode: Optional[st
                     mid = await _send_one(session, payload)
                     if mid:
                         last_mid = mid
+
+        if table_image_to_send:
+            try:
+                await send_telegram_photo(chat_id, table_image_to_send, None)
+            except Exception as e:
+                logger.error(f"❌ Ошибка отправки таблицы-изображения: {e}")
 
         if last_mid and save_dialogue and user_message and user_id:
             try:
