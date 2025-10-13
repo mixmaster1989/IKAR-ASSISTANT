@@ -333,6 +333,33 @@ class SmartBotTrigger:
                 dialogue_turns = dialogue_manager.get_recent_dialogue_context(chat_id, user_id, limit=5)
                 dialogue_context = dialogue_manager.format_dialogue_context(dialogue_turns)
             
+            # Интернет-интеграция: классификатор намерений + (опционально) веб-поиск
+            web_facts = None
+            try:
+                from internet.intent_router import classify_intent
+                intent_info = classify_intent(message_text)
+                if intent_info.get('need_web'):
+                    # Вызываем веб-поиск Perplexity Sonar с кэшем
+                    from internet.web_search import web_search
+                    ttl_sec = int(intent_info.get('ttl_sec') or 0)
+                    require_fresh = intent_info.get('intent') == 'date' or intent_info.get('fresh') == 'now'
+                    web_result = await web_search(message_text, intent_info.get('intent', 'general'), ttl_sec, require_fresh=require_fresh)
+                    web_facts = {
+                        'enabled': True,
+                        'intent': intent_info.get('intent'),
+                        'fresh': intent_info.get('fresh'),
+                        'ttl_sec': ttl_sec,
+                        'cache_hit': bool(web_result.get('cache_hit')),
+                        'text': web_result.get('text', ''),
+                        'urls': web_result.get('urls', []),
+                        'error': web_result.get('error')
+                    }
+                    logger.info(f"[web:on] intent={intent_info.get('intent')} fresh={intent_info.get('fresh')} ttl={ttl_sec}s cache_hit={web_facts['cache_hit']} urls={len(web_facts['urls'])}")
+                else:
+                    web_facts = {'enabled': False}
+            except Exception as _we:
+                logger.warning(f"[web:error] {str(_we)}")
+            
             return {
                 'time_info': time_info,
                 'recent_messages': recent_messages,
@@ -345,7 +372,8 @@ class SmartBotTrigger:
                 'is_quote': is_quote,
                 'quoted_message_id': quoted_message_id,
                 'is_mention': is_mention,
-                'dialogue_context': dialogue_context
+                'dialogue_context': dialogue_context,
+                'web_facts': web_facts
             }
             
         except Exception as e:
@@ -444,6 +472,9 @@ class SmartBotTrigger:
 {conversation_context}
 
 {context_data.get('dialogue_context', '')}
+
+=== ФАКТЫ ИЗ ИНТЕРНЕТА ===
+{self._format_web_facts(context_data.get('web_facts'))}
 
 ВАЖНО: Если в сообщениях есть просьба нарисовать что-то или упоминание визуального контента, ОБЯЗАТЕЛЬНО добавь в конец ответа JSON с описанием для генерации изображения.
 
@@ -1003,6 +1034,26 @@ SPEAK!{"speak": true, "text": "Хорошо, спасибо!", "tts": {"provider
         # Здесь будет старый код, если кэшированный промпт не найден
         return "Ты — Икар Икарыч, универсальный сотрудник компании «ИКАР». Отвечай профессионально и по делу!"
     
+
+    def _format_web_facts(self, web_facts: Optional[Dict[str, Any]]) -> str:
+        if not web_facts or not web_facts.get('enabled'):
+            return "(интернет-поиск не использовался)"
+        if web_facts.get('error'):
+            return f"(веб-поиск недоступен: {web_facts.get('error')})"
+        urls = web_facts.get('urls') or []
+        text = web_facts.get('text') or ""
+        preview = text.strip()
+        if len(preview) > 1200:
+            preview = preview[:1200] + "..."
+        lines = [preview]
+        if urls:
+            lines.append("\nИсточники:")
+            for u in urls[:4]:
+                lines.append(f"- {u}")
+        meta = f"\n[web:on cache:{'hit' if web_facts.get('cache_hit') else 'miss'} intent:{web_facts.get('intent')} fresh:{web_facts.get('fresh')}]"
+        lines.append(meta)
+        return "\n".join(lines)
+
 
     def _format_recent_messages(self, messages, participant_names: Dict[str, str]) -> str:
         """Форматирует последние сообщения для промпта"""
