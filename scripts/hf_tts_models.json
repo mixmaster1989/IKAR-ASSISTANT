@@ -1,7 +1,0 @@
-[
-  { "model_id": "coqui-ai/XTTS-v2", "note": "Мультиязычная TTS (включая RU)", "supports_ru": true },
-  { "model_id": "suno/bark",        "note": "Мультиязычная; может требовать доп.параметров", "supports_ru": true },
-  { "model_id": "suno/bark-small",  "note": "Облегчённый Bark", "supports_ru": true },
-  { "model_id": "facebook/mms-tts", "note": "MMS-tts семейство (включает RU)", "supports_ru": true },
-  { "model_id": "parler-tts/parler-tts-mini-v1", "note": "Parler мини (в основном EN)", "supports_ru": false }
-]
